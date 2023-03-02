@@ -1,6 +1,6 @@
 # the-scribe
 
-![GitHub contributors](https://img.shields.io/github/contributors/josht-dev/the-scribe?style=for-the-badge)
+![Contributors](https://img.shields.io/github/contributors/josht-dev/the-scribe?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/josht-dev/the-scribe?style=for-the-badge)
 ![node-lts](https://img.shields.io/badge/node-16.18.0-brightgreen?style=for-the-badge)
 [![npm version](https://img.shields.io/badge/express-4.16.4-brightgreen?style=for-the-badge)](https://badge.fury.io/js/express)
