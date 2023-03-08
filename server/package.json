@@ -1,0 +1,27 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "this is our server for the scribe application",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "server": "node server.js --ignore client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josht-dev/the-scribe.git"
+  },
+  "keywords": [
+    "mongoose",
+    "react"
+  ],
+  "author": "brendan borowski joshua taylor arthur cann christin carter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josht-dev/the-scribe/issues"
+  },
+  "homepage": "https://github.com/josht-dev/the-scribe#readme",
+  "dependencies": {
+    "mongoose": "^7.0.1"
+  }
+}
