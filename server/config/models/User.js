@@ -31,6 +31,12 @@ const userSchema = new Schema(
         ref: "UserPost",
       },
     ],
+    profile: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Profile",
+      },
+    ],
   },
   {
     toJSON: {
