@@ -1,4 +1,5 @@
 const { Schema, Types } = require("mongoose");
+const reactionSchema = require("./Reaction");
 const dayjs = require("dayjs");
 
 const commentSchema = new Schema(
@@ -13,7 +14,8 @@ const commentSchema = new Schema(
       maxlength: 280,
     },
     username: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
     createdAt: {
@@ -23,6 +25,7 @@ const commentSchema = new Schema(
         return dayjs(date).format("MMM DD YYYY H:m");
       },
     },
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -32,4 +35,10 @@ const commentSchema = new Schema(
   }
 );
 
-module.exports = commentSchema;
+userPostSchema.virtual("reactionCount").get(function () {
+  return this.reactions.length;
+});
+
+const Comment = model("Comment", commentSchema); 
+
+module.exports = Comment;
