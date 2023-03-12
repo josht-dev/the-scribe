@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
 const dayjs = require("dayjs");
 const reactionSchema = require("./Reaction");
+const Comment = require("./Comment");
 
 const userPostSchema = new Schema(
   {
@@ -34,6 +35,7 @@ const userPostSchema = new Schema(
       ref: "User",
       required: true,
     },
+    comments: [Comment],
     reactions: [reactionSchema],
     category: {
       type: Schema.Types.ObjectId,
@@ -48,6 +50,10 @@ const userPostSchema = new Schema(
     id: false,
   }
 );
+
+userPostSchema.virtual("commentCount").get(function () {
+  return this.comments.length;
+});
 
 userPostSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
