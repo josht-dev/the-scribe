@@ -36,7 +36,6 @@ const userPostSchema = new Schema(
       required: true,
     },
     comments: [Comment],
-    reactions: [reactionSchema],
     category: {
       type: Schema.Types.ObjectId,
       ref: "Forum",
