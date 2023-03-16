@@ -37,9 +37,8 @@ const userPostSchema = new Schema(
     },
     comments: [Comment],
     category: {
-      type: Schema.Types.ObjectId,
-      ref: "Forum",
-      required: true,
+     type: String,
+     required: true
     },
   },
   {
