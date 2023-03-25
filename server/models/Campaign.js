@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const storySchema = require("./Story");
+const Story = require("./Story");
 const dayjs = require("dayjs");
 
 const campaignSchema = new Schema(
@@ -10,7 +10,7 @@ const campaignSchema = new Schema(
       minLength: 1,
       maxLength: 50,
     },
-    ruleset: {
+    ruleSet: {
       type: String,
       required: true,
     },
@@ -30,7 +30,10 @@ const campaignSchema = new Schema(
       minLength: 1,
       maxLength: 10000,
     },
-    story: [storySchema],
+    story: [{
+      type: Schema.Types.ObjectId,
+      ref: "Story",
+    }],
   },
   {
     toJSON: {

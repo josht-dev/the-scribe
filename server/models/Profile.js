@@ -19,7 +19,9 @@ const profileSchema = new Schema(
       ref: "User",
       required: true,
     },
-    profilePicture: {},
+    profilePicture: {
+      type: String,
+    },
   },
   {
     toJSON: {

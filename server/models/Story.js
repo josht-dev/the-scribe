@@ -18,4 +18,6 @@ const storySchema = new Schema({
   },
 });
 
-module.exports = storySchema;
+const Story = model("Story", storySchema);
+
+module.exports = Story;

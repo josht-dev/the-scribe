@@ -25,7 +25,7 @@ const userSchema = new Schema(
         "Not a Valid Password",
       ],
     },
-    user_posts: [
+    userPosts: [
       {
         type: Schema.Types.ObjectId,
         ref: "UserPost",
