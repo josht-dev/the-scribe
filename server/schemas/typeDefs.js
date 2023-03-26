@@ -65,6 +65,16 @@ const typeDefs = gql`
     pc: String
   }
 
+  type Character {
+    // Need help with association
+    characterName: String
+    characterStatus: String
+    motivations: String
+    characterNotes: String
+    characterSheet: String
+    npc: Boolean
+    campaignId: ID
+  }
   //come back to forum as it may not need to be stored
 
  type Query {
