@@ -1,16 +1,16 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+import { 
+  AppBar, 
+  Box, 
+  Toolbar, 
+  IconButton, 
+  Typography,
+  Menu,
+  MenuItem, 
+  Container,
+  Button
+} from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import Logo from '../assets/the-scribe-logo 1.svg';
 import '../assets/css/style.css';
 
@@ -165,7 +165,8 @@ export default function Navbar() {
                   color: "white",
                   display: "block",
                   backgroundColor: "#1CB9B3",
-                  marginRight: "1rem"
+                  marginRight: "1rem",
+                  boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
                 }}
               >
                 {log.name}
