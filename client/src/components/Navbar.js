@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import Logo from '../assets/the-scribe-logo 1.svg';
+import '../assets/css/style.css';
 
 export default function Navbar() {
   const notLog = [
@@ -76,7 +78,12 @@ export default function Navbar() {
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          {/* AdbIcon does not hold an image, it is for using premade icons...
+          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
+          <img
+            src={Logo}
+            alt="the scribe logo"
+          ></img>
           <Typography
             variant="h6"
             noWrap
@@ -85,9 +92,10 @@ export default function Navbar() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
+              fontFamily: "Montserrat",
+              fontWeight: 900,
+              fontSize: '3rem',
+              lineHeight: '4.5rem',
               color: "black",
               textDecoration: "none",
             }}
