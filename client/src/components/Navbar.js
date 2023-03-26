@@ -11,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import Logo from '../assets/the-scribe-logo 1.svg';
 import '../assets/css/style.css';
 
@@ -78,8 +77,6 @@ export default function Navbar() {
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* AdbIcon does not hold an image, it is for using premade icons...
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <img
             src={Logo}
             alt="the scribe logo"
@@ -139,7 +136,6 @@ export default function Navbar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
