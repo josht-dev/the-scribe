@@ -32,3 +32,7 @@ const characterSchema = new Schema({
     required: true,
   },
 });
+
+const Character = model("Campaign", characterSchema);
+
+module.exports = Character;
