@@ -75,7 +75,7 @@ export default function Navbar() {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
-      <Container maxWidth="xl">
+      <Container disableGutters maxWidth="xl">
         <Toolbar disableGutters>
           <img
             src={Logo}
