@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,9 +12,6 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-
-const notLog = ["LOGIN", "REGISTER"];
-const log = ["CAMPAIGNS", "WORKSHOP", "HEADSPACE", "ACCOUNT", "LOGOUT"];
 
 export default function Navbar() {
   const notLog = [
@@ -77,7 +73,7 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -92,11 +88,11 @@ export default function Navbar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "black",
               textDecoration: "none",
             }}
           >
-            LOGO
+            The Scribe
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -128,9 +124,9 @@ export default function Navbar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {log.map((log) => (
+                <MenuItem key={log.id} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{log.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -148,20 +144,26 @@ export default function Navbar() {
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
-              color: "inherit",
+              color: "black",
               textDecoration: "none",
             }}
           >
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {log.map((log) => (
               <Button
-                key={page}
+                key={log.id}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+                sx={{
+                  my: 2,
+                  color: "white",
+                  display: "block",
+                  backgroundColor: "#1CB9B3",
+                  marginRight: "1rem"
+                }}
               >
-                {page}
+                {log.name}
               </Button>
             ))}
           </Box>
@@ -188,9 +190,9 @@ export default function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {notLog.map((notLog) => (
+                <MenuItem key={notLog.id} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{notLog.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
