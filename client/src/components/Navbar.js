@@ -80,6 +80,7 @@ export default function Navbar() {
           <img
             src={Logo}
             alt="the scribe logo"
+            style={{ marginRight: '1rem' }}
           ></img>
           <Typography
             variant="h6"
@@ -154,7 +155,7 @@ export default function Navbar() {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ flexGrow: 1, justifyContent: "flex-end", display: { xs: "none", md: "flex" } }}>
             {log.map((log) => (
               <Button
                 key={log.id}
