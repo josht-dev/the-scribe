@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from '../assets/the-scribe-logo 1.svg';
-import '../assets/css/style.css';
 
 export default function Navbar() {
   const notLog = [
