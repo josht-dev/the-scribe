@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -14,6 +14,8 @@ import Account from "./components/pages/Account";
 import Campaigns from "./components/pages/Campaigns";
 import Headspace from "./components/pages/Headspace";
 import Workshop from "./components/pages/Workshop";
+import CssBaseline from '@mui/material/CssBaseline';
+import '../src/assets/css/App.css';
 
 export default function App(){
     const router = createBrowserRouter(
@@ -39,6 +41,8 @@ return(
 const Root = () =>{
     return(
         <>
+        {/* CssBaseline is just a css reset */}
+        <CssBaseline />
         <Navbar/>
         <Outlet/>
         <Footer/>
