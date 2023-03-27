@@ -149,7 +149,7 @@ const campaignData = () => {
       </div>
       <div style={styles.tabContainer} id='tabContainer'>
         <span style={styles.tab} className='selectedTab'>your campaigns</span>
-        <span style={styles.tab} className='' data-campaignId='1'>fist full of credits</span>
+        <span style={styles.tab} className='' data-campaignid='1'>fist full of credits</span>
       </div>
       <div style={styles.listDivLarge} className='list-scroll'>
         {campaignArray.map(card => {
