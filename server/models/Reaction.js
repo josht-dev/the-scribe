@@ -3,10 +3,11 @@ const dayjs = require("dayjs");
 
 const reactionSchema = new Schema(
   {
-    reactionId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
+    commentId: 
+        {
+        type: Schema.Types.ObjectId,
+        ref: "Story",
+      },
     reactionBody: {
       type: String,
       required: true,
