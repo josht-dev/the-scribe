@@ -74,7 +74,7 @@ export default function Navbar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "white" }}>
+    <AppBar position="static" sx={{ backgroundColor: "white" }} component='nav'>
       <Container disableGutters maxWidth="xl">
         <Toolbar disableGutters>
           <img

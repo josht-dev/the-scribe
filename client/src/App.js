@@ -15,6 +15,7 @@ import Campaigns from "./components/pages/Campaigns";
 import Headspace from "./components/pages/Headspace";
 import Workshop from "./components/pages/Workshop";
 import CssBaseline from '@mui/material/CssBaseline';
+import '../src/assets/css/App.css';
 
 export default function App(){
     const router = createBrowserRouter(
