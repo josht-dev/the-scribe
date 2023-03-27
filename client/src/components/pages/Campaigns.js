@@ -128,7 +128,7 @@ const styles = {
   },
   listCardLargeTitle: {
     width: '70%',
-    margin: '0 0.25rem',
+    margin: '0 0.5rem',
     fontSize: '2rem'
   },
   listCardLargeDetails: {
@@ -149,7 +149,7 @@ const campaignData = () => {
       </div>
       <div style={styles.tabContainer} id='tabContainer'>
         <span style={styles.tab} className='selectedTab'>your campaigns</span>
-        <span style={styles.tab} className=''>fist full of credits</span>
+        <span style={styles.tab} className='' data-campaignId='1'>fist full of credits</span>
       </div>
       <div style={styles.listDivLarge} className='list-scroll'>
         {campaignArray.map(card => {
