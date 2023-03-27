@@ -19,3 +19,7 @@ main {
   color: #fff;
   background-color: #1CB9B3;
 }
+
+.list-scroll {
+  overflow-y: scroll;
+}
