@@ -11,6 +11,7 @@ import {
   Button
 } from '@mui/material';
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from 'react-router-dom';
 import Logo from '../assets/the-scribe-logo 1.svg';
 
 export default function Navbar() {
@@ -18,39 +19,39 @@ export default function Navbar() {
     {
       name: "LOGIN",
       id: 1,
-      link: "login",
+      link: "/login",
     },
     {
       name: "REGISTER",
       id: 2,
-      link: "register",
+      link: "/register",
     },
   ];
   const log = [
     {
       name: "CAMPAIGNS",
       id: 1,
-      link: "campaigns",
+      link: "/campaigns",
     },
     {
       name: "WORKSHOP",
       id: 2,
-      link: "workshop",
+      link: "/workshop",
     },
     {
       name: "HEADSPACE",
       id: 3,
-      link: "headspace",
+      link: "/headspace",
     },
     {
       name: "ACCOUNT",
       id: 4,
-      link: "account",
+      link: "/account",
     },
     {
       name: "LOGOUT",
       id: 5,
-      link: "logout",
+      link: "/logout",
     },
   ];
 
@@ -156,20 +157,22 @@ export default function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, justifyContent: "flex-end", display: { xs: "none", md: "flex" } }}>
             {log.map((log) => (
-              <Button
-                key={log.id}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  backgroundColor: "#1CB9B3",
-                  marginRight: "1rem",
-                  boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-                }}
-              >
-                {log.name}
-              </Button>
+              <Link to={log.link}>
+                <Button
+                  key={log.id}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    backgroundColor: "#1CB9B3",
+                    marginRight: "1rem",
+                    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+                  }}
+                >
+                  {log.name}
+                </Button>
+              </Link>
             ))}
           </Box>
         </Toolbar>
