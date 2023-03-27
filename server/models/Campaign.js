@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Story = require("./Story");
 const dayjs = require("dayjs");
 
 const campaignSchema = new Schema(
@@ -25,15 +24,34 @@ const campaignSchema = new Schema(
       type: String,
       required: true,
     },
-    notes: {
+    notes: [
+      {
+        type: String,
+        minLength: 1,
+        maxLength: 10000,
+      },
+    ],
+    storyOutline: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Story",
+      },
+    ],
+    adventures: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Adventure",
+      },
+    ],
+    currentDateInGame: {
       type: String,
-      minLength: 1,
-      maxLength: 10000,
     },
-    story: [{
-      type: Schema.Types.ObjectId,
-      ref: "Story",
-    }],
+    characters: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Character",
+      },
+    ],
   },
   {
     toJSON: {
