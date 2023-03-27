@@ -8,4 +8,14 @@
 
 body {
   padding: 1rem;
+  background-color: #F5F5F5 !important;
+}
+
+main {
+  text-transform: uppercase;
+}
+
+.selectedTab {
+  color: #fff;
+  background-color: #1CB9B3;
 }
