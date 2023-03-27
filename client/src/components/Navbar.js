@@ -157,9 +157,8 @@ export default function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, justifyContent: "flex-end", display: { xs: "none", md: "flex" } }}>
             {log.map((log) => (
-              <Link to={log.link}>
+              <Link to={log.link} key={log.id}>
                 <Button
-                  key={log.id}
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
