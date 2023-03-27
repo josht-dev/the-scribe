@@ -20,13 +20,13 @@ import '../src/assets/css/App.css';
 export default function App(){
     const router = createBrowserRouter(
       createRoutesFromElements(
-        <Route path="/" element={<Root />}>
+        <Route path="/" element={<Root />}>Outlet
           <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="account" element={<Account />} />
-          <Route path="campaigns" element={<Campaigns />} />
-          <Route path="headspace" element={<Headspace />} />
-          <Route path="workshop" element={<Workshop />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/campaigns" element={<Campaigns />} />
+          <Route path="/headspace" element={<Headspace />} />
+          <Route path="/workshop" element={<Workshop />} />
         </Route>
       )
     );
