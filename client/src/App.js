@@ -22,11 +22,11 @@ export default function App(){
       createRoutesFromElements(
         <Route path="/" element={<Root />}>
           <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="account" element={<Account />} />
-          <Route path="campaigns" element={<Campaigns />} />
-          <Route path="headspace" element={<Headspace />} />
-          <Route path="workshop" element={<Workshop />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/campaigns" element={<Campaigns />} />
+          <Route path="/headspace" element={<Headspace />} />
+          <Route path="/workshop" element={<Workshop />} />
         </Route>
       )
     );
