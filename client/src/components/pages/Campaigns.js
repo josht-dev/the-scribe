@@ -71,7 +71,8 @@ const styles = {
   container: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 1
   },
   section: {
     position: 'absolute',
@@ -80,7 +81,8 @@ const styles = {
     height: '50rem',
     backgroundColor: '#fff',
     borderRadius: '.25rem',
-    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)'
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    zIndex: 2
   },
   titleDiv: {
     display: 'flex',
@@ -139,9 +141,6 @@ const styles = {
 
 // Campaign specific content
 const campaignData = () => {
-
-  
-
   return (
     <>
       <div style={styles.titleDiv}>
