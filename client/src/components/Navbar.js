@@ -147,24 +147,6 @@ export default function Navbar() {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
           <Box sx={{ flexGrow: 1, justifyContent: "flex-end", display: { xs: "none", md: "flex" } }}>
             {log.map((log) => (
               <Link to={log.link} key={log.id}>

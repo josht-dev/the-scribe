@@ -35,7 +35,14 @@ export default function Register() {
         >
           Create an Account
         </DialogTitle>
-        <DialogContent>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <TextField
             autoFocus
             margin="dense"
@@ -44,6 +51,7 @@ export default function Register() {
             type="email"
             fullWidth
             variant="outlined"
+            sx={{ width: "85%" }}
           />
           <TextField
             autoFocus
@@ -53,6 +61,7 @@ export default function Register() {
             type="email"
             fullWidth
             variant="outlined"
+            sx={{ width: "85%" }}
           />
           <TextField
             autoFocus
@@ -62,9 +71,16 @@ export default function Register() {
             type="email"
             fullWidth
             variant="outlined"
+            sx={{ width: "85%" }}
           />
         </DialogContent>
-        <DialogActions>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Button
             onClick={handleClose}
             sx={{
