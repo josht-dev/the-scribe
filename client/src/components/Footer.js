@@ -3,6 +3,7 @@ import ContactIcon from "../assets/icons/contact-icon.svg";
 import DevsIcon from "../assets/icons/devs-icon.svg";
 import DonateIcon from "../assets/icons/donate-icon.svg";
 import { AppBar, Container, Toolbar } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const styles = {
     footer: {
@@ -53,9 +54,15 @@ export default function Footer() {
         }} component='footer'>
         <Container disableGutters maxWidth="xl">
             <Toolbar disableGutters>
-            <img style={styles.image} src={ContactIcon} alt="contact icon"></img>
-            <img style={styles.image} src={DevsIcon} alt="devs icon"></img>
-            <img style={styles.rightImg} src={DonateIcon} alt="donate icon"></img>
+            <Link to="/contact">
+                <img style={styles.image} src={ContactIcon} alt="contact icon"></img>
+            </Link>
+            <Link to="/about">
+                <img style={styles.image} src={DevsIcon} alt="devs icon"></img>
+            </Link>
+            <Link to="/donate">
+                <img style={styles.rightImg} src={DonateIcon} alt="donate icon"></img>
+            </Link>
             </Toolbar>
          </Container>
         </AppBar>
