@@ -74,7 +74,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    zIndex: 1
+    zIndex: 2
   },
   section: {
     position: 'absolute',
@@ -84,7 +84,7 @@ const styles = {
     backgroundColor: '#fff',
     borderRadius: '.25rem',
     boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-    zIndex: 2
+    zIndex: 3
   },
   titleDiv: {
     display: 'flex',
@@ -142,9 +142,8 @@ const styles = {
 };
 
 
-const Tab = (propObj) => {
-  console.log(propObj.props);
-  return <span style={styles.tab} className='selectedTab'>test</span>;
+const Tab = (props) => {
+  return <span style={styles.tab} className='selectedTab' data-campaignid={props.campaignId}>{props.campaignTitle} </span>;
 }
 
 
@@ -172,13 +171,14 @@ export default function Campaigns() {
     }
 
     const propObj = {
-      id: id,
-      title: title
+      id: id(),
+      title: title()
     }
 
-    console.log(propObj.title);
+    // Check if tab with campaignid already exists
+    console.log(tabList);
     
-    setTabList(tabList.concat(<Tab key={propObj} props={propObj} />));
+    setTabList(tabList.concat(<Tab key={propObj} campaignId={propObj.id} campaignTitle={propObj.title} />));
   }
 
 
@@ -218,11 +218,6 @@ export default function Campaigns() {
       </>
     );
   }
-
-
-
-
-
 
 
   return (
