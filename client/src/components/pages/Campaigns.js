@@ -1,4 +1,6 @@
-import React from "react";
+import { formControlLabelClasses } from "@mui/material";
+import React, { useState } from "react";
+import ReactDom from 'react-dom';
 
 // TODO - Refactor to be more modular, just needed it working for now
 
@@ -71,7 +73,8 @@ const styles = {
   container: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 1
   },
   section: {
     position: 'absolute',
@@ -80,7 +83,8 @@ const styles = {
     height: '50rem',
     backgroundColor: '#fff',
     borderRadius: '.25rem',
-    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)'
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    zIndex: 2
   },
   titleDiv: {
     display: 'flex',
@@ -137,38 +141,90 @@ const styles = {
   },
 };
 
-// Campaign specific content
-const campaignData = () => {
 
-  
-
-  return (
-    <>
-      <div style={styles.titleDiv}>
-        <span style={styles.titleBtn}>campaigns</span>
-      </div>
-      <div style={styles.tabContainer} id='tabContainer'>
-        <span style={styles.tab} className='selectedTab'>your campaigns</span>
-        <span style={styles.tab} className='' data-campaignid='1'>fist full of credits</span>
-      </div>
-      <div style={styles.listDivLarge} className='list-scroll'>
-        {campaignArray.map(card => {
-          return (
-            <article style={styles.listCardLarge} key={card._id}>
-              <span style={styles.listCardLargeTitle}>{card.title}</span>
-              <div style={styles.listCardLargeDetails}>
-                <span>game: {card.game}</span>
-                <span>Updated: {card.modifiedAt}</span>
-              </div>
-            </article>
-          ); 
-        })}
-      </div>
-    </>
-  );
+const Tab = (propObj) => {
+  console.log(propObj.props);
+  return <span style={styles.tab} className='selectedTab'>test</span>;
 }
 
+
 export default function Campaigns() {
+
+  const [tabList, setTabList] = useState([
+    <span style={styles.tab} className='selectedTab' key='0'>your campaigns</span>
+  ]);
+
+  const onAddBtnClick = (event) => {    
+    // Get the campaign id and title from the article data attributes
+    const title = () => {
+      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
+      const parentTitle = event.nativeEvent.srcElement.dataset.title;
+      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
+
+      return childTitle || parentTitle || nestedTitle;
+    }
+    const id = () => {
+      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
+      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
+      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
+
+      return childId || parentId || nestedId;
+    }
+
+    const propObj = {
+      id: id,
+      title: title
+    }
+
+    console.log(propObj.title);
+    
+    setTabList(tabList.concat(<Tab key={propObj} props={propObj} />));
+  }
+
+
+  // Campaign specific content
+  const campaignData = () => {
+    return (
+      <>
+        <div style={styles.titleDiv}>
+          <span style={styles.titleBtn}>campaigns</span>
+        </div>
+        <div style={styles.tabContainer} id='tabContainer'>
+          {tabList}
+
+          {/*
+        <span style={styles.tab} className='' data-campaignid='1'>fist full of credits</span>
+        */}
+        </div>
+        <div style={styles.listDivLarge} className='list-scroll'>
+          {campaignArray.map(card => {
+            return (
+              <article 
+                style={styles.listCardLarge} 
+                key={card._id} 
+                data-campaignid={card._id} 
+                data-title={card.title}
+                onClick={onAddBtnClick}
+              >
+                <span style={styles.listCardLargeTitle}>{card.title}</span>
+                <div style={styles.listCardLargeDetails}>
+                  <span>game: {card.game}</span>
+                  <span>Updated: {card.modifiedAt}</span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </>
+    );
+  }
+
+
+
+
+
+
+
   return (
     <main style={styles.container}>
       <section style={styles.section}>
@@ -176,5 +232,4 @@ export default function Campaigns() {
       </section>
     </main>
   );
-
 }
