@@ -1,4 +1,3 @@
-import { formControlLabelClasses } from "@mui/material";
 import React, { useState } from "react";
 import ReactDom from 'react-dom';
 
@@ -143,17 +142,23 @@ const styles = {
 
 
 const Tab = (props) => {
-  return <span style={styles.tab} className='selectedTab' data-campaignid={props.campaignId}>{props.campaignTitle} </span>;
+  return (
+    <span 
+      style={styles.tab} 
+      className='selectedTab' 
+      data-campaignid={props.campaignId}
+    >{props.campaignTitle}</span>
+  );
 }
 
 
 export default function Campaigns() {
 
   const [tabList, setTabList] = useState([
-    <span style={styles.tab} className='selectedTab' key='0'>your campaigns</span>
+    <span style={styles.tab} className='selectedTab' key='-1' data-campaignid='-1'>your campaigns</span>
   ]);
 
-  const onAddBtnClick = (event) => {    
+  const onAddBtnClick = (event) => {
     // Get the campaign id and title from the article data attributes
     const title = () => {
       const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
@@ -175,10 +180,21 @@ export default function Campaigns() {
       title: title()
     }
 
-    // Check if tab with campaignid already exists
-    console.log(tabList);
-    
-    setTabList(tabList.concat(<Tab key={propObj} campaignId={propObj.id} campaignTitle={propObj.title} />));
+    // Check if tab with campaignid/key already exists
+    let dup = false;
+    for (let i = 0; i < tabList.length; i++) {
+      if (tabList[i].key == propObj.id) {
+        dup = true;
+      }
+    }
+
+    if (!dup) {
+      console.log(tabList);
+      setTabList(tabList.concat(<Tab key={propObj.id} campaignId={propObj.id} campaignTitle={propObj.title} />));
+    } else {
+      return;
+    }
+
   }
 
 
