@@ -9,6 +9,9 @@
 body {
   padding: 1rem;
   background-color: #F5F5F5 !important;
+  background-image: url("../background-img.svg");
+  background-position: center;
+  background-size: cover;
 }
 
 main {
