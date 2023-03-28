@@ -145,7 +145,7 @@ const Tab = (props) => {
   return (
     <span 
       style={styles.tab} 
-      className='selectedTab' 
+      className='' 
       data-campaignid={props.campaignId}
     >{props.campaignTitle}</span>
   );
@@ -189,7 +189,7 @@ export default function Campaigns() {
     }
 
     if (!dup) {
-      console.log(tabList);
+      // Add a new tab
       setTabList(tabList.concat(<Tab key={propObj.id} campaignId={propObj.id} campaignTitle={propObj.title} />));
     } else {
       return;
