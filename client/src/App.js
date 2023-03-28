@@ -21,7 +21,7 @@ export default function App(){
     const router = createBrowserRouter(
       createRoutesFromElements(
         <Route path="/" element={<Root />}>
-          <Route path="login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
           <Route path="/campaigns" element={<Campaigns />} />
