@@ -53,6 +53,16 @@ export default function Navbar() {
       id: 5,
       link: "/logout",
     },
+    {
+      name: "LOGIN",
+      id: 6,
+      link: "/login",
+    },
+    {
+      name: "REGISTER",
+      id: 7,
+      link: "/register",
+    },
   ];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
