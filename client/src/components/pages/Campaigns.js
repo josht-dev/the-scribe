@@ -143,6 +143,132 @@ const styles = {
 
 const Tab = (props) => {
   return (
+    <span
+      style={styles.tab}
+      className=''
+      data-campaignid={props.campaignId}
+    >{props.campaignTitle}</span>
+  );
+}
+
+
+function Campaigns() {
+
+  // Tab state
+  const [currentTab, setCurrentTab] = useState(-1);
+
+  // Render main content modal/page
+  const renderPage = () => {
+    if (currentTab == -1) {
+      return campaignList();
+    }
+  }
+
+  // Function to handle the tab change
+  const handleTabChange = (tab) => setCurrentTab(tab);
+
+  // Tab state
+  const [tabList, setTabList] = useState([
+    <span style={styles.tab} className='selectedTab' key='-1' data-campaignid='-1'>your campaigns</span>
+  ]);
+
+  const onAddBtnClick = (event) => {
+    // Get the campaign id and title from the article data attributes
+    const title = () => {
+      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
+      const parentTitle = event.nativeEvent.srcElement.dataset.title;
+      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
+
+      return childTitle || parentTitle || nestedTitle;
+    }
+    const id = () => {
+      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
+      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
+      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
+
+      return childId || parentId || nestedId;
+    }
+
+    const propObj = {
+      id: id(),
+      title: title()
+    }
+
+    // Check if tab with campaignid/key already exists
+    let dup = false;
+    for (let i = 0; i < tabList.length; i++) {
+      if (tabList[i].key == propObj.id) {
+        dup = true;
+      }
+    }
+
+    if (!dup) {
+      // Add a new tab
+      setTabList(tabList.concat(<Tab key={propObj.id} campaignId={propObj.id} campaignTitle={propObj.title} />));
+    } else {
+      return;
+    }
+
+  }
+
+
+  // Campaign specific content
+  const campaignList = () => {
+    return (
+      <div style={styles.listDivLarge} className='list-scroll'>
+        {campaignArray.map(card => {
+          return (
+            <article
+              style={styles.listCardLarge}
+              key={card._id}
+              data-campaignid={card._id}
+              data-title={card.title}
+              onClick={onAddBtnClick}
+            >
+              <span style={styles.listCardLargeTitle}>{card.title}</span>
+              <div style={styles.listCardLargeDetails}>
+                <span>game: {card.game}</span>
+                <span>Updated: {card.modifiedAt}</span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // Return the large modal/page
+  return (
+    <main style={styles.container}>
+      <section style={styles.section}>
+        <>
+          <div style={styles.titleDiv}>
+            <span style={styles.titleBtn}>campaigns</span>
+          </div>
+          <div style={styles.tabContainer} id='tabContainer'>
+            {tabList}
+          </div>
+        </>
+        {renderPage()}
+
+      </section>
+    </main>
+  );
+}
+
+
+export default Campaigns;
+
+
+
+
+
+
+
+/* 
+
+const Tab = (props) => {
+  return (
     <span 
       style={styles.tab} 
       className='' 
@@ -152,7 +278,7 @@ const Tab = (props) => {
 }
 
 
-export default function Campaigns() {
+function Campaigns() {
 
   const [tabList, setTabList] = useState([
     <span style={styles.tab} className='selectedTab' key='-1' data-campaignid='-1'>your campaigns</span>
@@ -208,9 +334,6 @@ export default function Campaigns() {
         <div style={styles.tabContainer} id='tabContainer'>
           {tabList}
 
-          {/*
-        <span style={styles.tab} className='' data-campaignid='1'>fist full of credits</span>
-        */}
         </div>
         <div style={styles.listDivLarge} className='list-scroll'>
           {campaignArray.map(card => {
@@ -235,7 +358,7 @@ export default function Campaigns() {
     );
   }
 
-
+// Return the large modal/page
   return (
     <main style={styles.container}>
       <section style={styles.section}>
@@ -244,3 +367,7 @@ export default function Campaigns() {
     </main>
   );
 }
+
+
+
+*/
