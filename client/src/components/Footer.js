@@ -17,6 +17,7 @@ const styles = {
         float: "left",
         border: "1px solid red",
         width: "40%",
+        display: "flex",
     },
     rightDiv: {
         border: "1px solid blue",
@@ -24,6 +25,22 @@ const styles = {
     },
     rightImg: {
         float: "right",
+        backgroundColor: "#fff", 
+        borderRadius: "0.25rem",
+        boxShadow: "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+        width: "4.6rem",
+        height: "4.6rem",
+        margin: "0.25rem",
+        padding: "0.25rem",
+    },
+    image: {
+        backgroundColor: "#fff", 
+        borderRadius: "0.25rem",
+        boxShadow: "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+        width: "4.5rem",
+        height: "4.5rem",
+        margin: "0.25rem",
+        padding: "0.25rem",
     },
 }
 
@@ -36,13 +53,9 @@ export default function Footer() {
         }} component='footer'>
         <Container disableGutters maxWidth="xl">
             <Toolbar disableGutters>
-            <div style={styles.leftDiv}>
-                <img src={ContactIcon} alt="contact icon"></img>
-                <img src={DevsIcon} alt="devs icon"></img>
-            </div>
-            <div style={styles.rightDiv}>
-                <img style={styles.rightImg} src={DonateIcon} alt="donate icon"></img>
-            </div>
+            <img style={styles.image} src={ContactIcon} alt="contact icon"></img>
+            <img style={styles.image} src={DevsIcon} alt="devs icon"></img>
+            <img style={styles.rightImg} src={DonateIcon} alt="donate icon"></img>
             </Toolbar>
          </Container>
         </AppBar>
