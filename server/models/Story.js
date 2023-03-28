@@ -1,22 +1,60 @@
 const { Schema, model } = require("mongoose");
 
 const storySchema = new Schema({
-  storyId: {
-    type: Schema.Types.ObjectId,
-    default: function () {
-      return new Types.ObjectId();
+  campaignId: {
+        type: Schema.Types.ObjectId,
+        ref: "Campaign",
+  },
+  characters: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Character",
     },
+  ],
+  timeline: {
+    type: String
   },
-  storyOutline: {
-    type: String,
+  bigBad: {
+    type: String
   },
-  npc: {
-    type: String,
+  main: {
+    type: Boolean
   },
-  pc: {
-    type: String,
+  side: {
+    type: Boolean
   },
-});
+  player: {
+    type: Boolean
+  },
+  storyBoard:[{
+    type: String
+  }]
+},  
+{
+    toJSON: {
+      virtuals: true,
+    },
+    id: false,
+  });
+
+  storySchema.virtal("switchBooleans")
+  .get(function () {
+    return [this.side, this.main, this.player];
+  })
+  .set(function(boolean){
+    if (boolean.side === true){
+      boolean.main === false
+      boolean.player === false
+    } else if (boolean.main === true){
+      boolean.side === false
+      boolean.player === false
+    } else if (boolean.player === true){
+      boolean.side === false
+      boolean.main === false
+    } else {
+      return
+    }
+  });
 
 const Story = model("Story", storySchema);
 

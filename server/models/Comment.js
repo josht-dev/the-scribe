@@ -4,11 +4,6 @@ const dayjs = require("dayjs");
 
 const commentSchema = new Schema(
   {
-    //come back to later
-    // commentId: {
-    //   type: Schema.Types.ObjectId,
-    //   default: () => new Types.ObjectId(),
-    // },
     postId: {
       type: Schema.Types.ObjectId,
       ref: "UserPost",

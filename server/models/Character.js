@@ -19,11 +19,10 @@ const characterSchema = new Schema(
         allowNull: true,
       },
     ],
-    //! TODO: Might be an array, for subdocs
-    characterNotes: {
+    characterNotes: [{
       type: String,
       allowNull: true,
-    },
+    }],
     characterSheet: {
       type: String,
       allowNull: true,
@@ -38,8 +37,8 @@ const characterSchema = new Schema(
         ref: "Campaign",
       },
     ],
+    
   },
-  //? For use later, if we need it?
   {
     toJSON: {
       virtuals: true,
