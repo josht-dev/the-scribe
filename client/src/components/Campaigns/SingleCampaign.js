@@ -10,6 +10,7 @@ export default function SingleCampaign(props) {
       height: '42.25rem'
     }
   }
+  console.log(props.campaign);
 
   return (
     <div style={styles.divLarge}>
