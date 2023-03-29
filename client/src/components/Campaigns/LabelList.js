@@ -11,7 +11,6 @@ const styles = {
     fontSize: '1rem',
     padding: '0.5rem 1rem',
     color: '#fff',
-    
   }
 };
 
