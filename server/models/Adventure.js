@@ -2,6 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const adventureSchema = new Schema(
   {
+    campaignId: {
+      type: Schema.Types.ObjectId,
+      ref: "Campaign",
+    },
     title: {
       type: String,
       required: true,

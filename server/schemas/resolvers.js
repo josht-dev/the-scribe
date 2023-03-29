@@ -83,10 +83,15 @@ const resolvers = {
       return Character.findOne({ _id: characterId }).populate("Campaign");
     },
     adventures: async () => {
-      return Adventure.find().sort({ createdAt: 1 }).populate("Character");
+      return Adventure.find()
+        .sort({ createdAt: 1 })
+        .populate("Character")
+        .populate("Campaign");
     },
     adventure: async (parent, { adventureId }) => {
-      return Adventure.findOne({ _id: adventureId }).populate("Character");
+      return Adventure.findOne({ _id: adventureId })
+        .populate("Character")
+        .populate("Campaign");
     },
     individual: async (parent, args, context) => {
       if (context.user) {
@@ -171,7 +176,7 @@ const resolvers = {
       if (context.user) {
         const profile = await Profile.create({
           username: context.user.username,
-          about
+          about,
         });
 
         await User.findOneAndUpdate(
@@ -184,26 +189,67 @@ const resolvers = {
         "You must be logged in to view your profile!"
       );
     },
-    addCampaign: async (parent, {gameName, ruleSet, genre}, context) => {
-       if (!context.user) {
-         throw new AuthenticationError("You need to be logged in!");
-       }
-       if (context.profile) {
-        const campaign = await Campaign.create(
-          {
-            profile: context.profile.campaigns,
-            gameName,
-            ruleSet,
-            genre
-          }
-        )
+    addCampaign: async (parent, { gameName, ruleSet, genre }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      if (context.profile) {
+        const campaign = await Campaign.create({
+          profile: context.profile.campaigns,
+          gameName,
+          ruleSet,
+          genre,
+        });
         await Profile.findOneAndUpdate(
           { _id: context.profile._id },
-          { $addToSet: { profiles: campaign._id } }
+          { $addToSet: { campaigns: campaign._id } }
         );
-        return Campaign
-       }
-       throw new Error("No campaign found by that name!!")
+        return Campaign;
+      }
+      throw new Error("No campaign found by that name!!");
+    },
+    addStory: async (parent, { main, side, player, title }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      if (context.campaign) {
+        const story = await Story.create({
+          campaign: context.campaign.campaignId,
+          main,
+          side,
+          player,
+          title,
+        });
+        await Campaign.findOneAndUpdate(
+          { _id: context.campaign._id },
+          { $addToSet: { stories: story._id } }
+        );
+        return Story;
+      }
+      throw new Error("No story found by that name!!");
+    },
+    addAdventure: async (parent, { title }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      if (context.campaign) {
+        const adventure = await Adventure.create({
+          campaign: context.campaign.campaignId,
+          title,
+        });
+        await Campaign.findOneAndUpdate(
+          { _id: context.campaign._id },
+          { $addToSet: { adventures: adventure._id } }
+        );
+        return Adventure;
+      }
+      throw new Error("No Adventures found by that name!!");
+    },
+    addCharacter: async (parent, {characterName}, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      return Character.create({characterName})
     }
   },
 };

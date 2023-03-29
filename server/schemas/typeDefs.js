@@ -71,6 +71,7 @@ const typeDefs = gql`
     side: Boolean
     player: Boolean
     storyBoard: String
+    title: String
   }
 
   type Character {
@@ -91,6 +92,7 @@ const typeDefs = gql`
     objectives: String
     characters(characterId: ID!): Character
     encounters: String
+    campaignId(campaignId: ID!): Campaign
   }
 
   type Query {
@@ -125,9 +127,23 @@ const typeDefs = gql`
     addCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
     modifyCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
     removeCampaign(campaignId: ID!, userId: ID): Campaign
-    addStory(campaignId: ID!): Story
-    modifyStory(campaignId: ID!): Story
-    removeStory(storyId: ID!, userId: ID): Story
+    addStory(
+      title: String
+      campaignId: ID!
+      main: Boolean
+      side: Boolean
+      player: Boolean
+    ): Story
+    modifyStory(
+      title: String
+      timeline: String
+      bigBad: String
+      main: Boolean
+      side: Boolean
+      player: Boolean
+      storyBoard: String
+    ): Story
+    removeStory(storyId: ID!): Story
     addReaction(reactionBody: String!, username: ID!): Reaction
     modifyReaction(reactionBody: String!): Reaction
     removeReaction(reactionId: ID!): Reaction
@@ -141,8 +157,15 @@ const typeDefs = gql`
     modifyCharacter(characterName: String!): Character
     removeCharacter(characterId: ID!, userId: ID): Character
     addAdventure(title: String!): Adventure
-    modifyAdventure(title: String!): Adventure
-    removeAdventure(adventureId: ID!, userId: ID): Adventure
+    modifyAdventure(
+      title: String!
+      setup: String
+      resolution: String
+      notes: String
+      objectives: String
+      encounters: String
+    ): Adventure
+    removeAdventure(adventureId: ID!): Adventure
   }
 `;
 
