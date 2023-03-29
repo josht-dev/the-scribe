@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
+import SingleCampaign from "../Campaigns/SingleCampaign";
 
 // Testing data
 const campaignArray = [
@@ -127,8 +128,6 @@ function Campaigns() {
       // temp render
 
       return <CampaignList
-        tabList={tabList}
-        setTabList={setTabList}
         campaignArray={campaignArray}
       />
       //return campaignList();
