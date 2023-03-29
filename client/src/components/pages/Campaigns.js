@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactDom from 'react-dom';
+import Tab from '../Tab';
 
 // TODO - Refactor to be more modular, just needed it working for now
 
@@ -103,15 +103,6 @@ const styles = {
     margin: '0.5rem 0.5rem 0 0.5rem',
     display: 'flex'
   },
-  tab: {
-    padding: '0.5rem 1rem',
-    marginRight: '0.25rem',
-    borderWidth: '2px 2px 0px 2px',
-    borderStyle: 'solid',
-    borderColor: '#1CB9B3',
-    borderRadius: '0.25rem 0.25rem 0 0',
-    fontWeight: 500
-  },
   listDivLarge: {
     border: '1px solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
@@ -141,37 +132,16 @@ const styles = {
 };
 
 
-const Tab = (props) => {
-  return (
-    <span
-      style={styles.tab}
-      className=''
-      data-campaignid={props.campaignId}
-    >{props.campaignTitle}</span>
-  );
-}
-
-
 function Campaigns() {
+    const [tabList, setTabList] = useState([{id: -1, campaignTitle: 'your campaigns'}]);
 
-  // Tab state
-  const [currentTab, setCurrentTab] = useState(-1);
+    // Current selected tab state
+    const [currentTab, setCurrentTab] = useState('-1');
+  
+    // Function to handle the tab change
+    const handleTabChange = (tab) => setCurrentTab(tab);
 
-  // Render main content modal/page
-  const renderPage = () => {
-    if (currentTab == -1) {
-      return campaignList();
-    }
-  }
-
-  // Function to handle the tab change
-  const handleTabChange = (tab) => setCurrentTab(tab);
-
-  // Tab state
-  const [tabList, setTabList] = useState([
-    <span style={styles.tab} className='selectedTab' key='-1' data-campaignid='-1'>your campaigns</span>
-  ]);
-
+  // Event listener for campaign card click
   const onAddBtnClick = (event) => {
     // Get the campaign id and title from the article data attributes
     const title = () => {
@@ -191,24 +161,35 @@ function Campaigns() {
 
     const propObj = {
       id: id(),
-      title: title()
+      campaignTitle: title()
     }
 
     // Check if tab with campaignid/key already exists
     let dup = false;
     for (let i = 0; i < tabList.length; i++) {
-      if (tabList[i].key == propObj.id) {
+      if (tabList[i].id === propObj.id) {
         dup = true;
       }
     }
 
     if (!dup) {
       // Add a new tab
-      setTabList(tabList.concat(<Tab key={propObj.id} campaignId={propObj.id} campaignTitle={propObj.title} />));
+      setTabList(tabList.concat(propObj));
     } else {
       return;
     }
 
+  }
+
+  // Render main content modal/page
+  const renderPage = () => {
+    if (currentTab === -1) {
+      return campaignList();
+    } else {
+      // temp render
+
+      return campaignList();
+    }
   }
 
 
@@ -246,11 +227,17 @@ function Campaigns() {
             <span style={styles.titleBtn}>campaigns</span>
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
-            {tabList}
+            {tabList.map(item => {
+              return(<Tab 
+                currentTab={currentTab} 
+                handleTabChange={handleTabChange} 
+                tab={item} 
+                key={item.id}
+              />)
+            })}
           </div>
         </>
         {renderPage()}
-
       </section>
     </main>
   );
@@ -258,116 +245,3 @@ function Campaigns() {
 
 
 export default Campaigns;
-
-
-
-
-
-
-
-/* 
-
-const Tab = (props) => {
-  return (
-    <span 
-      style={styles.tab} 
-      className='' 
-      data-campaignid={props.campaignId}
-    >{props.campaignTitle}</span>
-  );
-}
-
-
-function Campaigns() {
-
-  const [tabList, setTabList] = useState([
-    <span style={styles.tab} className='selectedTab' key='-1' data-campaignid='-1'>your campaigns</span>
-  ]);
-
-  const onAddBtnClick = (event) => {
-    // Get the campaign id and title from the article data attributes
-    const title = () => {
-      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
-      const parentTitle = event.nativeEvent.srcElement.dataset.title;
-      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
-
-      return childTitle || parentTitle || nestedTitle;
-    }
-    const id = () => {
-      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
-      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
-      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
-
-      return childId || parentId || nestedId;
-    }
-
-    const propObj = {
-      id: id(),
-      title: title()
-    }
-
-    // Check if tab with campaignid/key already exists
-    let dup = false;
-    for (let i = 0; i < tabList.length; i++) {
-      if (tabList[i].key == propObj.id) {
-        dup = true;
-      }
-    }
-
-    if (!dup) {
-      // Add a new tab
-      setTabList(tabList.concat(<Tab key={propObj.id} campaignId={propObj.id} campaignTitle={propObj.title} />));
-    } else {
-      return;
-    }
-
-  }
-
-
-  // Campaign specific content
-  const campaignData = () => {
-    return (
-      <>
-        <div style={styles.titleDiv}>
-          <span style={styles.titleBtn}>campaigns</span>
-        </div>
-        <div style={styles.tabContainer} id='tabContainer'>
-          {tabList}
-
-        </div>
-        <div style={styles.listDivLarge} className='list-scroll'>
-          {campaignArray.map(card => {
-            return (
-              <article 
-                style={styles.listCardLarge} 
-                key={card._id} 
-                data-campaignid={card._id} 
-                data-title={card.title}
-                onClick={onAddBtnClick}
-              >
-                <span style={styles.listCardLargeTitle}>{card.title}</span>
-                <div style={styles.listCardLargeDetails}>
-                  <span>game: {card.game}</span>
-                  <span>Updated: {card.modifiedAt}</span>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </>
-    );
-  }
-
-// Return the large modal/page
-  return (
-    <main style={styles.container}>
-      <section style={styles.section}>
-        {campaignData()}
-      </section>
-    </main>
-  );
-}
-
-
-
-*/
