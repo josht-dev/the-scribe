@@ -2,7 +2,7 @@ import React from "react";
 
 const styles = {
   titleInput: {
-    width: '50%',
+    width: '49.5%',
     height: '4.5rem',
     border: '1px solid #1CB9B3',
     borderRadius: '0.25rem',
