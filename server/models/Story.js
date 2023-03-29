@@ -11,6 +11,9 @@ const storySchema = new Schema({
       ref: "Character",
     },
   ],
+  title: {
+    type: String
+  },
   timeline: {
     type: String
   },
