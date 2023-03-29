@@ -101,33 +101,7 @@ const styles = {
   tabContainer: {
     margin: '0.5rem 0.5rem 0 0.5rem',
     display: 'flex'
-  },
-  listDivLarge: {
-    border: '1px solid #1CB9B3',
-    borderRadius: '0 0.25rem 0.25rem 0.25rem',
-    margin: '0 0.5rem 0.5rem 0.5rem',
-    height: '42.25rem',
-    backgroundColor: '#F5F5F5',
-  },
-  listCardLarge: {
-    backgroundColor: '#fff',
-    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-    borderRadius: '0.25rem',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: '0.5rem',
-    height: '20%'
-  },
-  listCardLargeTitle: {
-    width: '70%',
-    margin: '0 0.5rem',
-    fontSize: '2rem'
-  },
-  listCardLargeDetails: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
+  }
 };
 
 
