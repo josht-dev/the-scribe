@@ -131,7 +131,6 @@ function Campaigns() {
       return <CampaignList
       tabList={tabList}
       setTabList={setTabList} 
-      handleTabChange={handleTabChange} 
       campaignArray={campaignArray}
       />
     }
