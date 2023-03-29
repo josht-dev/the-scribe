@@ -56,9 +56,9 @@ export default function SingleCampaign(props) {
             title={props.game}
           />
         </div>
-        <article style={styles.charactersContainer}>
+        <section style={styles.charactersContainer}>
       
-        </article>
+        </section>
         <div style={styles.btnBar}>
           <Button 
             title='main story' 
@@ -73,11 +73,11 @@ export default function SingleCampaign(props) {
             title='timeline' 
           />
         </div>
-        <article style={styles.adventureList}>
+        <section style={styles.adventureList}>
           <ListMd 
           
           />
-        </article>
+        </section>
      
     </section >
   );

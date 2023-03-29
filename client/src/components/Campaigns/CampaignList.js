@@ -73,7 +73,7 @@ export default function CampaignList(props) {
   }
 
   return (
-    <div style={styles.listDivLarge} className='list-scroll'>
+    <section style={styles.listDivLarge} className='list-scroll'>
       {props.campaignArray.map(card => {
         return (
           <article
@@ -91,6 +91,6 @@ export default function CampaignList(props) {
           </article>
         );
       })}
-    </div>
+    </section>
   );
 }
