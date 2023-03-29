@@ -10,12 +10,8 @@ import {
   DialogTitle,
 } from "@mui/material/";
 
-export default function Register() {
-  const [open, setOpen] = React.useState(false);
+export default function Register({open, setOpen}) {
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -23,11 +19,6 @@ export default function Register() {
 
   return (
     <div>
-      {/* Button to load the Modal with the Register form */}
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Register
-      </Button>
-
       {/* Register Form */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle

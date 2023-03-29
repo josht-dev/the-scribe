@@ -10,12 +10,7 @@ import {
   DialogTitle,
 } from "@mui/material/";
 
-export default function Login() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function Login({open, setOpen}) {
 
   const handleClose = () => {
     setOpen(false);
@@ -23,11 +18,6 @@ export default function Login() {
 
   return (
     <div>
-      {/* Button to load the Modal with the Login form */}
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Login
-      </Button>
-
       {/* Login Form */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle
@@ -46,8 +36,8 @@ export default function Login() {
           <TextField
             autoFocus
             margin="dense"
-            id="loginCreds"
-            label="Username/Email"
+            id="email"
+            label="Email"
             type="email"
             fullWidth
             variant="outlined"
