@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Tab from '../Tab';
+import Tab from '../Campaigns/Tab';
+import CampaignList from '../Campaigns/CampaignList';
+
 
 // TODO - Refactor to be more modular, just needed it working for now
 
@@ -142,6 +144,7 @@ function Campaigns() {
     const handleTabChange = (tab) => setCurrentTab(tab);
 
   // Event listener for campaign card click
+  /* 
   const onAddBtnClick = (event) => {
     // Get the campaign id and title from the article data attributes
     const title = () => {
@@ -180,20 +183,32 @@ function Campaigns() {
     }
 
   }
+  */ 
 
   // Render main content modal/page
   const renderPage = () => {
     if (currentTab === -1) {
-      return campaignList();
+      //return campaignList();
+      return <CampaignList 
+        tabList={tabList} 
+        setTabList={setTabList} 
+        campaignArray={campaignArray}
+      />
     } else {
       // temp render
 
-      return campaignList();
+      return <CampaignList 
+        tabList={tabList} 
+        setTabList={setTabList} 
+        campaignArray={campaignArray}
+      />
+      //return campaignList();
     }
   }
 
 
   // Campaign specific content
+  /*
   const campaignList = () => {
     return (
       <div style={styles.listDivLarge} className='list-scroll'>
@@ -217,6 +232,7 @@ function Campaigns() {
       </div>
     );
   }
+  */
 
   // Return the large modal/page
   return (
