@@ -9,7 +9,9 @@ const styles = {
     borderRadius: '0.25rem 0.25rem 0 0',
     fontWeight: 500,
     fontSize: '1rem',
-    padding: '0.75rem 2rem'
+    padding: '0.5rem 1rem',
+    color: '#fff',
+    
   }
 };
 

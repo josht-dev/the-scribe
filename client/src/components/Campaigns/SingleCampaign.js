@@ -2,6 +2,7 @@ import React from 'react';
 import TitleLarge from './TitleLarge';
 import Button from './Button';
 import { display } from '@mui/system';
+import ListMd from './ListMd';
 
 export default function SingleCampaign(props) {
 
@@ -77,7 +78,9 @@ export default function SingleCampaign(props) {
           />
         </div>
         <article style={styles.adventureList}>
-
+          <ListMd 
+          
+          />
         </article>
      
     </section >
