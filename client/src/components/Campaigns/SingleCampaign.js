@@ -2,6 +2,7 @@ import React from 'react';
 import TitleLarge from './TitleLarge';
 import Button from './Button';
 import ListMd from './ListMd';
+import ListSm from './ListSm';
 
 // Component styles
 const styles = {
@@ -55,7 +56,12 @@ export default function SingleCampaign(props) {
           />
         </div>
         <section style={styles.charactersContainer}>
-      
+          <ListSm 
+            title='player characters'
+          />
+          <ListSm 
+            title='non-player characters'
+          />
         </section>
         <div style={styles.btnBar}>
           <Button 

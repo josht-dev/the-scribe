@@ -1,24 +1,27 @@
 import React from 'react';
-import LabelList from './LabelList';
+import LabelListSm from './LabelListSm';
 import Button from './Button';
 
 const styles = {
   section: {
-    height: '100%',
+    height: '50%',
     zIndex: '99',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    marginTop: '0.25rem'
   },
   titleBar: {
     width: '100%',
-    height: '2.5rem',
-    display: 'flex'
+    height: '2rem',
+    display: 'flex',
   },
   addBtnDiv: {
-    width: '100%',
+    marginLeft: 'auto',
+    float: 'right',
+    flexShrink: '0',
     display: 'flex',
-    justifyContent: 'end',
-    paddingRight: '0.5rem'
+    paddingRight: '0.5rem',
+    marginBottom: '0.25rem'
   },
   listDivMd: {
     border: '1px solid #1CB9B3',
@@ -51,7 +54,7 @@ export default function ListSm(props) {
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
-        <LabelList
+        <LabelListSm
           title={props.title}
         />
         <div style={styles.addBtnDiv}>
