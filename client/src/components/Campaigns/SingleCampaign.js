@@ -1,5 +1,7 @@
 import React from 'react';
 import TitleLarge from './TitleLarge';
+import Button from './Button';
+import { display } from '@mui/system';
 
 export default function SingleCampaign(props) {
 
@@ -31,7 +33,9 @@ export default function SingleCampaign(props) {
     btnBar: {
       border: '1px solid black',
       gridColumn: '3 / span 4',
-      gridRowStart: '2'
+      gridRowStart: '2',
+      display: 'flex',
+      justifyContent: 'space-around',
     },
     adventureList: {
       border: '1px solid black',
@@ -59,7 +63,18 @@ export default function SingleCampaign(props) {
       
         </article>
         <div style={styles.btnBar}>
-
+          <Button 
+            title='main story' 
+          />
+          <Button 
+            title='side quests' 
+          />
+          <Button 
+            title='player plots' 
+          />
+          <Button 
+            title='timeline' 
+          />
         </div>
         <article style={styles.adventureList}>
 

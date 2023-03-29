@@ -5,6 +5,7 @@ const styles = {
   titleDiv: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
     width: '75rem',
   },
   titleBtn: {
