@@ -77,6 +77,7 @@ const typeDefs = gql`
     npc: Boolean
     campaignId(campaignId: ID!): Campaign
   }
+  
   type Adventure {
     title: String
     setup: String
