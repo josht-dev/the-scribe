@@ -2,9 +2,6 @@ import React, { useState } from "react";
 import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
 
-
-// TODO - Refactor to be more modular, just needed it working for now
-
 // Testing data
 const campaignArray = [
   {
@@ -135,104 +132,34 @@ const styles = {
 
 
 function Campaigns() {
-    const [tabList, setTabList] = useState([{id: -1, campaignTitle: 'your campaigns'}]);
+  const [tabList, setTabList] = useState([{ id: -1, campaignTitle: 'your campaigns' }]);
 
-    // Current selected tab state
-    const [currentTab, setCurrentTab] = useState('-1');
-  
-    // Function to handle the tab change
-    const handleTabChange = (tab) => setCurrentTab(tab);
+  // Current selected tab state
+  const [currentTab, setCurrentTab] = useState('-1');
 
-  // Event listener for campaign card click
-  /* 
-  const onAddBtnClick = (event) => {
-    // Get the campaign id and title from the article data attributes
-    const title = () => {
-      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
-      const parentTitle = event.nativeEvent.srcElement.dataset.title;
-      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
-
-      return childTitle || parentTitle || nestedTitle;
-    }
-    const id = () => {
-      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
-      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
-      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
-
-      return childId || parentId || nestedId;
-    }
-
-    const propObj = {
-      id: id(),
-      campaignTitle: title()
-    }
-
-    // Check if tab with campaignid/key already exists
-    let dup = false;
-    for (let i = 0; i < tabList.length; i++) {
-      if (tabList[i].id === propObj.id) {
-        dup = true;
-      }
-    }
-
-    if (!dup) {
-      // Add a new tab
-      setTabList(tabList.concat(propObj));
-    } else {
-      return;
-    }
-
-  }
-  */ 
+  // Function to handle the tab change
+  const handleTabChange = (tab) => setCurrentTab(tab);
 
   // Render main content modal/page
   const renderPage = () => {
     if (currentTab === -1) {
       //return campaignList();
-      return <CampaignList 
-        tabList={tabList} 
-        setTabList={setTabList} 
+      return <CampaignList
+        tabList={tabList}
+        setTabList={setTabList}
         campaignArray={campaignArray}
       />
     } else {
       // temp render
 
-      return <CampaignList 
-        tabList={tabList} 
-        setTabList={setTabList} 
+      return <CampaignList
+        tabList={tabList}
+        setTabList={setTabList}
         campaignArray={campaignArray}
       />
       //return campaignList();
     }
   }
-
-
-  // Campaign specific content
-  /*
-  const campaignList = () => {
-    return (
-      <div style={styles.listDivLarge} className='list-scroll'>
-        {campaignArray.map(card => {
-          return (
-            <article
-              style={styles.listCardLarge}
-              key={card._id}
-              data-campaignid={card._id}
-              data-title={card.title}
-              onClick={onAddBtnClick}
-            >
-              <span style={styles.listCardLargeTitle}>{card.title}</span>
-              <div style={styles.listCardLargeDetails}>
-                <span>game: {card.game}</span>
-                <span>Updated: {card.modifiedAt}</span>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    );
-  }
-  */
 
   // Return the large modal/page
   return (
@@ -244,10 +171,10 @@ function Campaigns() {
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
             {tabList.map(item => {
-              return(<Tab 
-                currentTab={currentTab} 
-                handleTabChange={handleTabChange} 
-                tab={item} 
+              return (<Tab
+                currentTab={currentTab}
+                handleTabChange={handleTabChange}
+                tab={item}
                 key={item.id}
               />)
             })}
