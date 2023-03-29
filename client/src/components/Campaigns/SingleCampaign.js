@@ -1,4 +1,5 @@
-import React from "react";
+import React from 'react';
+import TitleLarge from './TitleLarge';
 
 export default function SingleCampaign(props) {
 
@@ -14,7 +15,14 @@ export default function SingleCampaign(props) {
 
   return (
     <div style={styles.divLarge}>
-
+      <TitleLarge 
+        placeholder='campaign title'
+        title={props.title}
+      />
+      <TitleLarge 
+        placeholder='game system'
+        title={props.game}
+      />
 
 
     </div>
