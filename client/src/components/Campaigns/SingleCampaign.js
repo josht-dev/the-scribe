@@ -1,7 +1,6 @@
 import React from 'react';
 import TitleLarge from './TitleLarge';
 import Button from './Button';
-import { display } from '@mui/system';
 import ListMd from './ListMd';
 
 export default function SingleCampaign(props) {
