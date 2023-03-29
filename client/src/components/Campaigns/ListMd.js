@@ -11,8 +11,9 @@ const styles = {
   },
   addBtnDiv: {
     width: '100%',
-    border: '1px solid blue',
-
+    display: 'flex',
+    justifyContent: 'end',
+    paddingRight: '0.5rem'
   }
 }
 
