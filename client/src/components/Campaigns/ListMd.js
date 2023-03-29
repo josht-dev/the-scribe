@@ -25,25 +25,56 @@ const styles = {
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5'
+  },
+  listCardMd: {
+    backgroundColor: '#fff',
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    borderRadius: '0.25rem',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: '0.5rem',
+    height: '20%'
+  },
+  listCardMdTitle: {
+    width: '65%',
+    margin: '0 0.5rem',
+    fontSize: '1.5rem'
+  },
+  listCardMdDetails: {
+    display: 'flex',
+    flexDirection: 'column'
   }
 }
 
 export default function ListMd(props) {
-
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
-        <LabelList 
+        <LabelList
           title='adventures'
         />
         <div style={styles.addBtnDiv}>
-          <Button 
+          <Button
             title='+'
           />
         </div>
       </div>
       <article style={styles.listDivMd} className='list-scroll'>
-
+        {props.adventures.map(card => {
+          return (
+            <article
+              style={styles.listCardMd}
+              key={card._id}
+            >
+              <span style={styles.listCardMdTitle}>{card.title}</span>
+              <div style={styles.listCardMdDetails}>
+                <span>Date: {card.playDate}</span>
+                <span>Status: {card.status}</span>
+              </div>
+            </article>
+          );
+        })}
       </article>
     </section>
   );

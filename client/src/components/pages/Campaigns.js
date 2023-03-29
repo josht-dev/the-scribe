@@ -15,19 +15,19 @@ const campaignArray = [
         _id: 'A1',
         title: 'Meeting at a tavern!',
         status: 'completed',
-        playDate: '2023-01-08 16:42:33 mst'
+        playDate: '2023-01-08 16:42:33'
       },
       {
-        _id: 'A1',
+        _id: 'A2',
         title: 'A murder of Goblins!',
         status: 'Upcoming',
-        playDate: '2023-01-20 16:42:33 mst'
+        playDate: '2023-01-20 16:42:33'
       },
       {
-        _id: 'A1',
+        _id: 'A3',
         title: 'Meet Mr. Black...',
         status: 'Upcoming',
-        playDate: '2023-01-30 16:42:33 mst'
+        playDate: '2023-01-30 16:42:33'
       },
     ]
   },
@@ -145,9 +145,13 @@ function Campaigns() {
         campaignArray={campaignArray}
       />
     } else {
+      // Get index of currentTab based on _id
+      const tabIndex = campaignArray.findIndex(item => {
+        return item._id == currentTab;
+      });
       // Render a single campaign
       return <SingleCampaign 
-        campaign={campaignArray[currentTab]}
+        campaign={campaignArray[tabIndex]}
       />
     }
   }

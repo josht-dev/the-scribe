@@ -22,7 +22,7 @@ export default function TitleLarge(props) {
       type='text' 
       placeholder={props.placeholder} 
       readOnly 
-  
-    >{props.title}</input>
+      value={props.title}
+    ></input>
   );
 }
