@@ -12,25 +12,37 @@ export default function SingleCampaign(props) {
       padding: '0.5rem',
       display: 'grid',
       gridTemplateColumns: 'repeat(6, 1fr)',
-      columnGap: '0.25rem'
-    },
-    titleBar: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'space-between',
+      gridTemplateRows: 'repeat(12 ,1fr)',
+      gridGap: '0.25rem'
     },
     titleLeft: {
-      gridColumn: '1 / span 3'
+      gridColumn: '1 / span 3',
     },
     titleRight: {
-      gridColumn: '4 / span 3'
+      gridColumn: '4 / span 3',
+    },
+    charactersContainer: {
+      gridColumn: '1 / span 2',
+      gridRow: '2 / span 11',
+      border: '1px solid black',
+      
+
+    },
+    btnBar: {
+      border: '1px solid black',
+      gridColumn: '3 / span 4',
+      gridRowStart: '2'
+    },
+    adventureList: {
+      border: '1px solid black',
+      gridColumn: '3 / span 4',
+      gridRow: '3 / span 10'
     }
   }
   console.log(props.campaign);
 
   return (
     <section style={styles.section}>
-      
         <div style={styles.titleLeft}>
           <TitleLarge
             placeholder='campaign title'
@@ -43,6 +55,15 @@ export default function SingleCampaign(props) {
             title={props.game}
           />
         </div>
+        <article style={styles.charactersContainer}>
+      
+        </article>
+        <div style={styles.btnBar}>
+
+        </div>
+        <article style={styles.adventureList}>
+
+        </article>
      
     </section >
   );
