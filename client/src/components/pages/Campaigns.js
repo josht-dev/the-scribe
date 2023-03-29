@@ -9,7 +9,27 @@ const campaignArray = [
     _id: 1,
     title: 'fist full of credits',
     game: 'ffg star wars',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [
+      {
+        _id: 'A1',
+        title: 'Meeting at a tavern!',
+        status: 'completed',
+        playDate: '2023-01-08 16:42:33 mst'
+      },
+      {
+        _id: 'A1',
+        title: 'A murder of Goblins!',
+        status: 'Upcoming',
+        playDate: '2023-01-20 16:42:33 mst'
+      },
+      {
+        _id: 'A1',
+        title: 'Meet Mr. Black...',
+        status: 'Upcoming',
+        playDate: '2023-01-30 16:42:33 mst'
+      },
+    ]
   },
   {
     _id: 2,
