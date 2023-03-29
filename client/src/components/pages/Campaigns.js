@@ -126,12 +126,8 @@ function Campaigns() {
       />
     } else {
       // Render a single campaign
-      console.log('render single campiagn hit');
-      // temp render
-      return <CampaignList
-      tabList={tabList}
-      setTabList={setTabList} 
-      campaignArray={campaignArray}
+      return <SingleCampaign 
+        campaign={campaignArray[currentTab]}
       />
     }
   }
