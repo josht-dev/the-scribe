@@ -1,8 +1,10 @@
+import { border } from '@mui/system';
 import React from 'react';
 
 const styles = {
   titleBar: {
-    width: '100%'
+    width: '100%',
+    border: '1px solid red'
   },
 }
 
