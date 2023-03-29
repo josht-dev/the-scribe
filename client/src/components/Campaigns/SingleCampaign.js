@@ -35,7 +35,6 @@ export default function SingleCampaign(props) {
       justifyContent: 'space-around',
     },
     adventureList: {
-      border: '1px solid black',
       gridColumn: '3 / span 4',
       gridRow: '3 / span 10'
     }
