@@ -27,11 +27,8 @@ export default function SingleCampaign(props) {
       gridColumn: '1 / span 2',
       gridRow: '2 / span 11',
       border: '1px solid black',
-      
-
     },
     btnBar: {
-      border: '1px solid black',
       gridColumn: '3 / span 4',
       gridRowStart: '2',
       display: 'flex',
