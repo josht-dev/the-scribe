@@ -118,19 +118,19 @@ function Campaigns() {
   // Render main content modal/page
   const renderPage = () => {
     if (currentTab === -1) {
-      //return campaignList();
+      // Render the list of campaigns
       return <CampaignList
         tabList={tabList}
         setTabList={setTabList}
         campaignArray={campaignArray}
       />
     } else {
-      // temp render
+      // Render a single campaign
 
+      // temp render
       return <CampaignList
         campaignArray={campaignArray}
       />
-      //return campaignList();
     }
   }
 
