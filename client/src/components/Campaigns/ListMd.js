@@ -3,10 +3,15 @@ import LabelList from './LabelList';
 import Button from './Button';
 
 const styles = {
+  section: {
+    height: '100%',
+    zIndex: '99',
+    display: 'flex',
+    flexDirection: 'column'
+  },
   titleBar: {
     width: '100%',
     height: '2.5rem',
-    border: '1px solid red',
     display: 'flex'
   },
   addBtnDiv: {
@@ -14,13 +19,19 @@ const styles = {
     display: 'flex',
     justifyContent: 'end',
     paddingRight: '0.5rem'
+  },
+  listDivMd: {
+    border: '1px solid #1CB9B3',
+    borderRadius: '0 0.25rem 0.25rem 0.25rem',
+    flexGrow: 1,
+    backgroundColor: '#F5F5F5'
   }
 }
 
 export default function ListMd(props) {
 
   return (
-    <section>
+    <section style={styles.section}>
       <div style={styles.titleBar}>
         <LabelList 
           title='adventures'
@@ -31,9 +42,9 @@ export default function ListMd(props) {
           />
         </div>
       </div>
+      <article style={styles.listDivMd} className='list-scroll'>
 
-
-
+      </article>
     </section>
   );
 }
