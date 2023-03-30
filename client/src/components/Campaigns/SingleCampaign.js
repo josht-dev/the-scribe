@@ -25,8 +25,7 @@ const styles = {
   },
   charactersContainer: {
     gridColumn: '1 / span 2',
-    gridRow: '2 / span 11',
-    border: '1px solid black',
+    gridRow: '2 / span 11'
   },
   btnBar: {
     gridColumn: '3 / span 4',
@@ -55,7 +54,6 @@ export default function SingleCampaign(props) {
       pcs.push(char);
     }
   });
-
 
   return (
     <section style={styles.section}>

@@ -23,13 +23,14 @@ const styles = {
     paddingRight: '0.5rem',
     marginBottom: '0.25rem'
   },
-  listDivMd: {
+  listDivSm: {
     border: '1px solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
-    backgroundColor: '#F5F5F5'
+    backgroundColor: '#F5F5F5',
+    marginBottom: '0.5rem'
   },
-  listCardMd: {
+  listCardSm: {
     backgroundColor: '#fff',
     boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
     borderRadius: '0.25rem',
@@ -39,14 +40,10 @@ const styles = {
     margin: '0.5rem',
     height: '20%'
   },
-  listCardMdTitle: {
+  listCardSmTitle: {
     width: '65%',
     margin: '0 0.5rem',
     fontSize: '1.5rem'
-  },
-  listCardMdDetails: {
-    display: 'flex',
-    flexDirection: 'column'
   }
 }
 
@@ -66,14 +63,14 @@ export default function ListSm(props) {
           />
         </div>
       </div>
-      <article style={styles.listDivMd} className='list-scroll'>
+      <article style={styles.listDivSm} className='list-scroll'>
         {props.characters.map(card => {
           return (
             <article
-              style={styles.listCardMd}
+              style={styles.listCardSm}
               key={card._id}
             >
-              <span style={styles.listCardMdTitle}>{card.characterName}</span>
+              <span style={styles.listCardSmTitle}>{card.characterName}</span>
             </article>
           );
         })}
