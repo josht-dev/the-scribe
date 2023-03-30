@@ -1,8 +1,7 @@
-import { formControlLabelClasses } from "@mui/material";
 import React, { useState } from "react";
-import ReactDom from 'react-dom';
-
-// TODO - Refactor to be more modular, just needed it working for now
+import Tab from '../Campaigns/Tab';
+import CampaignList from '../Campaigns/CampaignList';
+import SingleCampaign from "../Campaigns/SingleCampaign";
 
 // Testing data
 const campaignArray = [
@@ -10,7 +9,225 @@ const campaignArray = [
     _id: 1,
     title: 'fist full of credits',
     game: 'ffg star wars',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [
+      {
+        _id: 'A1',
+        title: 'Meeting at a tavern!',
+        status: 'completed',
+        playDate: '2023-01-08 16:42:33'
+      },
+      {
+        _id: 'A2',
+        title: 'A murder of Goblins!',
+        status: 'Upcoming',
+        playDate: '2023-01-20 16:42:33'
+      },
+      {
+        _id: 'A3',
+        title: 'Meet Mr. Black...',
+        status: 'Upcoming',
+        playDate: '2023-01-30 16:42:33'
+      },
+      {
+        _id: 'A4',
+        title: 'title',
+        status: 'Upcoming',
+        playDate: '2023-01-30 16:42:33'
+      },
+      {
+        _id: 'A5',
+        title: 'title',
+        status: 'Upcoming',
+        playDate: '2023-01-30 16:42:33'
+      },
+      {
+        _id: 'A6',
+        title: 'title',
+        status: 'Upcoming',
+        playDate: '2023-01-30 16:42:33'
+      },
+    ],
+    characters: [
+      {
+        _id: 0,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: false,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame',
+          'Live life to the fullest',
+          'Live life to the fullest',
+          'Live life to the fullest',
+          'Live life to the fullest',
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 1,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: false,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 2,
+        characterName: 'Ken Kenobi',
+        characterStatus: '',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 3,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 4,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 5,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 6,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 7,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 8,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 9,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+    ]
   },
   {
     _id: 2,
@@ -74,7 +291,7 @@ const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'center',
-    zIndex: 1
+    zIndex: 2
   },
   section: {
     position: 'absolute',
@@ -84,7 +301,7 @@ const styles = {
     backgroundColor: '#fff',
     borderRadius: '.25rem',
     boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-    zIndex: 2
+    zIndex: 3
   },
   titleDiv: {
     display: 'flex',
@@ -103,133 +320,64 @@ const styles = {
   tabContainer: {
     margin: '0.5rem 0.5rem 0 0.5rem',
     display: 'flex'
-  },
-  tab: {
-    padding: '0.5rem 1rem',
-    marginRight: '0.25rem',
-    borderWidth: '2px 2px 0px 2px',
-    borderStyle: 'solid',
-    borderColor: '#1CB9B3',
-    borderRadius: '0.25rem 0.25rem 0 0',
-    fontWeight: 500
-  },
-  listDivLarge: {
-    border: '1px solid #1CB9B3',
-    borderRadius: '0 0.25rem 0.25rem 0.25rem',
-    margin: '0 0.5rem 0.5rem 0.5rem',
-    height: '42.25rem',
-    backgroundColor: '#F5F5F5',
-  },
-  listCardLarge: {
-    backgroundColor: '#fff',
-    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-    borderRadius: '0.25rem',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: '0.5rem',
-    height: '20%'
-  },
-  listCardLargeTitle: {
-    width: '70%',
-    margin: '0 0.5rem',
-    fontSize: '2rem'
-  },
-  listCardLargeDetails: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
+  }
 };
 
 
-const Tab = (propObj) => {
-  console.log(propObj.props);
-  return <span style={styles.tab} className='selectedTab'>test</span>;
-}
+function Campaigns() {
+  const [tabList, setTabList] = useState([{ id: -1, campaignTitle: 'your campaigns' }]);
 
+  // Current selected tab state
+  const [currentTab, setCurrentTab] = useState('-1');
 
-export default function Campaigns() {
+  // Function to handle the tab change
+  const handleTabChange = (tab) => setCurrentTab(tab);
 
-  const [tabList, setTabList] = useState([
-    <span style={styles.tab} className='selectedTab' key='0'>your campaigns</span>
-  ]);
-
-  const onAddBtnClick = (event) => {    
-    // Get the campaign id and title from the article data attributes
-    const title = () => {
-      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
-      const parentTitle = event.nativeEvent.srcElement.dataset.title;
-      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
-
-      return childTitle || parentTitle || nestedTitle;
+  // Render main content modal/page
+  const renderPage = () => {
+    if (currentTab == -1) {
+      // Render the list of campaigns
+      return <CampaignList
+        tabList={tabList}
+        setTabList={setTabList}
+        campaignArray={campaignArray}
+      />
+    } else {
+      // Get index of currentTab based on _id
+      const tabIndex = campaignArray.findIndex(item => {
+        return item._id == currentTab;
+      });
+      // Render a single campaign
+      return <SingleCampaign 
+        campaign={campaignArray[tabIndex]}
+      />
     }
-    const id = () => {
-      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
-      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
-      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
-
-      return childId || parentId || nestedId;
-    }
-
-    const propObj = {
-      id: id,
-      title: title
-    }
-
-    console.log(propObj.title);
-    
-    setTabList(tabList.concat(<Tab key={propObj} props={propObj} />));
   }
 
-
-  // Campaign specific content
-  const campaignData = () => {
-    return (
-      <>
-        <div style={styles.titleDiv}>
-          <span style={styles.titleBtn}>campaigns</span>
-        </div>
-        <div style={styles.tabContainer} id='tabContainer'>
-          {tabList}
-
-          {/*
-        <span style={styles.tab} className='' data-campaignid='1'>fist full of credits</span>
-        */}
-        </div>
-        <div style={styles.listDivLarge} className='list-scroll'>
-          {campaignArray.map(card => {
-            return (
-              <article 
-                style={styles.listCardLarge} 
-                key={card._id} 
-                data-campaignid={card._id} 
-                data-title={card.title}
-                onClick={onAddBtnClick}
-              >
-                <span style={styles.listCardLargeTitle}>{card.title}</span>
-                <div style={styles.listCardLargeDetails}>
-                  <span>game: {card.game}</span>
-                  <span>Updated: {card.modifiedAt}</span>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </>
-    );
-  }
-
-
-
-
-
-
-
+  // Return the large modal/page
   return (
     <main style={styles.container}>
       <section style={styles.section}>
-        {campaignData()}
+        <>
+          <div style={styles.titleDiv}>
+            <span style={styles.titleBtn}>campaigns</span>
+          </div>
+          <div style={styles.tabContainer} id='tabContainer'>
+            {tabList.map(item => {
+              return (<Tab
+                currentTab={currentTab}
+                handleTabChange={handleTabChange}
+                tab={item}
+                key={item.id}
+              />)
+            })}
+          </div>
+        </>
+        {renderPage()}
       </section>
     </main>
   );
 }
+
+
+export default Campaigns;
