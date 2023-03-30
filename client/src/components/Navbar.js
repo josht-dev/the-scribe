@@ -1,29 +1,30 @@
 import React from "react";
-import { 
-  AppBar, 
-  Box, 
-  Toolbar, 
-  IconButton, 
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
   Typography,
   Menu,
-  MenuItem, 
+  MenuItem,
   Container,
-  Button
-} from '@mui/material';
+  Button,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link } from 'react-router-dom';
-import Logo from '../assets/the-scribe-logo 1.svg';
+import { Link } from "react-router-dom";
+import Logo from "../assets/the-scribe-logo 1.svg";
+import Login from "./Login";
 
-export default function Navbar() {
+export default function Navbar({ setOpen, setRegisterOpen }) {
   const notLog = [
     {
       name: "LOGIN",
-      id: 1,
+      id: 6,
       link: "/login",
     },
     {
       name: "REGISTER",
-      id: 2,
+      id: 7,
       link: "/register",
     },
   ];
@@ -53,6 +54,16 @@ export default function Navbar() {
       id: 5,
       link: "/logout",
     },
+    {
+      name: "LOGIN",
+      id: 6,
+      link: "#",
+    },
+    {
+      name: "REGISTER",
+      id: 7,
+      link: "#",
+    },
   ];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -73,14 +84,24 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
+  const handleLinkClick = (e) => {
+    if (e.target.id === "6") {
+      e.preventDefault();
+      setOpen(true);
+    } else if (e.target.id === "7") {
+      e.preventDefault();
+      setRegisterOpen(true);
+    }
+  };
+
   return (
-    <AppBar position="static" sx={{ backgroundColor: "white" }} component='nav'>
+    <AppBar position="static" sx={{ backgroundColor: "white" }} component="nav">
       <Container disableGutters maxWidth="xl">
         <Toolbar disableGutters>
           <img
             src={Logo}
             alt="the scribe logo"
-            style={{ marginRight: '1rem' }}
+            style={{ marginRight: "1rem" }}
           ></img>
           <Typography
             variant="h6"
@@ -92,8 +113,8 @@ export default function Navbar() {
               display: { xs: "none", md: "flex" },
               fontFamily: "Montserrat",
               fontWeight: 900,
-              fontSize: '3rem',
-              lineHeight: '4.5rem',
+              fontSize: "3rem",
+              lineHeight: "4.5rem",
               color: "black",
               textDecoration: "none",
             }}
@@ -137,36 +158,26 @@ export default function Navbar() {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
+              justifyContent: "flex-end",
+              display: { xs: "none", md: "flex" },
             }}
           >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, justifyContent: "flex-end", display: { xs: "none", md: "flex" } }}>
             {log.map((log) => (
-              <Link to={log.link} key={log.id}>
+              <Link to={log.link} key={log.id} onClick={handleLinkClick}>
                 <Button
                   onClick={handleCloseNavMenu}
+                  id={log.id}
                   sx={{
                     my: 2,
                     color: "white",
                     display: "block",
                     backgroundColor: "#1CB9B3",
                     marginRight: "1rem",
-                    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+                    boxShadow:
+                      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
                   }}
                 >
                   {log.name}

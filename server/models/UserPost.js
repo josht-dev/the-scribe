@@ -35,7 +35,12 @@ const userPostSchema = new Schema(
       ref: "User",
       required: true,
     },
-    comments: [Comment],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
     category: {
      type: String,
      required: true
