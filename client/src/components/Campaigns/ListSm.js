@@ -51,6 +51,9 @@ const styles = {
 }
 
 export default function ListSm(props) {
+
+  console.log(props);
+
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
@@ -64,20 +67,16 @@ export default function ListSm(props) {
         </div>
       </div>
       <article style={styles.listDivMd} className='list-scroll'>
-        {/*props.adventures.map(card => {
+        {props.characters.map(card => {
           return (
             <article
               style={styles.listCardMd}
               key={card._id}
             >
-              <span style={styles.listCardMdTitle}>{card.title}</span>
-              <div style={styles.listCardMdDetails}>
-                <span>Date: {card.playDate}</span>
-                <span>Status: {card.status}</span>
-              </div>
+              <span style={styles.listCardMdTitle}>{card.characterName}</span>
             </article>
           );
-        })*/}
+        })}
       </article>
     </section>
   );

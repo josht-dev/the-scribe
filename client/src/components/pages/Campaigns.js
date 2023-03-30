@@ -47,6 +47,186 @@ const campaignArray = [
         status: 'Upcoming',
         playDate: '2023-01-30 16:42:33'
       },
+    ],
+    characters: [
+      {
+        _id: 0,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: false,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame',
+          'Live life to the fullest',
+          'Live life to the fullest',
+          'Live life to the fullest',
+          'Live life to the fullest',
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 1,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: false,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 2,
+        characterName: 'Ken Kenobi',
+        characterStatus: '',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 3,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1,
+          2
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 4,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 5,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 6,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 7,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 8,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
+      {
+        _id: 9,
+        characterName: 'ben Kenobi',
+        characterStatus: 'missing',
+        characterSheet: '',
+        npc: true,
+        campaignId: [
+          1
+        ],
+        motivations: [
+          'Live life to the fullest',
+          'Gain fame'
+        ],
+        characterNotes: [
+          'the character has gone missing after the big explosion'
+        ]
+      },
     ]
   },
   {

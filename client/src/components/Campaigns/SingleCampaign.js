@@ -41,6 +41,22 @@ const styles = {
 }
 
 export default function SingleCampaign(props) {
+  console.log(props);
+
+  const npcs = [];
+  const pcs = [];
+
+  // Spit characters into pc's and npc's
+  props.campaign.characters.forEach(char => {
+    // check if the character is an npc and push to appropriate array
+    if (char.npc) {
+      npcs.push(char);
+    } else {
+      pcs.push(char);
+    }
+  });
+
+
   return (
     <section style={styles.section}>
         <div style={styles.titleLeft}>
@@ -58,9 +74,11 @@ export default function SingleCampaign(props) {
         <section style={styles.charactersContainer}>
           <ListSm 
             title='player characters'
+            characters={pcs} 
           />
           <ListSm 
-            title='non-player characters'
+            title='non-player characters' 
+            characters={npcs} 
           />
         </section>
         <div style={styles.btnBar}>
