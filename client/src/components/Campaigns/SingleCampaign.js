@@ -3,6 +3,7 @@ import TitleLarge from './TitleLarge';
 import Button from './Button';
 import ListMd from './ListMd';
 import ListSm from './ListSm';
+import ModalLarge from './ModalLarge';
 
 // Component styles
 const styles = {
