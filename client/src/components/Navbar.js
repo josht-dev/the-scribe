@@ -1,56 +1,68 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+  Container,
+  Button,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import { Link } from "react-router-dom";
+import Logo from "../assets/the-scribe-logo 1.svg";
+import Login from "./Login";
 
-export default function Navbar() {
+export default function Navbar({ setOpen, setRegisterOpen }) {
   const notLog = [
     {
       name: "LOGIN",
-      id: 1,
-      link: "login",
+      id: 6,
+      link: "/login",
     },
     {
       name: "REGISTER",
-      id: 2,
-      link: "register",
+      id: 7,
+      link: "/register",
     },
   ];
   const log = [
     {
       name: "CAMPAIGNS",
       id: 1,
-      link: "campaigns",
+      link: "/campaigns",
     },
     {
       name: "WORKSHOP",
       id: 2,
-      link: "workshop",
+      link: "/workshop",
     },
     {
       name: "HEADSPACE",
       id: 3,
-      link: "headspace",
+      link: "/headspace",
     },
     {
       name: "ACCOUNT",
       id: 4,
-      link: "account",
+      link: "/account",
     },
     {
       name: "LOGOUT",
       id: 5,
-      link: "logout",
+      link: "/logout",
+    },
+    {
+      name: "LOGIN",
+      id: 6,
+      link: "#",
+    },
+    {
+      name: "REGISTER",
+      id: 7,
+      link: "#",
     },
   ];
 
@@ -72,11 +84,25 @@ export default function Navbar() {
     setAnchorElUser(null);
   };
 
+  const handleLinkClick = (e) => {
+    if (e.target.id === "6") {
+      e.preventDefault();
+      setOpen(true);
+    } else if (e.target.id === "7") {
+      e.preventDefault();
+      setRegisterOpen(true);
+    }
+  };
+
   return (
-    <AppBar position="static" sx={{ backgroundColor: "white" }}>
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{ backgroundColor: "white" }} component="nav">
+      <Container disableGutters maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <img
+            src={Logo}
+            alt="the scribe logo"
+            style={{ marginRight: "1rem" }}
+          ></img>
           <Typography
             variant="h6"
             noWrap
@@ -85,9 +111,10 @@ export default function Navbar() {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
+              fontFamily: "Montserrat",
+              fontWeight: 900,
+              fontSize: "3rem",
+              lineHeight: "4.5rem",
               color: "black",
               textDecoration: "none",
             }}
@@ -131,71 +158,32 @@ export default function Navbar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "black",
-              textDecoration: "none",
+              justifyContent: "flex-end",
+              display: { xs: "none", md: "flex" },
             }}
           >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {log.map((log) => (
-              <Button
-                key={log.id}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  backgroundColor: "#1CB9B3",
-                  marginRight: "1rem"
-                }}
-              >
-                {log.name}
-              </Button>
+              <Link to={log.link} key={log.id} onClick={handleLinkClick}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  id={log.id}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    backgroundColor: "#1CB9B3",
+                    marginRight: "1rem",
+                    boxShadow:
+                      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+                  }}
+                >
+                  {log.name}
+                </Button>
+              </Link>
             ))}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {notLog.map((notLog) => (
-                <MenuItem key={notLog.id} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{notLog.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>
