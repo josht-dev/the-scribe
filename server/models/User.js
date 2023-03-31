@@ -32,13 +32,12 @@ const userSchema = new Schema(
         ref: "UserPost",
       },
     ],
-    //may not need this
-    // profile: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Profile",
-    //   },
-    // ],
+    profile: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Profile",
+      },
+    ],
   },
   {
     toJSON: {
