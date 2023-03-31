@@ -40,9 +40,10 @@ export const ADD_USERPOST = gql`
 export const ADD_COMMENT = gql`
   mutation addComment($commentBody: String!, $userPostId: String!) {
     addComment(commentBody: $commentBody, userPostId: $userPostId) {
+      _id
       commentBody
       userPost {
-        userPostId
+        _id
       }
     }
   }
@@ -51,8 +52,8 @@ export const ADD_COMMENT = gql`
 export const ADD_REACTION = gql`
   mutation addReaction($commentId: String!, $reactionBody: String!) {
     addReaction(commentId: $commentId, reactionBody: $reactionBody) {
-      comment {
-        commentId
+      comments {
+        _id
       }
       reactionBody
     }
@@ -138,4 +139,3 @@ export const ADD_CHARACTER = gql`
     }
   }
 `;
-
