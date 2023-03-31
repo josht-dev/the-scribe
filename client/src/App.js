@@ -1,5 +1,12 @@
 import React from "react";
 import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import {
   createBrowserRouter,
   RouterProvider,
   Route,
@@ -17,8 +24,45 @@ import Workshop from "./components/pages/Workshop";
 import CssBaseline from "@mui/material/CssBaseline";
 import "../src/assets/css/App.css";
 
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  
+  const token = localStorage.getItem("id_token");
+ 
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
+export default function App(){
+    const router = createBrowserRouter(
+      createRoutesFromElements(
+        <ApolloProvider client={client}>
+          <Route path="/" element={<Root />}>
+            <Route path="account" element={<Account />} />
+            <Route path="campaigns" element={<Campaigns />} />
+            <Route path="headspace" element={<Headspace />} />
+            <Route path="workshop" element={<Workshop />} />
+          </Route>
+        </ApolloProvider>
+      )
+    );
+
 export default function App() {
-  const [open, setOpen] = React.useState(false);
+
+const [open, setOpen] = React.useState(false);
   const [registerOpen, setRegisterOpen] = React.useState(false);
 
   const router = createBrowserRouter(
