@@ -2,13 +2,13 @@ const {
   User,
   UserPost,
   Story,
-  Reaction,
   Profile,
   Adventure,
-  Comment,
   Character,
   Campaign,
 } = require("../models");
+const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
@@ -16,18 +16,16 @@ const resolvers = {
       return User.find({}, "-password").sort({ createdAt: -1 });
     },
     user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }, "-password").populate("UserPost");
+      return User.findOne({ _id: userId }, "-password");
     },
     userPosts: async () => {
       return UserPost.find()
         .sort({ createdAt: 1 })
-        .populate("User")
-        .populate("Comment");
+        .populate({ path: "username" })
     },
     userPost: async (parent, { userPostId }) => {
       return UserPost.findOne({ _id: userPostId })
-        .populate("User")
-        .populate("Comment");
+        .populate({ path: "username" })
     },
     campaigns: async () => {
       return Campaign.find().sort({ createdAt: 1 });
@@ -46,17 +44,17 @@ const resolvers = {
         .populate("Campaign")
         .populate("Character");
     },
-    reactions: async () => {
-      return Reaction.find()
-        .sort({ createdAt: 1 })
-        .populate("User")
-        .populate("Comment");
-    },
-    reaction: async (parent, { reactionId }) => {
-      return Reaction.findOne({ _id: reactionId })
-        .populate("User")
-        .populate("Comment");
-    },
+    // reactions: async () => {
+    //   return Reaction.find()
+    //     .sort({ createdAt: 1 })
+    //     .populate({ path: "username" })
+    //     .populate("Comment");
+    // },
+    // reaction: async (parent, { reactionId }) => {
+    //   return Reaction.findOne({ _id: reactionId })
+    //     .populate("User")
+    //     .populate("Comment");
+    // },
     profiles: async () => {
       return Profile.find().sort({ createdAt: 1 }).populate("User");
     },
@@ -65,17 +63,15 @@ const resolvers = {
         .populate("User")
         .populate("Campaign");
     },
-    comments: async () => {
-      return Comment.find()
-        .sort({ createdAt: 1 })
-        .populate("User")
-        .populate("UserPost");
-    },
-    comment: async (parent, { commentId }) => {
-      return Comment.findOne({ _id: commentId })
-        .populate("User")
-        .populate("UserPost");
-    },
+    // comments: async () => {
+    //   return Comment.find()
+    //     .sort({ createdAt: 1 })
+    //     .populate({ path: "commentWriter" })
+    // },
+    // comment: async (parent, { commentId }) => {
+    //   return Comment.findOne({ _id: commentId })
+    //     .populate({ path: "commentWriter" })
+    // },
     characters: async () => {
       return Character.find().sort({ createdAt: 1 }).populate("Campaign");
     },
@@ -124,12 +120,12 @@ const resolvers = {
 
       return { token, user };
     },
-    addUserPost: async (parent, { title, body }, context) => {
+    addUserPost: async (parent, { title, body, subject }, context) => {
       if (context.user) {
         const userPost = await UserPost.create({
           title,
           body,
-          username: context.user.username,
+          subject,
         });
 
         await User.findOneAndUpdate(
@@ -141,37 +137,77 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    addComment: async (parent, { commentBody }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("You need to be logged in!");
-      }
-      if (context.userPost) {
-        const comment = await Comment.create({
-          commentBody,
-          userPostId: context.userPost.postId,
-        });
+    // for future dev
+    // addComment: async (parent, { commentBody }, context) => {
+    //   if (!context.user) {
+    //     throw new AuthenticationError("You need to be logged in!");
+    //   }
+    //   if (context.body.variables.userPostId) {
+    //     const comment = await Comment.create(
+    //       {
+    //         commentBody,
+    //         postId: context.userPostId,
+    //       },
+    //     );
 
-        await UserPost.findOneAndUpdate(
-          { _id: context.userPost._id },
-          { $addToSet: { comments: comment._id } }
+    //      console.info(comment);
+    //     await UserPost.findOneAndUpdate(
+    //       { _id: context.body.variables.userPostId },
+    //       { $addToSet: { comments: comment._id} }
+    //     );
+    //     console.info(comment._id);
+    //     return Comment;
+
+    //   }
+    //   throw new Error("No Post Found!!");
+    // },
+    addComment: async (parent, { userPostId, commentBody}, context) => {
+      if (context.user) {
+        return UserPost.findOneAndUpdate(
+          { _id: userPostId},
+
+          {
+            $addToSet: {
+              comments:  {commentBody, commentWriter: context.user.username},
+            },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
         );
-        return Comment;
       }
-      throw new Error("No Post Found!!");
+      throw new AuthenticationError("You need to be logged in!");
     },
-    addReaction: async (parent, { commentId, reactionBody }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("You need to be logged in!");
-      }
-      return Comment.findOneAndUpdate(
-        { _id: commentId },
-        { $addToSet: { reactions: reactionBody } },
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-    },
+    // for future dev
+    // addReaction: async (parent, { commentId, reactionBody }, context) => {
+      // if (!context.user) {
+      //   throw new AuthenticationError("You need to be logged in!");
+      // }
+      // return Comment.findOneAndUpdate(
+      //   { _id: commentId },
+      //   { $addToSet: { reactions: reactionBody } },
+      //   {
+      //     new: true,
+      //     runValidators: true,
+      //   }
+      // );
+    //    if (context.user) {
+    //      return UserPost.findOneAndUpdate(
+    //        { _id: commentId},
+
+    //        {
+    //          $addToSet: {
+    //            comments: {commentWriter: context.user.username, reactions: { reactionBody, reactionWriter: context.user.username }},
+    //          },
+    //        },
+    //        {
+    //          new: true,
+    //        }
+    //      );
+    //    }
+    //    throw new AuthenticationError("You need to be logged in!");
+    // },
     addProfile: async (parent, { about }, context) => {
       if (context.user) {
         const profile = await Profile.create({
@@ -245,76 +281,63 @@ const resolvers = {
       }
       throw new Error("No Adventures found by that name!!");
     },
-    addCharacter: async (parent, {characterName}, context) => {
+    addCharacter: async (parent, { characterName }, context) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      return Character.create({characterName})
+      return Character.create({ characterName });
     },
     removeUser: async (parent, args, context) => {
-      if (context.user){
-        // return User.findOneAndDelete({
-        //   username:context.user.username
-        // })
-        const user = await User.findOneAndDelete(
-          {
-            username:context.user.username
-          }
-        )
-        if (user){
+      if (context.user) {
+        const user = await User.findOneAndDelete({
+          username: context.user.username,
+        });
+        if (user) {
           const profile = await Profile.findOneAndDelete({
             username: context.user.username,
           });
           if (profile) {
-            const campaign = await Campaign.findOneAndDelete(
-              {
-                campaigns: context.profile.campaigns
-              }
-            )
+            const campaign = await Campaign.findOneAndDelete({
+              campaigns: context.profile.campaigns,
+            });
             if (campaign) {
-              const story = await Story.findOneAndDelete(
-                {
-                  campaignId: context.campaign.storyId
-                }
-              )
+              const story = await Story.findOneAndDelete({
+                campaignId: context.campaign.storyId,
+              });
             }
-            if(campaign){
-              const character = await Character.findOneAndDelete(
-                {
-                  campaignId: context.campaign.characters
-                }
-              )
+            if (campaign) {
+              const character = await Character.findOneAndDelete({
+                campaignId: context.campaign.characters,
+              });
             }
-            if (campaign){
-              const adventure = await Adventure.findOneAndDelete(
-                {
-                  campaignId: context.campaign.adventures                
-                }
-              )
+            if (campaign) {
+              const adventure = await Adventure.findOneAndDelete({
+                campaignId: context.campaign.adventures,
+              });
             }
           }
-        } 
+        }
         return User.findOneAndDelete({
           username: context.user.username,
         });
       }
     },
-    removeUserPost: async (parent, {userPostId}, context) => {
-        if (context.user) {
-          const userPost = await UserPost.findOneAndDelete({
-            _id: userPostId,
-            username: context.user.username,
-          });
+    removeUserPost: async (parent, { userPostId }, context) => {
+      if (context.user) {
+        const userPost = await UserPost.findOneAndDelete({
+          _id: userPostId,
+          username: context.user.username,
+        });
 
-          await User.findOneAndUpdate(
-            { _id: context.user._id },
-            { $pull: { userPost: userPost._id } }
-          );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { userPost: userPost._id } }
+        );
 
-          return UserPost;
-        }
-        throw new AuthenticationError("You need to be logged in!");
-    }
+        return UserPost;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
   },
 };
 
