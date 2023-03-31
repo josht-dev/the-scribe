@@ -56,12 +56,12 @@ const resolvers = {
     //     .populate("Comment");
     // },
     profiles: async () => {
-      return Profile.find().sort({ createdAt: 1 }).populate("User");
+      return Profile.find().sort({ createdAt: 1 });
     },
     profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId })
-        .populate("User")
-        .populate("Campaign");
+      return Profile.findOne({ _id: profileId }).populate({
+        path: "campaigns",
+      });
     },
     // comments: async () => {
     //   return Comment.find()
@@ -211,13 +211,13 @@ const resolvers = {
     addProfile: async (parent, { about }, context) => {
       if (context.user) {
         const profile = await Profile.create({
-          username: context.user.username,
+          profileUser: context.user.username,
           about,
-        });
+      });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { profiles: profile._id } }
+          { $addToSet: { profile: profile._id } }
         );
         return Profile;
       }

@@ -7,6 +7,7 @@ const typeDefs = gql`
     email: String
     password: String
     userPosts(userPostId: ID!): UserPost
+    profile(profileId: ID!): Profile
   }
 
   type UserPost {
@@ -39,7 +40,7 @@ const typeDefs = gql`
     _id: ID
     about: String
     campaigns(campaignId: ID!): Campaign
-    username(userId: ID!): User
+    profileUser: String
     profilePicture: String
   }
 
@@ -137,9 +138,9 @@ const typeDefs = gql`
     addReaction(reactionBody: String!, commentId: ID!): UserPost
     modifyReaction(reactionBody: String!): Reaction
     removeReaction(reactionId: ID!): Reaction
-    addProfile(username: ID!, about: String): Profile
+    addProfile(about: String!): Profile
     modifyProfile(about: String!, profilePicture: String!): Profile
-    removeProfile(profileId: ID!, userId: ID): Profile
+    removeProfile(profileId: ID!): Profile
     addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
