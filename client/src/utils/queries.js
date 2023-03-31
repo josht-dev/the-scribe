@@ -45,8 +45,19 @@ export const QUERY_SINGLE_USERPOST = gql`
 `;
 
 export const QUERY_COMMENTS = gql`
-  query getComments($commentBody: String!, $userPostId: String!) {
-    addComment(commentBody: $commentBody, userPostId: $userPostId) {
+  query getComments {
+    comments {
+      _id
+      commentBody
+      userPost {
+        _id
+      }
+    }
+  }
+`;
+export const QUERY_SINGLE_COMMENT = gql`
+  query getSingleComment($commentId: ID!) {
+    comments(commentId: $commentId) {
       _id
       commentBody
       userPost {
@@ -57,8 +68,8 @@ export const QUERY_COMMENTS = gql`
 `;
 
 export const QUERY_REACTIONS = gql`
-  mutation addReaction($commentId: String!, $reactionBody: String!) {
-    addReaction(commentId: $commentId, reactionBody: $reactionBody) {
+  query getReactions($commentId: ID!) {
+    reactions(commentId: $commentId) {
       comments {
         _id
       }
@@ -68,8 +79,8 @@ export const QUERY_REACTIONS = gql`
 `;
 
 export const QUERY_PROFILES = gql`
-  mutation addProfile($username: String!, $about: String!) {
-    addProfile(username: $username, about: $about) {
+  query getProfiles {
+    profiles {
       user {
         _id
         username
@@ -79,8 +90,8 @@ export const QUERY_PROFILES = gql`
   }
 `;
 export const QUERY_SINGLE_PROFILE = gql`
-  mutation addProfile($username: String!, $about: String!) {
-    addProfile(username: $username, about: $about) {
+  query getSingleProfile($userId: ID!) {
+    profile($userID: userId) {
       user {
         _id
         username
@@ -91,18 +102,8 @@ export const QUERY_SINGLE_PROFILE = gql`
 `;
 
 export const QUERY_CAMPAIGNS = gql`
-  mutation addCampaign(
-    $profileId: String!
-    $gameName: String!
-    $ruleSet: String!
-    $genre: String!
-  ) {
-    addCampaign(
-      profileId: $profileId
-      gamename: $gameName
-      ruleSet: $ruleSet
-      genre: $genre
-    ) {
+  query getCampaigns {
+    campaigns {
       profile {
         _id
       }
@@ -113,18 +114,9 @@ export const QUERY_CAMPAIGNS = gql`
   }
 `;
 export const QUERY_SINGLE_CAMPAIGN = gql`
-  mutation addCampaign(
-    $profileId: String!
-    $gameName: String!
-    $ruleSet: String!
-    $genre: String!
-  ) {
-    addCampaign(
-      profileId: $profileId
-      gamename: $gameName
-      ruleSet: $ruleSet
-      genre: $genre
-    ) {
+  query getSingleCampaign($campaignId: ID!) {
+    campaign(campaignId: $campaignId) {
+      _id
       profile {
         _id
       }
@@ -136,20 +128,9 @@ export const QUERY_SINGLE_CAMPAIGN = gql`
 `;
 
 export const QUERY_STORIES = gql`
-  mutation addStory(
-    $campaignId: String!
-    $main: String!
-    $side: String!
-    $player: String!
-    $title: String!
-  ) {
-    addStory(
-      campaignId: $campaignId
-      main: $main
-      side: $side
-      player: $player
-      title: $title
-    ) {
+  query getStories {
+    stories {
+      _id
       campaign {
         _id
       }
@@ -161,20 +142,9 @@ export const QUERY_STORIES = gql`
   }
 `;
 export const QUERY_SINGLE_STORY = gql`
-  mutation addStory(
-    $campaignId: String!
-    $main: String!
-    $side: String!
-    $player: String!
-    $title: String!
-  ) {
-    addStory(
-      campaignId: $campaignId
-      main: $main
-      side: $side
-      player: $player
-      title: $title
-    ) {
+  query getSingleStory($storyId: ID!) {
+    story(storyId: $storyId) {
+      _id
       campaign {
         _id
       }
@@ -187,8 +157,9 @@ export const QUERY_SINGLE_STORY = gql`
 `;
 
 export const QUERY_ADVENTURES = gql`
-  mutation addAdventure($campaignId: String!, $title: String!) {
-    addAdventure(campaignId: $campaignId, title: $title) {
+  query getAdventures {
+    adventures {
+      _id
       campaign {
         _id
       }
@@ -197,8 +168,9 @@ export const QUERY_ADVENTURES = gql`
   }
 `;
 export const QUERY_SINGLE_ADVENTURE = gql`
-  mutation addAdventure($campaignId: String!, $title: String!) {
-    addAdventure(campaignId: $campaignId, title: $title) {
+  query getSingleAdventure($adventureId: ID!) {
+    adventure(adventureId: $adventureId) {
+      _id
       campaign {
         _id
       }
@@ -208,15 +180,15 @@ export const QUERY_SINGLE_ADVENTURE = gql`
 `;
 
 export const QUERY_CHARACTERS = gql`
-  mutation addCharacter($characterName: String!) {
-    addCharacter(characterName: $characterName) {
+  query getCharacters {
+    characters {
       characterName
     }
   }
 `;
 export const QUERY_SINGLE_CHARACTER = gql`
-  mutation addCharacter($characterName: String!) {
-    addCharacter(characterName: $characterName) {
+  query getSingleCharacter($characterName: String!) {
+    character(characterName: $characterName) {
       characterName
     }
   }
