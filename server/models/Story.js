@@ -40,7 +40,7 @@ const storySchema = new Schema({
     id: false,
   });
 
-  storySchema.virtal("switchBooleans")
+  storySchema.virtual("switchBooleans")
   .get(function () {
     return [this.side, this.main, this.player];
   })

@@ -13,13 +13,6 @@ const reactionSchema = new Schema(
       ref: "User",
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: function (date) {
-        return dayjs(date).format("MMM DD YYYY H:m");
-      },
-    },
   },
   {
     toJSON: {

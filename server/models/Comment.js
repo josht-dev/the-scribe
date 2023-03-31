@@ -1,4 +1,4 @@
-const { Schema, Types } = require("mongoose");
+const { Schema, model } = require("mongoose");
 const reactionSchema = require("./Reaction");
 const dayjs = require("dayjs");
 
@@ -19,13 +19,6 @@ const commentSchema = new Schema(
       ref: "User",
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: function (date) {
-        return dayjs(date).format("MMM DD YYYY H:m");
-      },
-    },
     reactions: [reactionSchema],
   },
   {
@@ -36,10 +29,10 @@ const commentSchema = new Schema(
   }
 );
 
-userPostSchema.virtual("reactionCount").get(function () {
+commentSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
-const Comment = model("Comment", commentSchema); 
+const Comment = model('Comment', commentSchema); 
 
 module.exports = Comment;

@@ -14,7 +14,6 @@ const typeDefs = gql`
     title: String
     subject: String
     body: String
-    createdAt: Date
     username(userId: ID!): User
     comments: [Comment]!
   }
@@ -29,8 +28,7 @@ const typeDefs = gql`
     postId(userPostId: ID!): UserPost
     commentBody: String
     username(userId: ID!): User
-    createdAt: Date
-    reactions: [reactionSchema]!
+    reactions: [Reaction]!
   }
 
   type Reaction {
@@ -38,13 +36,12 @@ const typeDefs = gql`
     reactionId(commentId: ID!): Comment
     reactionBody: String
     username(userId: ID!): User
-    createdAt: Date
   }
 
   type Profile {
     _id: ID
     about: String
-    campaigns(campaignId: ID!): Campaigns
+    campaigns(campaignId: ID!): Campaign
     username(userId: ID!): User
     profilePicture: String
   }
@@ -53,7 +50,6 @@ const typeDefs = gql`
     _id: ID
     gameName: String
     ruleSet: String
-    createdAt: Date
     genre: String
     notes: String
     storyOutline(storyId: ID!): Story

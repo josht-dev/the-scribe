@@ -1,7 +1,4 @@
 const { Schema, model } = require("mongoose");
-const dayjs = require("dayjs");
-const reactionSchema = require("./Reaction");
-const Comment = require("./Comment");
 
 const userPostSchema = new Schema(
   {
@@ -22,13 +19,6 @@ const userPostSchema = new Schema(
       required: true,
       minLength: 8,
       maxLength: 3000,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: function (date) {
-        return dayjs(date).format("MMM DD YYYY H:m");
-      },
     },
     username: {
       type: Schema.Types.ObjectId,

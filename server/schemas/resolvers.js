@@ -9,6 +9,8 @@ const {
   Character,
   Campaign,
 } = require("../models");
+const { signToken } = require("../utils/auth");
+const { AuthenticationError } = require("apollo-server-express");
 
 const resolvers = {
   Query: {
@@ -16,7 +18,7 @@ const resolvers = {
       return User.find({}, "-password").sort({ createdAt: -1 });
     },
     user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }, "-password").populate("UserPost");
+      return User.findOne({ _id: userId }, "-password");
     },
     userPosts: async () => {
       return UserPost.find()
@@ -139,7 +141,7 @@ const resolvers = {
 
         return userPost;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      //throw new AuthenticationError("You need to be logged in!");
     },
     addComment: async (parent, { commentBody }, context) => {
       if (!context.user) {
