@@ -25,17 +25,14 @@ const typeDefs = gql`
 
   type Comment {
     _id: ID
-    postId(userPostId: ID!): UserPost
     commentBody: String
-    username(userId: ID!): User
-    reactions: [Reaction]!
+    commentWriter: String
   }
 
   type Reaction {
     _id: ID
-    reactionId(commentId: ID!): Comment
     reactionBody: String
-    username(userId: ID!): User
+    reactionWriter: String
   }
 
   type Profile {
@@ -100,12 +97,8 @@ const typeDefs = gql`
     campaign(campaignId: ID!): Campaign
     stories: [Story]!
     story(storyId: ID!): Story
-    reactions: [Reaction]!
-    reaction(reactionId: ID!): Reaction
     profiles: [Profile]!
     profile(profileId: ID!): Profile
-    comments: [Comment]!
-    comment(commentId: ID!): Comment
     characters: [Character]!
     character(characterId: ID!): Character
     adventures: [Adventure]!
@@ -118,8 +111,8 @@ const typeDefs = gql`
     modifyUser(username: String!, email: String!, password: String!): User
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
-    addUserPost(title: String!, username: ID!, body: String!): UserPost
-    modifyUserPost(title: String!, username: ID!, body: String!): UserPost
+    addUserPost(title: String!, body: String!, subject: String!): UserPost
+    modifyUserPost(title: String!, body: String!): UserPost
     removeUserPost(userPostId: ID!): UserPost
     addCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
     modifyCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
@@ -141,13 +134,13 @@ const typeDefs = gql`
       storyBoard: String
     ): Story
     removeStory(storyId: ID!): Story
-    addReaction(reactionBody: String!, username: ID!): Reaction
+    addReaction(reactionBody: String!, commentId: ID!): UserPost
     modifyReaction(reactionBody: String!): Reaction
     removeReaction(reactionId: ID!): Reaction
     addProfile(username: ID!, about: String): Profile
     modifyProfile(about: String!, profilePicture: String!): Profile
     removeProfile(profileId: ID!, userId: ID): Profile
-    addComment(commentBody: String!): Comment
+    addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
     addCharacter(characterName: String!): Character
