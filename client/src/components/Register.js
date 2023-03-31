@@ -1,3 +1,99 @@
-import React from "react";
+import * as React from "react";
+import {
+  Link,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material/";
 
-export default function Register() {}
+export default function Register({open, setOpen}) {
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      {/* Register Form */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle
+          sx={{ textAlign: "center", fontWeight: "bold", fontSize: "2.5rem" }}
+        >
+          Create an Account
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <TextField
+            autoFocus
+            margin="dense"
+            id="username"
+            label="Username"
+            type="email"
+            fullWidth
+            variant="outlined"
+            sx={{ width: "85%" }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="email"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="outlined"
+            sx={{ width: "85%" }}
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="password"
+            label="Password"
+            type="email"
+            fullWidth
+            variant="outlined"
+            sx={{ width: "85%" }}
+          />
+        </DialogContent>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            onClick={handleClose}
+            sx={{
+              my: 2,
+              color: "white",
+              display: "block",
+              backgroundColor: "#1CB9B3",
+              marginRight: "1rem",
+              boxShadow:
+                "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+            }}
+          >
+            Create an Account
+          </Button>
+        </DialogActions>
+        <DialogContent sx={{ textAlign: "center" }}>
+          <DialogContentText>Already a Member?</DialogContentText>
+          <Link href="/login" underline="always">
+            Log In
+          </Link>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
