@@ -250,6 +250,70 @@ const resolvers = {
         throw new AuthenticationError("You need to be logged in!");
       }
       return Character.create({characterName})
+    },
+    removeUser: async (parent, args, context) => {
+      if (context.user){
+        // return User.findOneAndDelete({
+        //   username:context.user.username
+        // })
+        const user = await User.findOneAndDelete(
+          {
+            username:context.user.username
+          }
+        )
+        if (user){
+          const profile = await Profile.findOneAndDelete({
+            username: context.user.username,
+          });
+          if (profile) {
+            const campaign = await Campaign.findOneAndDelete(
+              {
+                campaigns: context.profile.campaigns
+              }
+            )
+            if (campaign) {
+              const story = await Story.findOneAndDelete(
+                {
+                  campaignId: context.campaign.storyId
+                }
+              )
+            }
+            if(campaign){
+              const character = await Character.findOneAndDelete(
+                {
+                  campaignId: context.campaign.characters
+                }
+              )
+            }
+            if (campaign){
+              const adventure = await Adventure.findOneAndDelete(
+                {
+                  campaignId: context.campaign.adventures                
+                }
+              )
+            }
+          }
+        } 
+        return User.findOneAndDelete({
+          username: context.user.username,
+        });
+      }
+    },
+    removeUserPost: async (parent, {userPostId}, context) => {
+        if (context.user) {
+          const userPost = await UserPost.findOneAndDelete({
+            _id: userPostId,
+            username: context.user.username,
+          });
+
+          await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $pull: { userPost: userPost._id } }
+          );
+
+          return UserPost;
+        }
+        throw new AuthenticationError("You need to be logged in!");
     }
   },
 };
