@@ -38,7 +38,7 @@ export const ADD_USERPOST = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($commentBody: String!, $userPostId: String!) {
+  mutation addComment($commentBody: String!, $userPostId: ID!) {
     addComment(commentBody: $commentBody, userPostId: $userPostId) {
       _id
       commentBody
@@ -50,7 +50,7 @@ export const ADD_COMMENT = gql`
 `;
 
 export const ADD_REACTION = gql`
-  mutation addReaction($commentId: String!, $reactionBody: String!) {
+  mutation addReaction($commentId: ID!, $reactionBody: String!) {
     addReaction(commentId: $commentId, reactionBody: $reactionBody) {
       comments {
         _id
@@ -74,7 +74,7 @@ export const ADD_PROFILE = gql`
 
 export const ADD_CAMPAIGN = gql`
   mutation addCampaign(
-    $profileId: String!
+    $profileId: ID!
     $gameName: String!
     $ruleSet: String!
     $genre: String!
@@ -97,7 +97,7 @@ export const ADD_CAMPAIGN = gql`
 
 export const ADD_STORY = gql`
   mutation addStory(
-    $campaignId: String!
+    $campaignId: ID!
     $main: String!
     $side: String!
     $player: String!
@@ -122,7 +122,7 @@ export const ADD_STORY = gql`
 `;
 
 export const ADD_ADVENTURE = gql`
-  mutation addAdventure($campaignId: String!, $title: String!) {
+  mutation addAdventure($campaignId: ID!, $title: String!) {
     addAdventure(campaignId: $campaignId, title: $title) {
       campaign {
         _id
