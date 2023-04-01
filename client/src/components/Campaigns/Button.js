@@ -15,12 +15,15 @@ const styles = {
     color: '#fff'
   }
 };
+//onClick={() => setLoggedIn(!loggedIn)}
 
 export default function Button(props) {
   return (
     <div style={styles.titleDiv}>
       <span 
-        style={styles.titleBtn}
+        id={props.btnId ? props.btnId : ''} 
+        style={styles.titleBtn} 
+        onClick={props.handleModalOpen}
       >{props.title}</span>
     </div>
   );

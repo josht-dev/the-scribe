@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TitleLarge from './TitleLarge';
 import Button from './Button';
 import ListMd from './ListMd';
@@ -41,6 +41,11 @@ const styles = {
 }
 
 export default function SingleCampaign(props) {
+  const [openModal, setOpenModal] = useState(false);
+
+  // Handle opneing/closing this modal
+  const handleModalOpen = () => setOpenModal(!openModal);
+
   console.log(props);
 
   const npcs = [];
@@ -56,7 +61,19 @@ export default function SingleCampaign(props) {
     }
   });
 
+  // Tell ModalLarge which data to display
+  const modalRender = () => {
+    handleModalOpen();
+
+
+  }
+
   return (
+    <>
+    <ModalLarge 
+      openModal={openModal} 
+      setOpenModal={setOpenModal} 
+    />
     <section style={styles.section}>
         <div style={styles.titleLeft}>
           <TitleLarge
@@ -83,6 +100,7 @@ export default function SingleCampaign(props) {
         <div style={styles.btnBar}>
           <Button 
             title='main story' 
+            handleModalOpen={handleModalOpen}
           />
           <Button 
             title='side quests' 
@@ -99,7 +117,7 @@ export default function SingleCampaign(props) {
             adventures={props.campaign.adventures}
           />
         </section>
-     
     </section >
+    </>
   );
 }
