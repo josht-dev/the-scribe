@@ -13,13 +13,6 @@ const campaignSchema = new Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: function (date) {
-        return dayjs(date).format("MMM DD YYYY H:m");
-      },
-    },
     genre: {
       type: String,
       required: true,
@@ -52,6 +45,10 @@ const campaignSchema = new Schema(
         ref: "Character",
       },
     ],
+    profileUser: {
+      type: String,
+      required: true
+    }
   },
   {
     toJSON: {

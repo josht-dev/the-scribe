@@ -1,58 +1,53 @@
 const { Schema, model } = require("mongoose");
-const dayjs = require("dayjs");
 const reactionSchema = require("./Reaction");
-const Comment = require("./Comment");
 
-const userPostSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-      minLength: 8,
-      maxLength: 50,
-    },
-    subject: {
-      type: String,
-      required: true,
-      minLength: 8,
-      maxLength: 50,
-    },
-    body: {
-      type: String,
-      required: true,
-      minLength: 8,
-      maxLength: 3000,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: function (date) {
-        return dayjs(date).format("MMM DD YYYY H:m");
-      },
-    },
-    username: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
-    category: {
-     type: String,
-     required: true
-    },
+
+const userPostSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+    minLength: 8,
+    maxLength: 50,
   },
-  {
-    toJSON: {
-      virtuals: true,
+  subject: {
+    type: String,
+    required: true,
+    minLength: 8,
+    maxLength: 50,
+  },
+  body: {
+    type: String,
+    required: true,
+    minLength: 8,
+    maxLength: 3000,
+  },
+  username: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  comments: [
+    {
+      commentBody: {
+        type: String,
+        required: true,
+        maxlength: 280,
+      },
+      commentWriter: {
+        type: String,
+        required: true,
+      },
+     },
+    {
+      toJSON: {
+        getters: true,
+      },
+      id: false,
     },
-    id: false,
-  }
-);
+  ],
+  category: {
+    type: String,
+  },
+});
 
 userPostSchema.virtual("commentCount").get(function () {
   return this.comments.length;
@@ -61,6 +56,7 @@ userPostSchema.virtual("commentCount").get(function () {
 userPostSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
+
 
 const UserPost = model("UserPost", userPostSchema); 
 

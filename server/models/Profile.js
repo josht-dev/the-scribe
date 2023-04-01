@@ -7,17 +7,18 @@ const profileSchema = new Schema(
       type: String,
       minLength: 10,
       maxLength: 150,
-    },
-    campaigns: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Campaign",
-      },
-    ],
-    username: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
       required: true,
+    },
+    // campaigns: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Campaign",
+    //   },
+    // ],
+    profileUser: {
+      type: String,
+      required: true,
+      trim: true,
     },
     profilePicture: {
       type: String,

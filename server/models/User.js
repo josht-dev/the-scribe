@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
@@ -21,7 +22,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       match: [
-        /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.[^a-zA-Z0-9])(?!.*\s).{8,15}$/,
+        /^(?=.{8,35})(?=.*[a-z])(?=.*[A-Z])(?=.*[¬!"£$%^&*()_+=\-`{}:@~#';<>?/.,|\\]).*$/,
         "Not a Valid Password",
       ],
     },
@@ -31,13 +32,18 @@ const userSchema = new Schema(
         ref: "UserPost",
       },
     ],
-    //may not need this
-    // profile: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Profile",
-    //   },
-    // ],
+    profile: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Profile",
+      },
+    ],
+    campaigns: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Campaign",
+      },
+    ],
   },
   {
     toJSON: {
@@ -47,9 +53,22 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.virtal("userPostCount").get(function () {
+userSchema.virtual("userPostCount").get(function () {
   return this.user_posts.length;
 });
+
+userSchema.pre("save", async function (next) {
+  if (this.isNew || this.isModified("password")) {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+
+  next();
+});
+
+userSchema.methods.isCorrectPassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
 
 const User = model("User", userSchema);
 

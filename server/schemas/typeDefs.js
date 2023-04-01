@@ -7,6 +7,8 @@ const typeDefs = gql`
     email: String
     password: String
     userPosts(userPostId: ID!): UserPost
+    profile(profileId: ID!): Profile
+    campaigns(campaignId: ID!): Campaign
   }
 
   type UserPost {
@@ -14,7 +16,6 @@ const typeDefs = gql`
     title: String
     subject: String
     body: String
-    createdAt: Date
     username(userId: ID!): User
     comments: [Comment]!
   }
@@ -26,26 +27,20 @@ const typeDefs = gql`
 
   type Comment {
     _id: ID
-    postId(userPostId: ID!): UserPost
     commentBody: String
-    username(userId: ID!): User
-    createdAt: Date
-    reactions: [reactionSchema]!
+    commentWriter: String
   }
 
   type Reaction {
     _id: ID
-    reactionId(commentId: ID!): Comment
     reactionBody: String
-    username(userId: ID!): User
-    createdAt: Date
+    reactionWriter: String
   }
 
   type Profile {
     _id: ID
     about: String
-    campaigns(campaignId: ID!): Campaigns
-    username(userId: ID!): User
+    profileUser: String
     profilePicture: String
   }
 
@@ -53,17 +48,17 @@ const typeDefs = gql`
     _id: ID
     gameName: String
     ruleSet: String
-    createdAt: Date
     genre: String
     notes: String
     storyOutline(storyId: ID!): Story
     adventures(adventureId: ID!): Adventure
     characters(characterId: ID!): Character
+    profileUser: String
   }
 
   type Story {
     _id: ID
-    campaignId(campaignId: ID!): Campaign
+    campaign: String
     characters(characterId: ID!): Character
     timeline: String
     bigBad: String
@@ -104,12 +99,8 @@ const typeDefs = gql`
     campaign(campaignId: ID!): Campaign
     stories: [Story]!
     story(storyId: ID!): Story
-    reactions: [Reaction]!
-    reaction(reactionId: ID!): Reaction
     profiles: [Profile]!
     profile(profileId: ID!): Profile
-    comments: [Comment]!
-    comment(commentId: ID!): Comment
     characters: [Character]!
     character(characterId: ID!): Character
     adventures: [Adventure]!
@@ -122,15 +113,14 @@ const typeDefs = gql`
     modifyUser(username: String!, email: String!, password: String!): User
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
-    addUserPost(title: String!, username: ID!, body: String!): UserPost
-    modifyUserPost(title: String!, username: ID!, body: String!): UserPost
+    addUserPost(title: String!, body: String!, subject: String!): UserPost
+    modifyUserPost(title: String!, body: String!): UserPost
     removeUserPost(userPostId: ID!): UserPost
-    addCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
+    addCampaign(gameName: String!, ruleSet: String!, genre: String!): Campaign
     modifyCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
     removeCampaign(campaignId: ID!, userId: ID): Campaign
     addStory(
       title: String
-      campaignId: ID!
       main: Boolean
       side: Boolean
       player: Boolean
@@ -145,16 +135,16 @@ const typeDefs = gql`
       storyBoard: String
     ): Story
     removeStory(storyId: ID!): Story
-    addReaction(reactionBody: String!, username: ID!): Reaction
+    addReaction(reactionBody: String!, commentId: ID!): UserPost
     modifyReaction(reactionBody: String!): Reaction
     removeReaction(reactionId: ID!): Reaction
-    addProfile(username: ID!, about: String): Profile
+    addProfile(about: String!): Profile
     modifyProfile(about: String!, profilePicture: String!): Profile
-    removeProfile(profileId: ID!, userId: ID): Profile
-    addComment(commentBody: String!): Comment
+    removeProfile(profileId: ID!): Profile
+    addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
-    addCharacter(characterName: String!): Character
+    addCharacter(characterName: String!, npc: Boolean!): Character
     modifyCharacter(characterName: String!): Character
     removeCharacter(characterId: ID!, userId: ID): Character
     addAdventure(title: String!): Adventure
