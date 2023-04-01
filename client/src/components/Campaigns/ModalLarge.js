@@ -1,4 +1,5 @@
 import React from 'react';
+import LabelInModal from './LabelInModal';
 
 export default function ModalLarge(props) {
 // Component styling
@@ -20,15 +21,19 @@ const styles = {
   }
 }
 
+
+
 // Render the modal based on the modalId sent
 const switchModal = () => {
-  switch (props.modalId) {
+  switch (props.id) {
     case 'main-story':
       return (
-        <></>
-      );
-      break;
-  
+        <>
+          <LabelInModal 
+            title={'main story'}
+          />
+        </>
+      );  
     default:
       break;
   }
@@ -36,7 +41,7 @@ const switchModal = () => {
 }
 
   return (
-    <section style={styles.modal}>
+    <section style={styles.modal} id='ModalLarge'>
       {switchModal()}
     </section>
   );

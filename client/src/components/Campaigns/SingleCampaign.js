@@ -54,17 +54,19 @@ export default function SingleCampaign(props) {
     }
   });
 
+  const [modalId, setModalId] = useState('none');
+  const handleModalId = (id) => setModalId(id);
+
   // Tell ModalLarge which data to display
-  const renderModal = (modalId) => {
+  const renderModal = () => {
     if (props.openModal) {
       // Display modal with data appropriate to the user clicked
-
 
 
       // REMOVE - temp/testing code
       return (
         <ModalLarge 
-          modalId={modalId}
+          id={modalId}
         />
       );
 
@@ -104,16 +106,27 @@ export default function SingleCampaign(props) {
         <div style={styles.btnBar}>
           <Button 
             title='main story' 
+            id='main-story' 
             handleModalOpen={props.handleModalOpen}
+            handleModalId={handleModalId}
           />
           <Button 
             title='side quests' 
+            id='side-quests' 
+            handleModalOpen={props.handleModalOpen}
+            handleModalId={handleModalId}
           />
           <Button 
             title='player plots' 
+            id='player-plots' 
+            handleModalOpen={props.handleModalOpen}
+            handleModalId={handleModalId}
           />
           <Button 
             title='timeline' 
+            id='timeline' 
+            handleModalOpen={props.handleModalOpen}
+            handleModalId={handleModalId}
           />
         </div>
         <section style={styles.adventureList}>
