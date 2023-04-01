@@ -61,6 +61,7 @@ export default function SingleCampaign(props) {
 
   // Tell ModalLarge which data to display
   const modalRender = () => {
+    console.log('handleModalOpen hit');
     handleModalOpen();
 
 
