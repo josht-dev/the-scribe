@@ -337,10 +337,7 @@ function Campaigns() {
 
   // Handle opneing/closing this modal
   const handleModalOpen = () => {
-    console.log('handlemodalopen hit');
-    console.log(openModal);
     setOpenModal(!openModal);
-    console.log(openModal);
   };
 
   // Render main content modal/page

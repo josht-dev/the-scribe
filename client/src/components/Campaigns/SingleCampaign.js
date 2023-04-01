@@ -56,7 +56,6 @@ export default function SingleCampaign(props) {
 
   // Tell ModalLarge which data to display
   const renderModal = (modalId) => {
-    console.log('handleModalOpen hit');
     if (props.openModal) {
       // Display modal with data appropriate to the user clicked
 
