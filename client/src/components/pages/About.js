@@ -25,12 +25,14 @@ export default function About() {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <IconButton href="https://github.com/artiecannv">
-            <GitHubIcon fontSize="large" />
-          </IconButton>
-          <IconButton href="https://www.linkedin.com/in/arthur-cann-62b213248/">
-            <LinkedInIcon fontSize="large" />
-          </IconButton>
+          <div>
+            <IconButton href="https://github.com/artiecannv">
+              <GitHubIcon fontSize="large" />
+            </IconButton>
+            <IconButton href="https://www.linkedin.com/in/arthur-cann-62b213248/">
+              <LinkedInIcon fontSize="large" />
+            </IconButton>
+          </div>
           Hey, I'm Artie! I'm a detail oriented web development student looking
           for a career in the technology industry. I love to work on a team to
           ensure that a nice, clean, and effiecient product is delivered to
@@ -38,6 +40,14 @@ export default function About() {
           fast, and I try to never stop learning something new.
         </TabPanel>
         <TabPanel value="2">
+        <div>
+            <IconButton href="https://github.com/loudwhisperer">
+              <GitHubIcon fontSize="large" />
+            </IconButton>
+            <IconButton href="#">
+              <LinkedInIcon fontSize="large" />
+            </IconButton>
+          </div>
           I am a young Full Stack Programmer self-taught and a recent graduate
           from the University of Denver Full Stack Bootcamp. I come from humble
           roots in South Florida and at a young age on my own dime all over
@@ -47,6 +57,14 @@ export default function About() {
           continue to dedicate my time and attention too both pursuits.
         </TabPanel>
         <TabPanel value="3">
+        <div>
+            <IconButton href="https://github.com/porkchoppy/">
+              <GitHubIcon fontSize="large" />
+            </IconButton>
+            <IconButton href="#">
+              <LinkedInIcon fontSize="large" />
+            </IconButton>
+          </div>
           Just some nerdy girl who is learning to code and loves jumping
           spiders. I live in Longmont, CO with my husband, our two children, and
           a plethora of pets. Hobbies I enjoy include cooking, reading, cross
@@ -54,6 +72,14 @@ export default function About() {
           forward to learning so much more.
         </TabPanel>
         <TabPanel value="4">
+        <div>
+            <IconButton href="https://github.com/josht-dev">
+              <GitHubIcon fontSize="large" />
+            </IconButton>
+            <IconButton href="#">
+              <LinkedInIcon fontSize="large" />
+            </IconButton>
+          </div>
           My name is Josh Taylor, and I am originally from Tulsa, OK. My wife
           and I moved to Longmont, CO, in 2019 and never looked back! We love
           hiking with our 2 pups in the mountains and playing board games with
