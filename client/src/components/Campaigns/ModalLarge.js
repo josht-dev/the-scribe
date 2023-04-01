@@ -1,10 +1,9 @@
 import React from 'react';
 
-export default function ModalLarge(openModal, setOpenModal) {
+export default function ModalLarge() {
 // Component styling
 const styles = {
   modal: {
-    display: openModal ? 'none' : '',
     border: '0.25rem solid #000',
     backgroundColor: '#fff',
     borderShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',

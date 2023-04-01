@@ -41,10 +41,7 @@ const styles = {
 }
 
 export default function SingleCampaign(props) {
-  const [openModal, setOpenModal] = useState(false);
-
-  // Handle opneing/closing this modal
-  const handleModalOpen = () => setOpenModal(!openModal);
+  
 
   const npcs = [];
   const pcs = [];
@@ -60,20 +57,29 @@ export default function SingleCampaign(props) {
   });
 
   // Tell ModalLarge which data to display
-  const modalRender = () => {
+  const renderModal = () => {
     console.log('handleModalOpen hit');
-    handleModalOpen();
+    if (props.openModal) {
+      // Display modal with data appropriate to the user clicked
 
+
+
+      // REMOVE - temp/testing code
+      return (<ModalLarge />);
+
+    } else {
+      // Modal is closed
+      return;
+    }
 
   }
 
+  
+
   return (
     <>
-    <ModalLarge 
-      openModal={openModal} 
-      setOpenModal={setOpenModal} 
-    />
-    <section style={styles.section}>
+    {renderModal()}
+    <section style={styles.section} >
         <div style={styles.titleLeft}>
           <TitleLarge
             placeholder='campaign title'
@@ -99,7 +105,7 @@ export default function SingleCampaign(props) {
         <div style={styles.btnBar}>
           <Button 
             title='main story' 
-            handleModalOpen={handleModalOpen}
+            handleModalOpen={props.handleModalOpen}
           />
           <Button 
             title='side quests' 
