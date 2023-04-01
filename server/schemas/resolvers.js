@@ -28,7 +28,8 @@ const resolvers = {
         .populate({ path: "username" })
     },
     campaigns: async () => {
-      return Campaign.find().sort({ createdAt: 1 });
+      return Campaign.find().sort({ createdAt: 1 })
+        .populate({path: 'storyOutline'});
     },
     campaign: async (parent, { campaignId }) => {
       return Campaign.findOne({ _id: campaignId })

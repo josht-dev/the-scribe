@@ -49,7 +49,7 @@ const typeDefs = gql`
     gameName: String
     ruleSet: String
     genre: String
-    notes: String
+    notes: [String]
     storyOutline: [Story]!
     adventures(adventureId: ID!): Adventure
     characters(characterId: ID!): Character
