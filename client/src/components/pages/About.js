@@ -1,98 +1,117 @@
-import * as React from "react";
-import { Box, Tab, Divider, IconButton } from "@mui/material/";
-import { TabContext, TabList, TabPanel } from "@mui/lab/";
-import { LinkedInIcon, GitHubIcon } from "@mui/icons-material/";
+import React, { useState } from "react";
+import Tab from '../Campaigns/Tab';
 
-export default function About() {
-  const [value, setValue] = React.useState("1");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+// Testing data
+const devArray = [
+  {
+    _id: 1,
+    title: 'ARTIE',
+  },
+  {
+    _id: 2,
+    title: 'BRENDAN',
+  },
+  {
+    _id: 3,
+    title: 'CHRISTIN',
+  },
+  {
+    _id: 4,
+    title: 'JOSH',
+  },
+  
+];
 
+// Styling object
+const styles = {
+  container: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    zIndex: 2
+  },
+  section: {
+    position: 'absolute',
+    top: '10rem',
+    width: '75rem',
+    height: '50rem',
+    backgroundColor: '#fff',
+    borderRadius: '.25rem',
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    zIndex: 3
+  },
+  titleDiv: {
+    display: 'flex',
+    alignItems: 'center',
+    width: '75rem',
+  },
+  titleBtn: {
+    margin: '0.5rem',
+    padding: '.5rem 1.5rem',
+    float: 'left',
+    backgroundColor: '#1CB9B3',
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    borderRadius: '0.25rem',
+    color: '#fff'
+  },
+  tabContainer: {
+    margin: '0.5rem 0.5rem 0 0.5rem',
+    display: 'flex'
+  }
+};
+
+
+function About() {
+  const [tabList, setTabList] = useState([{ id: 1, aboutTitle: 'ABOUT THE DEVS' }]);
+
+  // Current selected tab state
+  const [currentTab, setCurrentTab] = useState('-1');
+
+  // Function to handle the tab change
+  const handleTabChange = (tab) => setCurrentTab(tab);
+
+  // Render main content modal/page
+  // const renderPage = () => {
+  //   if (currentTab == -1) {
+  //     // Render the list of campaigns
+  //     return <CampaignList
+  //       tabList={tabList}
+  //       setTabList={setTabList}
+  //       devArray={devArray}
+  //     />
+  //   } else {
+  //     // Get index of currentTab based on _id
+  //     const tabIndex = campaignArray.findIndex(item => {
+  //       return item._id == currentTab;
+  //     });
+     
+  //   }
+  // }
+
+  // Return the large modal/page
   return (
-    <Box sx={{ width: "100%", typography: "body1" }}>
-      <TabContext value={value} textColor="#1CB9B3">
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="ARTIE" value="1" />
-            <Divider orientation="vertical" variant="middle" />
-            <Tab label="BRENDAN" value="2" />
-            <Divider orientation="vertical" variant="middle" />
-            <Tab label="CHRISTIN" value="3" />
-            <Divider orientation="vertical" variant="middle" />
-            <Tab label="JOSH" value="4" />
-          </TabList>
-        </Box>
-        <TabPanel value="1">
-          <div>
-            <IconButton href="https://github.com/artiecannv">
-              <GitHubIcon fontSize="large" />
-            </IconButton>
-            <IconButton href="https://www.linkedin.com/in/arthur-cann-62b213248/">
-              <LinkedInIcon fontSize="large" />
-            </IconButton>
+    <main style={styles.container}>
+      <section style={styles.section}>
+        <>
+          <div style={styles.titleDiv}>
+            <span style={styles.titleBtn}>About the Devs</span>
           </div>
-          Hey, I'm Artie! I'm a detail oriented web development student looking
-          for a career in the technology industry. I love to work on a team to
-          ensure that a nice, clean, and effiecient product is delivered to
-          users, as I am quite the web user myself! I pick up new skills really
-          fast, and I try to never stop learning something new.
-        </TabPanel>
-        <TabPanel value="2">
-        <div>
-            <IconButton href="https://github.com/loudwhisperer">
-              <GitHubIcon fontSize="large" />
-            </IconButton>
-            <IconButton href="#">
-              <LinkedInIcon fontSize="large" />
-            </IconButton>
+          <div style={styles.tabContainer} id='tabContainer'>
+            {tabList.map(item => {
+              return (<Tab
+                currentTab={currentTab}
+                handleTabChange={handleTabChange}
+                tab={item}
+                key={item.id}
+              />)
+            })}
           </div>
-          I am a young Full Stack Programmer self-taught and a recent graduate
-          from the University of Denver Full Stack Bootcamp. I come from humble
-          roots in South Florida and at a young age on my own dime all over
-          America seeking out the ways different geographies ebb and flow. Long
-          time game designer, I have spent my life playing and writing tabletop
-          RPG's in the pursuit of fun inclusive times had with friends and will
-          continue to dedicate my time and attention too both pursuits.
-        </TabPanel>
-        <TabPanel value="3">
-        <div>
-            <IconButton href="https://github.com/porkchoppy/">
-              <GitHubIcon fontSize="large" />
-            </IconButton>
-            <IconButton href="#">
-              <LinkedInIcon fontSize="large" />
-            </IconButton>
-          </div>
-          Just some nerdy girl who is learning to code and loves jumping
-          spiders. I live in Longmont, CO with my husband, our two children, and
-          a plethora of pets. Hobbies I enjoy include cooking, reading, cross
-          stitch, and walking. My coding adventure has just begun, and I look
-          forward to learning so much more.
-        </TabPanel>
-        <TabPanel value="4">
-        <div>
-            <IconButton href="https://github.com/josht-dev">
-              <GitHubIcon fontSize="large" />
-            </IconButton>
-            <IconButton href="#">
-              <LinkedInIcon fontSize="large" />
-            </IconButton>
-          </div>
-          My name is Josh Taylor, and I am originally from Tulsa, OK. My wife
-          and I moved to Longmont, CO, in 2019 and never looked back! We love
-          hiking with our 2 pups in the mountains and playing board games with
-          friends. During the pandemic, I realized I had lost interest in my
-          quality assurance job and started to contemplate other prospects.
-          While I have a solid eye for detail that helps me in the QA role, I
-          wanted to participate in the creation of something a bit more. Thus,
-          in 2023 I will complete a certification in full-stack development. I
-          am told that my strongest values are being honest, patient, and
-          detail-oriented. I look forward to applying these values at my next
-          opportunity!
-        </TabPanel>
-      </TabContext>
-    </Box>
+        </>
+      </section>
+    </main>
   );
 }
+
+
+export default About;
