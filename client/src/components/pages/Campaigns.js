@@ -335,7 +335,7 @@ function Campaigns() {
 
   const [openModal, setOpenModal] = useState(false);
 
-  // Handle opneing/closing this modal
+  // Handle opening/closing this modal
   const handleModalOpen = () => {
     setOpenModal(!openModal);
   };
