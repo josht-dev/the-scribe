@@ -49,8 +49,8 @@ const typeDefs = gql`
     gameName: String
     ruleSet: String
     genre: String
-    notes: String
-    storyOutline(storyId: ID!): Story
+    notes: [String]
+    storyOutline: [Story]!
     adventures(adventureId: ID!): Adventure
     characters(characterId: ID!): Character
     profileUser: String
@@ -65,11 +65,12 @@ const typeDefs = gql`
     main: Boolean
     side: Boolean
     player: Boolean
-    storyBoard: String
+    storyBoard: [String]
     title: String
   }
 
   type Character {
+    _id: ID
     characterName: String
     characterStatus: String
     motivations: String
@@ -124,6 +125,8 @@ const typeDefs = gql`
       main: Boolean
       side: Boolean
       player: Boolean
+      campaign: String
+      campaignId: ID
     ): Story
     modifyStory(
       title: String

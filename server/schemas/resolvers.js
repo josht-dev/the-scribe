@@ -28,7 +28,8 @@ const resolvers = {
         .populate({ path: "username" })
     },
     campaigns: async () => {
-      return Campaign.find().sort({ createdAt: 1 });
+      return Campaign.find().sort({ createdAt: 1 })
+        .populate({path: 'storyOutline'});
     },
     campaign: async (parent, { campaignId }) => {
       return Campaign.findOne({ _id: campaignId })
@@ -241,24 +242,31 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    addStory: async (parent, { main, side, player, title }, context) => {
+    addStory: async (parent, { main, side, player, title, campaign, campaignId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      if (context.user) {
+      console.info(title);
+      console.info(campaignId);
+
         const story = await Story.create({
-          campaign: context.user.username,
+          campaign,
           main,
           side,
           player,
+          main,
           title,
         });
-        await Campaign.findOneAndUpdate(
-          { _id: context.campaign._id },
-          { $addToSet: { storyOutline: story._id } }
-        );
-        return story;
-      }
+
+        if (story) {
+          await Campaign.findOneAndUpdate(
+            { _id: campaignId },
+            { $addToSet: { storyOutline: story._id } }
+          );
+          
+          return story;
+        }
+        
       throw new Error("No story found by that name!!");
     },
     addAdventure: async (parent, { title }, context) => {
