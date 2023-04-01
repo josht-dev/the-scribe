@@ -1,9 +1,9 @@
 const { Schema, model } = require("mongoose");
 
 const storySchema = new Schema({
-  campaignId: {
-        type: Schema.Types.ObjectId,
-        ref: "Campaign",
+  campaign: {
+        type: String,
+        required: true
   },
   characters: [
     {

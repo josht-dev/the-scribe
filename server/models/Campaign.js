@@ -45,6 +45,10 @@ const campaignSchema = new Schema(
         ref: "Character",
       },
     ],
+    profileUser: {
+      type: String,
+      required: true
+    }
   },
   {
     toJSON: {

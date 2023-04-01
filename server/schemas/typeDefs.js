@@ -8,6 +8,7 @@ const typeDefs = gql`
     password: String
     userPosts(userPostId: ID!): UserPost
     profile(profileId: ID!): Profile
+    campaigns(campaignId: ID!): Campaign
   }
 
   type UserPost {
@@ -39,7 +40,6 @@ const typeDefs = gql`
   type Profile {
     _id: ID
     about: String
-    campaigns(campaignId: ID!): Campaign
     profileUser: String
     profilePicture: String
   }
@@ -53,11 +53,12 @@ const typeDefs = gql`
     storyOutline(storyId: ID!): Story
     adventures(adventureId: ID!): Adventure
     characters(characterId: ID!): Character
+    profileUser: String
   }
 
   type Story {
     _id: ID
-    campaignId(campaignId: ID!): Campaign
+    campaign: String
     characters(characterId: ID!): Character
     timeline: String
     bigBad: String
@@ -115,12 +116,11 @@ const typeDefs = gql`
     addUserPost(title: String!, body: String!, subject: String!): UserPost
     modifyUserPost(title: String!, body: String!): UserPost
     removeUserPost(userPostId: ID!): UserPost
-    addCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
+    addCampaign(gameName: String!, ruleSet: String!, genre: String!): Campaign
     modifyCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
     removeCampaign(campaignId: ID!, userId: ID): Campaign
     addStory(
       title: String
-      campaignId: ID!
       main: Boolean
       side: Boolean
       player: Boolean
@@ -144,7 +144,7 @@ const typeDefs = gql`
     addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
-    addCharacter(characterName: String!): Character
+    addCharacter(characterName: String!, npc: Boolean!): Character
     modifyCharacter(characterName: String!): Character
     removeCharacter(characterId: ID!, userId: ID): Character
     addAdventure(title: String!): Adventure
