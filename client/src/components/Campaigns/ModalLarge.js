@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ModalLarge() {
+export default function ModalLarge(props) {
 // Component styling
 const styles = {
   modal: {
@@ -12,15 +12,32 @@ const styles = {
     width: '56.25rem',
     position: 'absolute',
     marginRight: 'auto',
-    marginLeft: 'calc((75rem - 56.25rem)/2)'
+    marginLeft: 'calc((75rem - 56.25rem)/2)',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gridTemplateRows: 'repeat(12, 1fr)',
+    gridGap: '0.25rem'
   }
+}
+
+// Render the modal based on the modalId sent
+const switchModal = () => {
+  switch (props.modalId) {
+    case 'main-story':
+      return (
+        <></>
+      );
+      break;
+  
+    default:
+      break;
+  }
+
 }
 
   return (
     <section style={styles.modal}>
-
-
-
+      {switchModal()}
     </section>
   );
 

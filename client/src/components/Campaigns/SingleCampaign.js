@@ -41,8 +41,6 @@ const styles = {
 }
 
 export default function SingleCampaign(props) {
-  
-
   const npcs = [];
   const pcs = [];
 
@@ -57,7 +55,7 @@ export default function SingleCampaign(props) {
   });
 
   // Tell ModalLarge which data to display
-  const renderModal = () => {
+  const renderModal = (modalId) => {
     console.log('handleModalOpen hit');
     if (props.openModal) {
       // Display modal with data appropriate to the user clicked
@@ -65,7 +63,11 @@ export default function SingleCampaign(props) {
 
 
       // REMOVE - temp/testing code
-      return (<ModalLarge />);
+      return (
+        <ModalLarge 
+          modalId={modalId}
+        />
+      );
 
     } else {
       // Modal is closed
@@ -73,8 +75,6 @@ export default function SingleCampaign(props) {
     }
 
   }
-
-  
 
   return (
     <>
