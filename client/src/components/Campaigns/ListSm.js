@@ -48,9 +48,6 @@ const styles = {
 }
 
 export default function ListSm(props) {
-
-  console.log(props);
-
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>

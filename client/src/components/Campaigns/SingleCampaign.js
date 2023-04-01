@@ -46,8 +46,6 @@ export default function SingleCampaign(props) {
   // Handle opneing/closing this modal
   const handleModalOpen = () => setOpenModal(!openModal);
 
-  console.log(props);
-
   const npcs = [];
   const pcs = [];
 

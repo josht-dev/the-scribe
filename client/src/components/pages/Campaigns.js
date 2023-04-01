@@ -331,9 +331,7 @@ function Campaigns() {
   const [currentTab, setCurrentTab] = useState('-1');
 
   // Function to handle the tab change
-  const handleTabChange = (tab) => {
-    console.log('handleTabChange hit');
-    setCurrentTab(tab)};
+  const handleTabChange = (tab) => setCurrentTab(tab);
 
   // Render main content modal/page
   const renderPage = () => {
