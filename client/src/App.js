@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import About from "./components/pages/About";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Account from "./components/pages/Account";
@@ -29,7 +30,6 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-
   const token = localStorage.getItem("id_token");
 
   return {
@@ -59,6 +59,7 @@ export default function App() {
         <Route path="/campaigns" element={<Campaigns />} />
         <Route path="/headspace" element={<Headspace />} />
         <Route path="/workshop" element={<Workshop />} />
+        <Route path="/about" element={<About />} />
       </Route>
     )
   );
