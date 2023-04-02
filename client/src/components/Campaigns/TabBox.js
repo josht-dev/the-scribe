@@ -57,14 +57,12 @@ export default function TabBox(props) {
         <textarea
           style={styles.textarea}
           className={isActive ? '' : 'hidden'}
-          value={props.setup} 
-          onChange={() => {console.log('Add an onChange for user editing')}} 
+          defaultValue={props.setup} 
         ></textarea>
         <textarea
           style={styles.textarea}
           className={isActive ? 'hidden' : ''}
-          value={props.resolution} 
-          onChange={() => {console.log('Add an onChange for user editing')}} 
+          defaultValue={props.resolution} 
         ></textarea>
       </div>
     </article>
