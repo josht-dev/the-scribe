@@ -12,6 +12,7 @@ const styles = {
     padding: '0.5rem 0.75rem',
     color: '#fff',
     alignSelf: 'baseline',
+    width: 'fit-content'
   }
 };
 

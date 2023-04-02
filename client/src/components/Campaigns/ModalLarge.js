@@ -20,6 +20,10 @@ export default function ModalLarge(props) {
       gridTemplateColumns: 'repeat(6, 1fr)',
       gridTemplateRows: 'repeat(12, 1fr)',
       gridGap: '0.25rem'
+    },
+    mainAdversary: {
+      gridColumn: '1 / span 2',
+      gridRow: '2 / span 1'
     }
   }
 
@@ -34,7 +38,9 @@ export default function ModalLarge(props) {
             <LabelInModal
               title={props.title}
             />
+            <div style={styles.mainAdversary}>
             <InputAndLabel />
+            </div>
           </section>
         );
       default:
