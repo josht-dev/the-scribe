@@ -51,13 +51,7 @@ export default function About() {
               <LinkedInIcon fontSize="large" />
             </IconButton>
           </div>
-          I am a young Full Stack Programmer self-taught and a recent graduate
-          from the University of Denver Full Stack Bootcamp. I come from humble
-          roots in South Florida and at a young age on my own dime all over
-          America seeking out the ways different geographies ebb and flow. Long
-          time game designer, I have spent my life playing and writing tabletop
-          RPG's in the pursuit of fun inclusive times had with friends and will
-          continue to dedicate my time and attention too both pursuits.
+          I am a young Full Stack Programmer self-taught and a recent graduate from the University of Denver Full Stack Bootcamp. I come from humble roots in South Florida and at a young age on my own dime all over America seeking out the ways different geographies ebb and flow. Long time game designer, I have spent my life playing and writing tabletop RPG's in the pursuit of fun inclusive times had with friends and will continue to dedicate my time and attention too both pursuits.
         </TabPanel>
         <TabPanel value="3">
           <div>
@@ -68,11 +62,7 @@ export default function About() {
               <LinkedInIcon fontSize="large" />
             </IconButton>
           </div>
-          Just some nerdy girl who is learning to code and loves jumping
-          spiders. I live in Longmont, CO with my husband, our two children, and
-          a plethora of pets. Hobbies I enjoy include cooking, reading, cross
-          stitch, and walking. My coding adventure has just begun, and I look
-          forward to learning so much more.
+          Just some nerdy girl who is learning to code and loves jumping spiders. I live in Longmont, CO with my husband, our two children, and a plethora of pets. Hobbies I enjoy include cooking, reading, cross stitch, and walking. My coding adventure has just begun, and I look forward to learning so much more.
         </TabPanel>
         <TabPanel value="4">
           <div>
@@ -83,17 +73,7 @@ export default function About() {
               <LinkedInIcon fontSize="large" />
             </IconButton>
           </div>
-          My name is Josh Taylor, and I am originally from Tulsa, OK. My wife
-          and I moved to Longmont, CO, in 2019 and never looked back! We love
-          hiking with our 2 pups in the mountains and playing board games with
-          friends. During the pandemic, I realized I had lost interest in my
-          quality assurance job and started to contemplate other prospects.
-          While I have a solid eye for detail that helps me in the QA role, I
-          wanted to participate in the creation of something a bit more. Thus,
-          in 2023 I will complete a certification in full-stack development. I
-          am told that my strongest values are being honest, patient, and
-          detail-oriented. I look forward to applying these values at my next
-          opportunity!
+          My name is Josh Taylor, and I am originally from Tulsa, OK. My wife and I moved to Longmont, CO, in 2019 and never looked back! We love hiking with our 2 pups in the mountains and playing board games with friends. During the pandemic, I realized I had lost interest in my quality assurance job and started to contemplate other prospects. While I have a solid eye for detail that helps me in the QA role, I wanted to participate in the creation of something a bit more. Thus, in 2023 I will complete a certification in full-stack development. I am told that my strongest values are being honest, patient, and detail-oriented. I look forward to applying these values at my next opportunity!
         </TabPanel>
       </TabContext>
     </Box>
