@@ -373,12 +373,7 @@ function Campaigns() {
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
 
-  const [openModal, setOpenModal] = useState(false);
 
-  // Handle opening/closing this modal
-  const handleModalOpen = () => {
-    setOpenModal(!openModal);
-  };
 
   // Render main content modal/page
   const renderPage = () => {
@@ -397,9 +392,6 @@ function Campaigns() {
       // Render a single campaign
       return <SingleCampaign 
         campaign={campaignArray[tabIndex]}
-        openModal={openModal} 
-        setOpenModal={setOpenModal}
-        handleModalOpen={handleModalOpen} 
       />
     }
   }
@@ -408,9 +400,6 @@ function Campaigns() {
   return (
     <main 
       style={styles.container} 
-      onClick={() => {
-        if (openModal) {handleModalOpen()}
-      }}
     >
       <section style={styles.section}>
         <>

@@ -7,6 +7,11 @@ import TabBox from './TabBox';
 export default function ModalLarge(props) {
   // Component styling
   const styles = {
+    modalBackdrop: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%'
+    },
     modal: {
       border: '0.2rem solid #000',
       boxSizing: 'border-box',
@@ -79,6 +84,12 @@ export default function ModalLarge(props) {
 
   return (
     <>
+      <div
+        style={styles.modalBackdrop}
+        onClick={(e) => {
+          if (props.openModal) {props.handleModalOpen()}
+        }}
+      ></div>
       {switchModal()}
     </>
   );

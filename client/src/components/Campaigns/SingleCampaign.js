@@ -54,12 +54,19 @@ export default function SingleCampaign(props) {
     }
   });
 
+  // Modal useState code
   const [modalId, setModalId] = useState('none');
   const handleModalId = (id) => setModalId(id);
 
+  const [openModal, setOpenModal] = useState(false);
+  // Handle opening/closing this modal
+  const handleModalOpen = () => {
+    setOpenModal(!openModal);
+  };
+
   // Tell ModalLarge which data to display
   const renderModal = () => {
-    if (props.openModal) {
+    if (openModal) {
 
       // Grab the title depending on btn used
       const title = () => {
@@ -94,6 +101,8 @@ export default function SingleCampaign(props) {
           id={modalId}
           title={title()} 
           modalData={modalData()} 
+          openModal={openModal} 
+          handleModalOpen={handleModalOpen} 
         />
       );
 
@@ -134,25 +143,25 @@ export default function SingleCampaign(props) {
           <Button 
             title='main story' 
             id='main-story' 
-            handleModalOpen={props.handleModalOpen}
+            handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
           <Button 
             title='side quests' 
             id='side-quests' 
-            handleModalOpen={props.handleModalOpen}
+            handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
           <Button 
             title='player plots' 
             id='player-plots' 
-            handleModalOpen={props.handleModalOpen}
+            handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
           <Button 
             title='timeline' 
             id='timeline' 
-            handleModalOpen={props.handleModalOpen}
+            handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
         </div>
