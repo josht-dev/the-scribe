@@ -41,9 +41,14 @@ const styles = {
     height: '20%'
   },
   listCardSmTitle: {
-    width: '65%',
-    margin: '0 0.5rem',
-    fontSize: '1.5rem'
+    width: '100%',
+    height: '100%',
+    margin: '0',
+    padding: '0.25rem',
+    fontSize: '1.5rem',
+    resize: 'none',
+    border: 'none',
+    outline: 'none'
   }
 }
 
@@ -67,7 +72,10 @@ export default function ListSm(props) {
               style={styles.listCardSm}
               key={card._id}
             >
-              <span style={styles.listCardSmTitle}>{card.characterName}</span>
+              <textarea
+                style={styles.listCardSmTitle}
+                defaultValue={card.characterName}
+              ></textarea>
             </article>
           );
         })}

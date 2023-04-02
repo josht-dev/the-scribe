@@ -18,7 +18,7 @@ const styles = {
   addBtnDiv: {
     marginLeft: 'auto',
     float: 'right',
-    
+
     display: 'flex',
     paddingRight: '0.5rem',
     marginBottom: '0.25rem'
@@ -42,8 +42,13 @@ const styles = {
   },
   listCardSmTitle: {
     width: '100%',
-    margin: '0 0.5rem',
-    fontSize: '1rem'
+    height: '100%',
+    margin: '0',
+    padding: '0.25rem',
+    fontSize: '1rem',
+    resize: 'none',
+    border: 'none',
+    outline: 'none'
   }
 }
 
@@ -67,7 +72,10 @@ export default function ListSm(props) {
               style={styles.listCardSm}
               key={index}
             >
-              <span style={styles.listCardSmTitle}>{card}</span>
+              <textarea
+                style={styles.listCardSmTitle}
+                defaultValue={card}
+              ></textarea>
             </article>
           );
         })}

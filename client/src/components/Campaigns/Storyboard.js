@@ -54,7 +54,9 @@ const styles = {
     margin: '0',
     padding: '0.25rem',
     fontSize: '1rem',
-    resize: 'none'
+    resize: 'none',
+    border: 'none',
+    outline: 'none'
   }
 }
 
@@ -78,8 +80,8 @@ export default function Storyboard(props) {
               style={styles.listCard}
               key={index}
             >
-              <textarea 
-              style={styles.listCardTitle}
+              <textarea
+                style={styles.listCardTitle}
                 defaultValue={card}
               ></textarea>
             </article>
