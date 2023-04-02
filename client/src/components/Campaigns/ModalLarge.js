@@ -23,7 +23,8 @@ export default function ModalLarge(props) {
     },
     mainAdversary: {
       gridColumn: '1 / span 2',
-      gridRow: '2 / span 1'
+      gridRow: '2 / span 1',
+      marginLeft: '0.5rem'
     }
   }
 
@@ -40,6 +41,7 @@ export default function ModalLarge(props) {
             />
             <div style={styles.mainAdversary}>
               <InputAndLabel 
+                label='main adversary' 
                 value={props.modalData.bigBad}
               />
             </div>
