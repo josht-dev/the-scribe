@@ -73,7 +73,8 @@ export default function SingleCampaign(props) {
         switch (modalId) {
           case 'main-story':
             return 'main story'
-        
+          case 'side-story':
+            return 'side story'
           default:
             break;
         }
@@ -81,12 +82,19 @@ export default function SingleCampaign(props) {
 
       // Set the campaign data to send to ModalLarge
       const modalData = () => {
+        let data;
         switch (modalId) {
           case 'main-story':
-            const data = props.campaign.story.find((story) => {
+            data = props.campaign.story.find((story) => {
               return story.main;
             });
             return data;
+          case 'side-story':
+            data = props.campaign.story.map((story, index) => {
+              return story.side;
+            });
+            console.log(data);
+            return data
           default:
             break;
         }
