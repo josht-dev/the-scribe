@@ -237,7 +237,7 @@ const campaignArray = [
         main: true,
         side: false,
         player: false,
-        storyBoard: [
+        storyboard: [
           {
             _id: '0',
             type: 'general',
