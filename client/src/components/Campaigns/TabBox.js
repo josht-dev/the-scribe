@@ -3,14 +3,33 @@ import React, { useState } from 'react';
 // Component styling
 const styles = {
   article: {
-    
+    height: '100%',
+    width: '100%'
   },
-  titleBar: {},
-  rightTitle: {},
-  leftTitle: {},
+  titleBar: {
+    width: '100%',
+    height: '1.5rem',
+    margin: '0.25rem 0',
+    display: 'flex',
+    textAlign: 'center'
+  },
+  rightTitle: {
+    borderLeft: '0.1rem solid #1CB9B3',
+    width: '50%'
+  },
+  leftTitle: {
+    borderRight: '0.1rem solid #1CB9B3',
+    width: '50%'
+  },
+  textBox: {
+    height: '80%',
+  },
   p: {
     border: '0.1rem solid #1CB9B3',
-    borderRadius: '0.25rem'
+    borderRadius: '0.25rem',
+    height: '100%',
+    margin: '0',
+    padding: '0.25rem'
   },
 };
 
@@ -31,8 +50,10 @@ export default function TabBox(props) {
           onClick={handleIsActive} 
         >resolution</span>
       </div>
-      <p style={styles.p} className={isActive ? '' : 'hidden'}>{props.setup}</p>
-      <p style={styles.p} className={isActive ? 'hidden' : ''}>{props.resolution}</p>
+      <div style={styles.textBox}>
+      <p style={styles.p} className={isActive ? '' : 'hidden list-scroll'}>{props.setup}</p>
+      <p style={styles.p} className={isActive ? 'hidden list-scroll' : ''}>{props.resolution}</p>
+      </div>
     </article>
   );
 }

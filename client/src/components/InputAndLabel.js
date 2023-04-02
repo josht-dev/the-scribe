@@ -11,7 +11,7 @@ const styles = {
   },
   input: {
     width: '100%',
-    height: '4rem',
+    
     border: '0.1rem solid #1CB9B3',
     borderRadius: '0.25rem',
     fontSize: '2rem',

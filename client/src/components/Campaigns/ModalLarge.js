@@ -34,10 +34,11 @@ export default function ModalLarge(props) {
       marginLeft: '0.5rem'
     },
     tabBox: {
-      gridColumn: '3 / span 3',
+      gridColumn: '3 / span 4',
       gridRow: '1 / span 3',
-      width: '100%',
-      marginRight: '0.5rem'
+      marginRight: '0.5rem',
+      display: 'flex',
+      flexDirection: 'column'
     }
   }
 
