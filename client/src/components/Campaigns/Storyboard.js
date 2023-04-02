@@ -2,9 +2,10 @@ import React from 'react';
 import LabelListSm from './LabelListSm';
 import Button from './Button';
 
+// Component styling
 const styles = {
   section: {
-    height: '50%',
+    height: '100%',
     zIndex: '99',
     display: 'flex',
     flexDirection: 'column',
@@ -23,14 +24,21 @@ const styles = {
     paddingRight: '0.5rem',
     marginBottom: '0.25rem'
   },
-  listDivSm: {
+  sortBtnDiv: {
+    float: 'right',
+    flexShrink: '0',
+    display: 'flex',
+    paddingRight: '0.5rem',
+    marginBottom: '0.25rem'
+  },
+  listDiv: {
     border: '1px solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5',
     marginBottom: '0.5rem'
   },
-  listCardSm: {
+  listCard: {
     backgroundColor: '#fff',
     boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
     borderRadius: '0.25rem',
@@ -40,19 +48,19 @@ const styles = {
     margin: '0.5rem',
     height: '20%'
   },
-  listCardSmTitle: {
-    width: '100%',
+  listCardTitle: {
     height: '100%',
+    width: '100%',
     margin: '0',
     padding: '0.25rem',
-    fontSize: '1.5rem',
+    fontSize: '1rem',
     resize: 'none',
     border: 'none',
     outline: 'none'
   }
 }
 
-export default function ListSm(props) {
+export default function Storyboard(props) {
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
@@ -65,21 +73,22 @@ export default function ListSm(props) {
           />
         </div>
       </div>
-      <article style={styles.listDivSm} className='list-scroll'>
-        {props.characters.map(card => {
+      <article style={styles.listDiv} className='list-scroll'>
+        {props.storyboards.map((card, index) => {
           return (
             <article
-              style={styles.listCardSm}
-              key={card._id}
+              style={styles.listCard}
+              key={index}
             >
               <textarea
-                style={styles.listCardSmTitle}
-                defaultValue={card.characterName}
+                style={styles.listCardTitle}
+                defaultValue={card}
               ></textarea>
             </article>
           );
         })}
       </article>
+
     </section>
   );
 }

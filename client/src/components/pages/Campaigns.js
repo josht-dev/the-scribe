@@ -227,6 +227,28 @@ const campaignArray = [
           'the character has gone missing after the big explosion'
         ]
       },
+    ],
+    story: [
+      {
+        _id: '1',
+        title: '',
+        timeline: '',
+        bigBad: 'Dr. Evil',
+        main: true,
+        side: false,
+        player: false,
+        storyboard: [
+          'This is a general note for the gm to keep in mind',
+          'This adversary did a thing',
+          'This is a secret evil corporation!',
+        ],
+        objectives: [
+          'find the castle',
+          'save the princess'
+        ],
+        setup: 'This is the setup for the story.',
+        resolution: 'Here is how the story was resolved for later reference.'
+      }
     ]
   },
   {
@@ -333,6 +355,8 @@ function Campaigns() {
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
 
+
+
   // Render main content modal/page
   const renderPage = () => {
     if (currentTab == -1) {
@@ -356,7 +380,9 @@ function Campaigns() {
 
   // Return the large modal/page
   return (
-    <main style={styles.container}>
+    <main 
+      style={styles.container} 
+    >
       <section style={styles.section}>
         <>
           <div style={styles.titleDiv}>

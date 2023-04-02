@@ -27,3 +27,11 @@ main {
 .list-scroll {
   overflow-y: scroll;
 }
+
+.hidden {
+  display: none;
+}
+
+.selectTabBox {
+  color: #1CB9B3;
+}

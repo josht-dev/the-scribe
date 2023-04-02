@@ -20,9 +20,8 @@ export default function TitleLarge(props) {
     <input
       style={styles.titleInput} 
       type='text' 
-      placeholder={props.placeholder} 
-      readOnly 
-      value={props.title}
+      placeholder={props.placeholder}  
+      defaultValue={props.title} 
     ></input>
   );
 }

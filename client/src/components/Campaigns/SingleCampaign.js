@@ -41,11 +41,6 @@ const styles = {
 }
 
 export default function SingleCampaign(props) {
-  const [openModal, setOpenModal] = useState(false);
-
-  // Handle opneing/closing this modal
-  const handleModalOpen = () => setOpenModal(!openModal);
-
   const npcs = [];
   const pcs = [];
 
@@ -59,21 +54,69 @@ export default function SingleCampaign(props) {
     }
   });
 
-  // Tell ModalLarge which data to display
-  const modalRender = () => {
-    console.log('handleModalOpen hit');
-    handleModalOpen();
+  // Modal useState code
+  const [modalId, setModalId] = useState('none');
+  const handleModalId = (id) => setModalId(id);
 
+  const [openModal, setOpenModal] = useState(false);
+  // Handle opening/closing this modal
+  const handleModalOpen = () => {
+    setOpenModal(!openModal);
+  };
+
+  // Tell ModalLarge which data to display
+  const renderModal = () => {
+    if (openModal) {
+
+      // Grab the title depending on btn used
+      const title = () => {
+        switch (modalId) {
+          case 'main-story':
+            return 'main story'
+        
+          default:
+            break;
+        }
+      }
+
+      // Set the campaign data to send to ModalLarge
+      const modalData = () => {
+        switch (modalId) {
+          case 'main-story':
+            const data = props.campaign.story.find((story) => {
+              return story.main;
+            });
+            return data;
+          default:
+            break;
+        }
+      }
+
+      // Display modal with data appropriate to the user clicked
+
+
+      // REMOVE - temp/testing code
+      return (
+        <ModalLarge 
+          id={modalId}
+          title={title()} 
+          modalData={modalData()} 
+          openModal={openModal} 
+          handleModalOpen={handleModalOpen} 
+        />
+      );
+
+    } else {
+      // Modal is closed
+      return;
+    }
 
   }
 
   return (
     <>
-    <ModalLarge 
-      openModal={openModal} 
-      setOpenModal={setOpenModal} 
-    />
-    <section style={styles.section}>
+    {renderModal()}
+    <section style={styles.section} >
         <div style={styles.titleLeft}>
           <TitleLarge
             placeholder='campaign title'
@@ -99,16 +142,27 @@ export default function SingleCampaign(props) {
         <div style={styles.btnBar}>
           <Button 
             title='main story' 
+            id='main-story' 
             handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
           />
           <Button 
             title='side quests' 
+            id='side-quests' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
           />
           <Button 
             title='player plots' 
+            id='player-plots' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
           />
           <Button 
             title='timeline' 
+            id='timeline' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
           />
         </div>
         <section style={styles.adventureList}>
