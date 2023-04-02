@@ -22,8 +22,7 @@ const userPostSchema = new Schema({
     maxLength: 3000,
   },
   username: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
   },
   comments: [
     {

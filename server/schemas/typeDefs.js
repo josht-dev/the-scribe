@@ -6,17 +6,17 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    userPosts(userPostId: ID!): UserPost
-    profile(profileId: ID!): Profile
-    campaigns(campaignId: ID!): Campaign
+    userPosts: [UserPost]!
+    profile: [Profile]!
+    campaigns: [Campaign]!
   }
 
   type UserPost {
-    _id: ID
-    title: String
-    subject: String
-    body: String
-    username(userId: ID!): User
+    _id: ID!
+    title: String!
+    subject: String!
+    body: String!
+    username: String!
     comments: [Comment]!
   }
 
@@ -52,8 +52,9 @@ const typeDefs = gql`
     notes: [String]
     storyOutline: [Story]!
     adventures(adventureId: ID!): Adventure
-    characters(characterId: ID!): Character
+    characters: [Character]
     profileUser: String
+    currentDateInGame: String
   }
 
   type Story {
@@ -73,27 +74,26 @@ const typeDefs = gql`
     _id: ID
     characterName: String
     characterStatus: String
-    motivations: String
-    characterNotes: String
+    motivations: [String]
+    characterNotes: [String]
     characterSheet: String
     npc: Boolean
-    campaignId(campaignId: ID!): Campaign
   }
 
   type Adventure {
     title: String
     setup: String
     resolution: String
-    notes: String
+    notes: [String]
     objectives: String
-    characters(characterId: ID!): Character
+    characters(characterId: ID!): [Character]
     encounters: String
-    campaignId(campaignId: ID!): Campaign
+    campaign: String
   }
 
   type Query {
-    users: [User]!
-    user(userId: ID!): User
+    users: [User]
+    user(username: String!): User
     userPosts: [UserPost]!
     userPost(userPostId: ID!): UserPost
     campaigns: [Campaign]!
@@ -115,10 +115,11 @@ const typeDefs = gql`
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
     addUserPost(title: String!, body: String!, subject: String!): UserPost
-    modifyUserPost(title: String!, body: String!): UserPost
+    updateUserPost(title: String!, body: String!, subject: String!, userPostId: ID!): UserPost
     removeUserPost(userPostId: ID!): UserPost
-    addCampaign(gameName: String!, ruleSet: String!, genre: String!): Campaign
-    modifyCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
+    addCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
+    modifyCampaign(gameName: String!, ruleSet: String!, genre: String, notes: [String], currentDateInGame: String, campaignId: ID!): Campaign
+    removeCharacter(characters: ID, campaignId: ID): Campaign
     removeCampaign(campaignId: ID!, userId: ID): Campaign
     addStory(
       title: String
@@ -147,10 +148,10 @@ const typeDefs = gql`
     addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
-    addCharacter(characterName: String!, npc: Boolean!): Character
-    modifyCharacter(characterName: String!): Character
-    removeCharacter(characterId: ID!, userId: ID): Character
-    addAdventure(title: String!): Adventure
+    addCharacter(characterName: String!, npc: Boolean!, campaignId: ID!): Character
+    modifyCharacter(characterName: String!, characterStatus: String, motivations: [String], characterNotes: [String], characterSheet: String, characterId: ID ): Character
+    deleteCharacter(characterId: ID!, userId: ID): Character
+    addAdventure(title: String!, campaign: String!, campaignId: ID!): Adventure
     modifyAdventure(
       title: String!
       setup: String

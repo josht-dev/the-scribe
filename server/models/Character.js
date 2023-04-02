@@ -16,12 +16,10 @@ const characterSchema = new Schema(
     motivations: [
       {
         type: String,
-        allowNull: true,
       },
     ],
     characterNotes: [{
       type: String,
-      allowNull: true,
     }],
     characterSheet: {
       type: String,
@@ -31,13 +29,6 @@ const characterSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    campaignId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Campaign",
-      },
-    ],
-    
   },
   {
     toJSON: {
