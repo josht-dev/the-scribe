@@ -79,8 +79,6 @@ export default function SingleCampaign(props) {
             const data = props.campaign.story.find((story) => {
               return story.main;
             });
-            console.log('modalData function hit');
-            console.log(data);
             return data;
           default:
             break;

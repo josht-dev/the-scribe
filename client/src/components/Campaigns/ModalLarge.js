@@ -34,13 +34,10 @@ export default function ModalLarge(props) {
     }
   }
 
-  console.log(props);
-
   // Render the modal based on the modalId sent
   const switchModal = () => {
     switch (props.id) {
       case 'main-story':
-        console.log(props);
         return (
           <section style={styles.modal} id='ModalLarge'>
             <LabelInModal
