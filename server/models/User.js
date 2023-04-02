@@ -69,6 +69,12 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+//add salt round to dot env
+userSchema.methods.hashPassword = async function (password) {
+    const saltRounds = 10;
+    const newPassword = await bcrypt.hash(password, saltRounds);
+    return newPassword;
+}
 
 const User = model("User", userSchema);
 

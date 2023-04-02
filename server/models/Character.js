@@ -10,34 +10,23 @@ const characterSchema = new Schema(
     },
     characterStatus: {
       type: String,
-      allowNull: true,
       maxLength: 50,
     },
     motivations: [
       {
         type: String,
-        allowNull: true,
       },
     ],
     characterNotes: [{
       type: String,
-      allowNull: true,
     }],
     characterSheet: {
       type: String,
-      allowNull: true,
     },
     npc: {
       type: Boolean,
       required: true,
     },
-    campaignId: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Campaign",
-      },
-    ],
-    
   },
   {
     toJSON: {

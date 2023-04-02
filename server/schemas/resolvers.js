@@ -9,41 +9,49 @@ const {
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
+const mongoose = require("mongoose");
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find({}, "-password").sort({ createdAt: -1 });
+      return User.find({}).sort({ createdAt: -1 });
     },
-    user: async (parent, { userId }) => {
-      return User.findOne({ _id: userId }, "-password");
+    user: async (parent, { username }) => {
+      console.info(username);
+      return await User.findOne({ username }, "-password")
+        .populate({ path: "userPosts" })
+        .populate({ path: "profile" })
+        .populate({ path: "campaigns" });
     },
     userPosts: async () => {
       return UserPost.find()
         .sort({ createdAt: 1 })
-        .populate({ path: "username" })
+        .populate({ path: "username" });
     },
     userPost: async (parent, { userPostId }) => {
-      return UserPost.findOne({ _id: userPostId })
-        .populate({ path: "username" })
+      return UserPost.findOne({ _id: userPostId }).populate({
+        path: "username",
+      });
     },
     campaigns: async () => {
-      return Campaign.find().sort({ createdAt: 1 })
-        .populate({path: 'storyOutline'});
+      return Campaign.find()
+        .sort({ createdAt: 1 })
+        .populate({ path: "storyOutline" })
+        .populate({ path: "characters" });
     },
     campaign: async (parent, { campaignId }) => {
       return Campaign.findOne({ _id: campaignId })
-        .populate("Story")
-        .populate("Adventure")
-        .populate("Character");
+        .populate({ path: "storyOutline" })
+        .populate({ path: "adventures" })
+        .populate({ path: "characters" });
     },
     stories: async () => {
-      return Story.find().sort({ createdAt: 1 }).populate("Campaign");
+      return Story.find()
+        .sort({ createdAt: 1 })
+        .populate({ path: "characters" });
     },
     story: async (parent, { storyId }) => {
-      return Story.findOne({ _id: storyId })
-        .populate("Campaign")
-        .populate("Character");
+      return Story.findOne({ _id: storyId }).populate({ path: "characters" });
     },
     // reactions: async () => {
     //   return Reaction.find()
@@ -74,25 +82,31 @@ const resolvers = {
     //     .populate({ path: "commentWriter" })
     // },
     characters: async () => {
-      return Character.find().sort({ createdAt: 1 }).populate("Campaign");
+      return Character.find()
+        .sort({ createdAt: 1 })
+        .populate({ path: "campaigns" });
     },
     character: async (parent, { characterId }) => {
-      return Character.findOne({ _id: characterId }).populate("Campaign");
+      return Character.findOne({ _id: characterId }).populate({
+        path: "campaigns",
+      });
     },
     adventures: async () => {
       return Adventure.find()
         .sort({ createdAt: 1 })
-        .populate("Character")
-        .populate("Campaign");
+        .populate({ path: "characters" });
     },
     adventure: async (parent, { adventureId }) => {
-      return Adventure.findOne({ _id: adventureId })
-        .populate("Character")
-        .populate("Campaign");
+      return Adventure.findOne({ _id: adventureId }).populate({
+        path: "characters",
+      });
     },
     individual: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("UserPost");
+        return User.findOne({ _id: context.user._id }, "-password")
+          .populate({ path: "userPosts" })
+          .populate({ path: "profile" })
+          .populate({ path: "campaigns" });
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -110,7 +124,6 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
-
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
@@ -127,6 +140,7 @@ const resolvers = {
           title,
           body,
           subject,
+          username: context.user.username,
         });
 
         await User.findOneAndUpdate(
@@ -162,14 +176,14 @@ const resolvers = {
     //   }
     //   throw new Error("No Post Found!!");
     // },
-    addComment: async (parent, { userPostId, commentBody}, context) => {
+    addComment: async (parent, { userPostId, commentBody }, context) => {
       if (context.user) {
         return UserPost.findOneAndUpdate(
-          { _id: userPostId},
+          { _id: userPostId },
 
           {
             $addToSet: {
-              comments:  {commentBody, commentWriter: context.user.username},
+              comments: { commentBody, commentWriter: context.user.username },
             },
           },
           {
@@ -182,17 +196,17 @@ const resolvers = {
     },
     // for future dev
     // addReaction: async (parent, { commentId, reactionBody }, context) => {
-      // if (!context.user) {
-      //   throw new AuthenticationError("You need to be logged in!");
-      // }
-      // return Comment.findOneAndUpdate(
-      //   { _id: commentId },
-      //   { $addToSet: { reactions: reactionBody } },
-      //   {
-      //     new: true,
-      //     runValidators: true,
-      //   }
-      // );
+    // if (!context.user) {
+    //   throw new AuthenticationError("You need to be logged in!");
+    // }
+    // return Comment.findOneAndUpdate(
+    //   { _id: commentId },
+    //   { $addToSet: { reactions: reactionBody } },
+    //   {
+    //     new: true,
+    //     runValidators: true,
+    //   }
+    // );
     //    if (context.user) {
     //      return UserPost.findOneAndUpdate(
     //        { _id: commentId},
@@ -214,11 +228,12 @@ const resolvers = {
         const profile = await Profile.create({
           profileUser: context.user.username,
           about,
-      });
+        });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { profiles: profile._id } }
+          { $addToSet: { profiles: profile._id } },
+          console.info(context.user)
         );
         return profile;
       }
@@ -227,7 +242,7 @@ const resolvers = {
       );
     },
     addCampaign: async (parent, { gameName, ruleSet, genre }, context) => {
-         if (context.user) {
+      if (context.user) {
         const campaign = await Campaign.create({
           profileUser: context.user.username,
           gameName,
@@ -242,56 +257,69 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    addStory: async (parent, { main, side, player, title, campaign, campaignId }, context) => {
+    addStory: async (
+      parent,
+      { main, side, player, title, campaign, campaignId },
+      context
+    ) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      console.info(title);
-      console.info(campaignId);
+      const story = await Story.create({
+        campaign,
+        main,
+        side,
+        player,
+        main,
+        title,
+      });
 
-        const story = await Story.create({
-          campaign,
-          main,
-          side,
-          player,
-          main,
-          title,
-        });
+      if (story) {
+        await Campaign.findOneAndUpdate(
+          { _id: campaignId },
+          { $addToSet: { storyOutline: story._id } }
+        );
 
-        if (story) {
-          await Campaign.findOneAndUpdate(
-            { _id: campaignId },
-            { $addToSet: { storyOutline: story._id } }
-          );
-          
-          return story;
-        }
-        
+        return story;
+      }
+
       throw new Error("No story found by that name!!");
     },
-    addAdventure: async (parent, { title }, context) => {
+    addAdventure: async (parent, { title, campaign, campaignId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      if (context.campaign) {
-        const adventure = await Adventure.create({
-          campaign: context.campaign.campaignId,
-          title,
-        });
+      const adventure = await Adventure.create({
+        campaign,
+        title,
+      });
+      if (adventure) {
         await Campaign.findOneAndUpdate(
-          { _id: context.campaign._id },
+          { _id: campaignId },
           { $addToSet: { adventures: adventure._id } }
         );
-        return Adventure;
+        return adventure;
       }
-      throw new Error("No Adventures found by that name!!");
+      throw new Error("No story found by that name!!");
     },
-    addCharacter: async (parent, { characterName, npc }, context) => {
+    addCharacter: async (
+      parent,
+      { characterName, npc, campaignId },
+      context
+    ) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      return Character.create({ characterName, npc });
+      const character = await Character.create({ characterName, npc });
+      if (character) {
+        await Campaign.findOneAndUpdate(
+          { _id: campaignId },
+          { $addToSet: { characters: character._id } }
+        );
+      }
+      return character;
     },
+    // start removes
     removeUser: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findOneAndDelete({
@@ -299,25 +327,25 @@ const resolvers = {
         });
         if (user) {
           const profile = await Profile.findOneAndDelete({
-            username: context.user.username,
+            username: context.user.profile,
           });
           if (profile) {
             const campaign = await Campaign.findOneAndDelete({
-              campaigns: context.profile.campaigns,
+              campaigns: context.user.campaigns,
             });
             if (campaign) {
               const story = await Story.findOneAndDelete({
-                campaignId: context.campaign.storyId,
+                campaignId: campaign.storyOutline,
               });
             }
             if (campaign) {
               const character = await Character.findOneAndDelete({
-                campaignId: context.campaign.characters,
+                campaignId: campaign.characters,
               });
             }
             if (campaign) {
               const adventure = await Adventure.findOneAndDelete({
-                campaignId: context.campaign.adventures,
+                campaignId: campaign.adventures,
               });
             }
           }
@@ -331,7 +359,6 @@ const resolvers = {
       if (context.user) {
         const userPost = await UserPost.findOneAndDelete({
           _id: userPostId,
-          username: context.user.username,
         });
 
         await User.findOneAndUpdate(
@@ -339,9 +366,102 @@ const resolvers = {
           { $pull: { userPost: userPost._id } }
         );
 
-        return UserPost;
+        return userPost;
       }
       throw new AuthenticationError("You need to be logged in!");
+    },
+    updateUserPost: async (parent, { userPostId, title, subject, body }) => {
+      return await UserPost.findOneAndUpdate(
+        { _id: userPostId },
+        { $set: { title: title, subject: subject, body: body } },
+        { new: true }
+      );
+    },
+    modifyCampaign: async (
+      parent,
+      { gameName, ruleSet, genre, notes, currentDateInGame, campaignId }
+    ) => {
+      const campaign = await Campaign.findOneAndUpdate(
+        { _id: campaignId },
+        {
+          $set: {
+            gameName: gameName,
+            ruleSet: ruleSet,
+            genre: genre,
+            currentDateInGame: currentDateInGame,
+          },
+        },
+        { $addToSet: { notes: notes } },
+        { new: true }
+      );
+      return campaign;
+    },
+    removeCharacter: async (parent, { characters, campaignId }) => {
+      const removeCharacter = await Campaign.findOneAndUpdate(
+        { _id: campaignId },
+        { $pull: { characters: { $in: [characters] } } },
+        { new: true }
+      );
+      return removeCharacter;
+    },
+    modifyCharacter: async (
+      parent,
+      {
+        characterName,
+        characterStatus,
+        motivations,
+        characterNotes,
+        characterSheet,
+        characterId,
+      }
+    ) => {
+      const character = await Character.findOneAndUpdate(
+        { _id: characterId },
+        {
+          $set: {
+            characterName: characterName,
+            characterStatus: characterStatus,
+            characterSheet: characterSheet,
+            motivations: motivations,
+            characterNotes: characterNotes,
+          },
+        },
+        { new: true }
+      );
+      return character;
+    },
+    modifyUser: async (
+      parent,
+      { username, email, password, newPassword, userId },
+      context
+    ) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          { $set: { username: username, email: email } },
+          { new: true, runValidators: true }
+        );
+       if (!newPassword) {
+         return user;
+       }
+        const correctPw = await user.isCorrectPassword(password);
+        if (password === newPassword) {
+          return Error("new password must not be the same as the old one");
+        } else if (correctPw) {
+          const hashedPassword = await user.hashPassword(newPassword)
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { $set: { password: hashedPassword } },
+            { new: true, runValidators: true },
+          );
+              signToken(updatedUser);
+              console.info(updatedUser)
+          return updatedUser ;
+        } else {
+          throw new AuthenticationError("Incorrect credentials");
+        }
+        
+      }
     },
   },
 };
