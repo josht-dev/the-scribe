@@ -21,7 +21,7 @@ const styles = {
     paddingRight: '0.5rem'
   },
   listDivMd: {
-    border: '1px solid #1CB9B3',
+    border: '0.1rem solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5'

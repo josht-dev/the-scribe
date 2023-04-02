@@ -51,8 +51,7 @@ export default function ModalLarge(props) {
       gridColumn: '3 / span 4',
       gridRow: '4 / span 9',
       marginRight: '0.5rem',
-      marginBottom: '0.5rem',
-      border: '1px solid black'
+      marginBottom: '0.5rem'
     }
   }
 
