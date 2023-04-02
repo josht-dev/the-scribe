@@ -24,7 +24,7 @@ export default function InputAndLabel(props) {
     <>
       <label
         style={styles.label}
-        for='bigBad' 
+        htmlFor='bigBad' 
       >{props.label}
       </label>
       <input
