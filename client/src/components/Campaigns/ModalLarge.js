@@ -2,6 +2,7 @@ import React from 'react';
 import LabelInModal from './LabelInModal';
 import InputAndLabel from '../InputAndLabel';
 import ListSmTall from './ListSmTall';
+import TabBox from './TabBox';
 
 export default function ModalLarge(props) {
   // Component styling
@@ -31,6 +32,12 @@ export default function ModalLarge(props) {
       gridColumn: '1 / span 2',
       gridRow: '3 / span 10',
       marginLeft: '0.5rem'
+    },
+    tabBox: {
+      gridColumn: '3 / span 3',
+      gridRow: '1 / span 3',
+      width: '100%',
+      marginRight: '0.5rem'
     }
   }
 
@@ -54,6 +61,12 @@ export default function ModalLarge(props) {
               title='objectives' 
               objectives={props.modalData.objectives} 
             />
+            </div>
+            <div style={styles.tabBox}>
+              <TabBox 
+                setup={props.modalData.setup} 
+                resolution={props.modalData.resolution} 
+              />
             </div>
           </section>
         );
