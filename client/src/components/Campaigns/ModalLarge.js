@@ -3,6 +3,7 @@ import LabelInModal from './LabelInModal';
 import InputAndLabel from '../InputAndLabel';
 import ListSmTall from './ListSmTall';
 import TabBox from './TabBox';
+import Storyboard from './Storyboard';
 
 export default function ModalLarge(props) {
   // Component styling
@@ -44,6 +45,13 @@ export default function ModalLarge(props) {
       marginRight: '0.5rem',
       display: 'flex',
       flexDirection: 'column'
+    },
+    storyDiv: {
+      gridColumn: '3 / span 4',
+      gridRow: '4 / span 9',
+      marginRight: '0.5rem',
+      marginBottom: '0.5rem',
+      border: '1px solid black'
     }
   }
 
@@ -73,6 +81,12 @@ export default function ModalLarge(props) {
                 setup={props.modalData.setup} 
                 resolution={props.modalData.resolution} 
               />
+            </div>
+            <div
+              style={styles.storyDiv}
+            >
+
+
             </div>
           </section>
         );
