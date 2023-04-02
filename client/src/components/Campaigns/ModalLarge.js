@@ -1,6 +1,7 @@
 import React from 'react';
 import LabelInModal from './LabelInModal';
 import InputAndLabel from '../InputAndLabel';
+import ListSmTall from './ListSmTall';
 
 export default function ModalLarge(props) {
   // Component styling
@@ -25,6 +26,11 @@ export default function ModalLarge(props) {
       gridColumn: '1 / span 2',
       gridRow: '2 / span 1',
       marginLeft: '0.5rem'
+    },
+    objectives: {
+      gridColumn: '1 / span 2',
+      gridRow: '3 / span 10',
+      marginLeft: '0.5rem'
     }
   }
 
@@ -34,6 +40,7 @@ export default function ModalLarge(props) {
   const switchModal = () => {
     switch (props.id) {
       case 'main-story':
+        console.log(props);
         return (
           <section style={styles.modal} id='ModalLarge'>
             <LabelInModal
@@ -44,6 +51,12 @@ export default function ModalLarge(props) {
                 label='main adversary' 
                 value={props.modalData.bigBad}
               />
+            </div>
+            <div style={styles.objectives}>
+            <ListSmTall 
+              title='objectives' 
+              objectives={props.modalData.objectives} 
+            />
             </div>
           </section>
         );

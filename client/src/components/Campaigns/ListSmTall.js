@@ -18,7 +18,7 @@ const styles = {
   addBtnDiv: {
     marginLeft: 'auto',
     float: 'right',
-    flexShrink: '0',
+    
     display: 'flex',
     paddingRight: '0.5rem',
     marginBottom: '0.25rem'
@@ -41,9 +41,9 @@ const styles = {
     height: '20%'
   },
   listCardSmTitle: {
-    width: '65%',
+    width: '100%',
     margin: '0 0.5rem',
-    fontSize: '1.5rem'
+    fontSize: '1rem'
   }
 }
 
