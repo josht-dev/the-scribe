@@ -248,6 +248,46 @@ const campaignArray = [
         ],
         setup: 'This is the setup for the story.',
         resolution: 'Here is how the story was resolved for later reference.'
+      },
+      {
+        _id: '2',
+        title: '',
+        timeline: '',
+        bigBad: 'Dr. Evil side 1',
+        main: false,
+        side: true,
+        player: false,
+        storyboard: [
+          'This is a general note for the gm to keep in mind',
+          'This adversary did a thing',
+          'This is a secret evil corporation!',
+        ],
+        objectives: [
+          'find the castle',
+          'save the princess'
+        ],
+        setup: 'This is the setup for the story.',
+        resolution: 'Here is how the story was resolved for later reference.'
+      },
+      {
+        _id: '3',
+        title: '',
+        timeline: '',
+        bigBad: 'Dr. Evil side 2',
+        main: false,
+        side: true,
+        player: false,
+        storyboard: [
+          'This is a general note for the gm to keep in mind',
+          'This adversary did a thing',
+          'This is a secret evil corporation!',
+        ],
+        objectives: [
+          'find the castle',
+          'save the princess'
+        ],
+        setup: 'This is the setup for the story.',
+        resolution: 'Here is how the story was resolved for later reference.'
       }
     ]
   },
