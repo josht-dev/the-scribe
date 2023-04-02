@@ -43,11 +43,13 @@ export default function TabBox(props) {
     <article style={styles.article}>
       <div style={styles.titleBar}>
         <span
-          style={styles.leftTitle}
+          style={styles.leftTitle} 
+          className={isActive ? 'selectTabBox' : ''}
           onClick={handleIsActive}
         >setup</span>
         <span
-          style={styles.rightTitle}
+          style={styles.rightTitle} 
+          className={isActive ? '' : 'selectTabBox'}
           onClick={handleIsActive}
         >resolution</span>
       </div>

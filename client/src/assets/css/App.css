@@ -31,3 +31,7 @@ main {
 .hidden {
   display: none;
 }
+
+.selectTabBox {
+  color: #1CB9B3;
+}
