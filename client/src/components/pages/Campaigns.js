@@ -238,27 +238,9 @@ const campaignArray = [
         side: false,
         player: false,
         storyboard: [
-          {
-            _id: '0',
-            type: 'general',
-            text: 'This is a general note for the gm to keep in mind',
-            inGameDate: '',
-            linkedCharacter: ''
-          },
-          {
-            _id: '1',
-            type: 'adversary',
-            text: 'This adversary did a thing',
-            inGameDate: '',
-            linkedCharacter: '1'
-          },
-          {
-            _id: '2',
-            type: 'organization',
-            text: 'This is a secret evil corporation!',
-            inGameDate: '',
-            linkedCharacter: ''
-          },
+          'This is a general note for the gm to keep in mind',
+          'This adversary did a thing',
+          'This is a secret evil corporation!',
         ],
         objectives: [
           'find the castle',

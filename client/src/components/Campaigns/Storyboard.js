@@ -31,14 +31,14 @@ const styles = {
     paddingRight: '0.5rem',
     marginBottom: '0.25rem'
   },
-  listDivSm: {
+  listDiv: {
     border: '1px solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5',
     marginBottom: '0.5rem'
   },
-  listCardSm: {
+  listCard: {
     backgroundColor: '#fff',
     boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
     borderRadius: '0.25rem',
@@ -48,6 +48,14 @@ const styles = {
     margin: '0.5rem',
     height: '20%'
   },
+  listCardTitle: {
+    height: '100%',
+    width: '100%',
+    margin: '0',
+    padding: '0.25rem',
+    fontSize: '1rem',
+    resize: 'none'
+  }
 }
 
 export default function Storyboard(props) {
@@ -62,20 +70,18 @@ export default function Storyboard(props) {
             title='+'
           />
         </div>
-        <div style={styles.sortBtnDiv}>
-          <Button
-            title='sort'
-          />
-        </div>
       </div>
-      <article style={styles.listDivSm} className='list-scroll'>
-        {props.storyboards.map(card => {
+      <article style={styles.listDiv} className='list-scroll'>
+        {props.storyboards.map((card, index) => {
           return (
             <article
-              style={styles.listCardSm}
-              key={card._id}
+              style={styles.listCard}
+              key={index}
             >
-              <span style={styles.listCardSmTitle}>test</span>
+              <textarea 
+              style={styles.listCardTitle}
+                defaultValue={card}
+              ></textarea>
             </article>
           );
         })}
