@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 // Component styling
 const styles = {
-  article: {},
+  article: {
+    
+  },
   titleBar: {},
   rightTitle: {},
   leftTitle: {},
