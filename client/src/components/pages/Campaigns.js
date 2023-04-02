@@ -295,55 +295,82 @@ const campaignArray = [
     _id: 2,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 3,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 4,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 5,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 6,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 7,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 8,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 9,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 10,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
 ];
 
