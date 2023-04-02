@@ -66,7 +66,7 @@ export default function ListSm(props) {
         </div>
       </div>
       <article style={styles.listDivSm} className='list-scroll'>
-        {props.characters.map(card => {
+        {props.characters.flatMap(card => {
           return (
             <article
               style={styles.listCardSm}

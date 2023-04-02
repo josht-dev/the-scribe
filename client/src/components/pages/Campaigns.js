@@ -429,7 +429,7 @@ function Campaigns() {
             <span style={styles.titleBtn}>campaigns</span>
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
-            {tabList.map(item => {
+            {tabList.flatMap(item => {
               return (<Tab
                 currentTab={currentTab}
                 handleTabChange={handleTabChange}

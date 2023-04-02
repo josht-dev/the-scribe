@@ -74,7 +74,7 @@ export default function CampaignList(props) {
 
   return (
     <section style={styles.listDivLarge} className='list-scroll'>
-      {props.campaignArray.map(card => {
+      {props.campaignArray.flatMap(card => {
         return (
           <article
             style={styles.listCardLarge}

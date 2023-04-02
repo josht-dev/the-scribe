@@ -61,7 +61,7 @@ export default function ListMd(props) {
         </div>
       </div>
       <article style={styles.listDivMd} className='list-scroll'>
-        {props.adventures.map(card => {
+        {props.adventures.flatMap(card => {
           return (
             <article
               style={styles.listCardMd}
