@@ -1,117 +1,113 @@
-import React, { useState } from "react";
-import Tab from '../Campaigns/Tab';
+import * as React from "react";
+import PropTypes from "prop-types";
+import { Tabs, Tab, Typography, Box, Divider, IconButton } from "@mui/material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-// Testing data
-const devArray = [
-  {
-    _id: 1,
-    title: 'ARTIE',
-  },
-  {
-    _id: 2,
-    title: 'BRENDAN',
-  },
-  {
-    _id: 3,
-    title: 'CHRISTIN',
-  },
-  {
-    _id: 4,
-    title: 'JOSH',
-  },
-  
-];
-
-// Styling object
-const styles = {
-  container: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    zIndex: 2
-  },
-  section: {
-    position: 'absolute',
-    top: '10rem',
-    width: '75rem',
-    height: '50rem',
-    backgroundColor: '#fff',
-    borderRadius: '.25rem',
-    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-    zIndex: 3
-  },
-  titleDiv: {
-    display: 'flex',
-    alignItems: 'center',
-    width: '75rem',
-  },
-  titleBtn: {
-    margin: '0.5rem',
-    padding: '.5rem 1.5rem',
-    float: 'left',
-    backgroundColor: '#1CB9B3',
-    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
-    borderRadius: '0.25rem',
-    color: '#fff'
-  },
-  tabContainer: {
-    margin: '0.5rem 0.5rem 0 0.5rem',
-    display: 'flex'
-  }
-};
-
-
-function About() {
-  const [tabList, setTabList] = useState([{ id: 1, aboutTitle: 'ABOUT THE DEVS' }]);
-
-  // Current selected tab state
-  const [currentTab, setCurrentTab] = useState('-1');
-
-  // Function to handle the tab change
-  const handleTabChange = (tab) => setCurrentTab(tab);
-
-  // Render main content modal/page
-  // const renderPage = () => {
-  //   if (currentTab == -1) {
-  //     // Render the list of campaigns
-  //     return <CampaignList
-  //       tabList={tabList}
-  //       setTabList={setTabList}
-  //       devArray={devArray}
-  //     />
-  //   } else {
-  //     // Get index of currentTab based on _id
-  //     const tabIndex = campaignArray.findIndex(item => {
-  //       return item._id == currentTab;
-  //     });
-     
-  //   }
-  // }
-
-  // Return the large modal/page
   return (
-    <main style={styles.container}>
-      <section style={styles.section}>
-        <>
-          <div style={styles.titleDiv}>
-            <span style={styles.titleBtn}>About the Devs</span>
-          </div>
-          <div style={styles.tabContainer} id='tabContainer'>
-            {tabList.map(item => {
-              return (<Tab
-                currentTab={currentTab}
-                handleTabChange={handleTabChange}
-                tab={item}
-                key={item.id}
-              />)
-            })}
-          </div>
-        </>
-      </section>
-    </main>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
   );
 }
 
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
-export default About;
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
+export default function BasicTabs() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <Box sx={{ width: "100%", background: "white" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          centered
+          sx={{ color: "#1CB9B3", indicatorColor: "#1CB9B3" }}
+        >
+          <Tab label="ARTIE" {...a11yProps(0)} />
+          <Divider orientation="vertical" variant="middle" />
+          <Tab label="BRENDAN" {...a11yProps(1)} />
+          <Divider orientation="vertical" variant="middle" />
+          <Tab label="CHRISTIN" {...a11yProps(2)} />
+          <Divider orientation="vertical" variant="middle" />
+          <Tab label="JOSH" {...a11yProps(3)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+        <div>
+          <IconButton href="#">
+            <GitHubIcon fontSize="large" />
+          </IconButton>
+          <IconButton href="#">
+            <LinkedInIcon fontSize="large" />
+          </IconButton>
+        </div>
+        Hey, I'm Artie! I'm a detail oriented web development student looking
+        for a career in the technology industry. I love to work on a team to
+        ensure that a nice, clean, and effiecient product is delivered to users,
+        as I am quite the web user myself! I pick up new skills really fast, and
+        I try to never stop learning something new.
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <div>
+          <IconButton href="h#">
+            <GitHubIcon fontSize="large" />
+          </IconButton>
+          <IconButton href="#">
+            <LinkedInIcon fontSize="large" />
+          </IconButton>
+        </div>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <div>
+          <IconButton href="h#">
+            <GitHubIcon fontSize="large" />
+          </IconButton>
+          <IconButton href="#">
+            <LinkedInIcon fontSize="large" />
+          </IconButton>
+        </div>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <div>
+          <IconButton href="h#">
+            <GitHubIcon fontSize="large" />
+          </IconButton>
+          <IconButton href="#">
+            <LinkedInIcon fontSize="large" />
+          </IconButton>
+        </div>
+      </TabPanel>
+    </Box>
+  );
+}
