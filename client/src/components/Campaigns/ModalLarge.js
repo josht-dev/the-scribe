@@ -54,48 +54,130 @@ export default function ModalLarge(props) {
       marginBottom: '0.5rem'
     }
   }
+  // If the props.modalData is an array, handle differently
+  const storyIsArray = Array.isArray(props.modalData);
 
   // Render the modal based on the modalId sent
   const switchModal = () => {
-    switch (props.id) {
-      case 'main-story':
-        return (
-          <section style={styles.modal} id='ModalLarge'>
-            <LabelInModal
-              title={props.title}
-            />
-            <div style={styles.mainAdversary}>
-              <InputAndLabel 
-                label='main adversary' 
-                value={props.modalData.bigBad}
-              />
-            </div>
-            <div style={styles.objectives}>
-            <ListSmTall 
-              title='objectives' 
-              objectives={props.modalData.objectives} 
-            />
-            </div>
-            <div style={styles.tabBox}>
-              <TabBox 
-                setup={props.modalData.setup} 
-                resolution={props.modalData.resolution} 
-              />
-            </div>
-            <div
-              style={styles.storyDiv}
-            >
-              <Storyboard 
-                title='storyboard'
-                storyboards={props.modalData.storyboard}
-              />
-            </div>
-          </section>
-        );
-      default:
-        break;
+    // Switch label based on modal sent
+    const inputLabel = () => {
+      if (props.id === 'player-plots') {
+        return 'focused player';
+      } else {
+        return 'main adversary';
+      }
     }
 
+    return (
+      <section style={styles.modal} id='ModalLarge'>
+        <LabelInModal
+          title={props.title}
+        />
+        <div style={styles.mainAdversary}>
+          <InputAndLabel
+            label={inputLabel()}
+            value={storyIsArray ? '' : props.modalData.bigBad}
+          />
+        </div>
+        <div style={styles.objectives}>
+          <ListSmTall
+            title='objectives'
+            objectives={storyIsArray ? [] : props.modalData.objectives}
+          />
+        </div>
+        <div style={styles.tabBox}>
+          <TabBox
+            setup={storyIsArray ? '' : props.modalData.setup} 
+            resolution={storyIsArray ? '' : props.modalData.resolution} 
+          />
+        </div>
+        <div
+          style={styles.storyDiv}
+        >
+          <Storyboard
+            title='storyboard'
+            isArray={storyIsArray} 
+            storyboards={storyIsArray ? [] : props.modalData.storyboard}
+          />
+        </div>
+      </section>
+    );
+{
+    /*
+        switch (props.id) {
+          case 'main-story':
+            return (
+              <section style={styles.modal} id='ModalLarge'>
+                <LabelInModal
+                  title={props.title}
+                />
+                <div style={styles.mainAdversary}>
+                  <InputAndLabel
+                    label='main adversary'
+                    value={props.modalData.bigBad}
+                  />
+                </div>
+                <div style={styles.objectives}>
+                  <ListSmTall
+                    title='objectives'
+                    objectives={props.modalData.objectives}
+                  />
+                </div>
+                <div style={styles.tabBox}>
+                  <TabBox
+                    setup={props.modalData.setup}
+                    resolution={props.modalData.resolution}
+                  />
+                </div>
+                <div
+                  style={styles.storyDiv}
+                >
+                  <Storyboard
+                    title='storyboard'
+                    storyboards={props.modalData.storyboard}
+                  />
+                </div>
+              </section>
+            );
+          case 'side-story':
+            return (
+              <section style={styles.modal} id='ModalLarge'>
+                <LabelInModal
+                  title={props.title}
+                />
+                <div style={styles.mainAdversary}>
+                  <InputAndLabel
+                    label='main adversary'
+                    value={props.modalData.bigBad}
+                  />
+                </div>
+                <div style={styles.objectives}>
+                  <ListSmTall
+                    title='objectives'
+                    objectives={props.modalData.objectives}
+                  />
+                </div>
+                <div style={styles.tabBox}>
+                  <TabBox
+                    setup={props.modalData.setup}
+                    resolution={props.modalData.resolution}
+                  />
+                </div>
+                <div
+                  style={styles.storyDiv}
+                >
+                  <Storyboard
+                    title='storyboard'
+                    storyboards={props.modalData.storyboard}
+                  />
+                </div>
+              </section>
+            );
+          default:
+            break;
+        }
+        */
+      }
   }
 
   return (
@@ -103,7 +185,7 @@ export default function ModalLarge(props) {
       <div
         style={styles.modalBackdrop}
         onClick={(e) => {
-          if (props.openModal) {props.handleModalOpen()}
+          if (props.openModal) { props.handleModalOpen() }
         }}
       ></div>
       {switchModal()}

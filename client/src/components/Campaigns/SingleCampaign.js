@@ -73,7 +73,7 @@ export default function SingleCampaign(props) {
         switch (modalId) {
           case 'main-story':
             return 'main story'
-          case 'side-story':
+          case 'side-quests':
             return 'side story'
           default:
             break;
@@ -85,15 +85,18 @@ export default function SingleCampaign(props) {
         let data;
         switch (modalId) {
           case 'main-story':
-            data = props.campaign.story.find((story) => {
+            data = props.campaign.story.find(story => {
               return story.main;
             });
             return data;
-          case 'side-story':
-            data = props.campaign.story.map((story, index) => {
-              return story.side;
+          case 'side-quests':
+            data = props.campaign.story.flatMap(story => {
+              if (story.side) {
+                return story;
+              } else {
+                return [];
+              }
             });
-            console.log(data);
             return data
           default:
             break;

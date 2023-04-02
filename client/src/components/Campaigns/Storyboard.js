@@ -74,7 +74,7 @@ export default function Storyboard(props) {
         </div>
       </div>
       <article style={styles.listDiv} className='list-scroll'>
-        {props.storyboards.map((card, index) => {
+        {props.storyboards.flatMap((card, index) => {
           return (
             <article
               style={styles.listCard}
