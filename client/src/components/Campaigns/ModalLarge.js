@@ -37,7 +37,8 @@ export default function ModalLarge(props) {
     objectives: {
       gridColumn: '1 / span 2',
       gridRow: '3 / span 10',
-      marginLeft: '0.5rem'
+      marginLeft: '0.5rem',
+      marginBottom: '0.5rem'
     },
     tabBox: {
       gridColumn: '3 / span 4',
@@ -54,6 +55,8 @@ export default function ModalLarge(props) {
       border: '1px solid black'
     }
   }
+
+  console.log(props.modalData);
 
   // Render the modal based on the modalId sent
   const switchModal = () => {
@@ -85,8 +88,10 @@ export default function ModalLarge(props) {
             <div
               style={styles.storyDiv}
             >
-
-
+              <Storyboard 
+                title='storyboard'
+                storyboards={props.modalData.storyBoard}
+              />
             </div>
           </section>
         );
