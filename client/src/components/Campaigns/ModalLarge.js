@@ -39,7 +39,9 @@ export default function ModalLarge(props) {
               title={props.title}
             />
             <div style={styles.mainAdversary}>
-            <InputAndLabel />
+              <InputAndLabel 
+                value={props.modalData.bigBad}
+              />
             </div>
           </section>
         );

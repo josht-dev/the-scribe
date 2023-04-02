@@ -227,6 +227,42 @@ const campaignArray = [
           'the character has gone missing after the big explosion'
         ]
       },
+    ],
+    story: [
+      {
+        title: '',
+        timeline: '',
+        bigBad: 'Dr. Evil',
+        main: true,
+        side: false,
+        player: false,
+        storyBoard: [
+          {
+            type: 'general',
+            text: 'This is a general note for the gm to keep in mind',
+            inGameDate: '',
+            linkedCharacter: ''
+          },
+          {
+            type: 'adversary',
+            text: 'This adversary did a thing',
+            inGameDate: '',
+            linkedCharacter: '1'
+          },
+          {
+            type: 'organization',
+            text: 'This is a secret evil corporation!',
+            inGameDate: '',
+            linkedCharacter: ''
+          },
+        ],
+        objectives: [
+          'find the castle',
+          'save the princess'
+        ],
+        setup: 'This is the setup for the story.',
+        resolution: 'Here is how the story was resolved for later reference.'
+      }
     ]
   },
   {

@@ -72,6 +72,21 @@ export default function SingleCampaign(props) {
         }
       }
 
+      // Set the campaign data to send to ModalLarge
+      const modalData = () => {
+        switch (modalId) {
+          case 'main-story':
+            const data = props.campaign.story.find((story) => {
+              return story.main;
+            });
+            console.log('modalData function hit');
+            console.log(data);
+            return data;
+          default:
+            break;
+        }
+      }
+
       // Display modal with data appropriate to the user clicked
 
 
@@ -79,7 +94,8 @@ export default function SingleCampaign(props) {
       return (
         <ModalLarge 
           id={modalId}
-          title={title()}
+          title={title()} 
+          modalData={modalData()} 
         />
       );
 
