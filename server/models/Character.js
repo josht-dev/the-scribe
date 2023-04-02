@@ -10,7 +10,6 @@ const characterSchema = new Schema(
     },
     characterStatus: {
       type: String,
-      allowNull: true,
       maxLength: 50,
     },
     motivations: [
@@ -23,7 +22,6 @@ const characterSchema = new Schema(
     }],
     characterSheet: {
       type: String,
-      allowNull: true,
     },
     npc: {
       type: Boolean,

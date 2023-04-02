@@ -9,15 +9,16 @@ const {
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
+const mongoose = require("mongoose");
 
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find({}, "-password").sort({ createdAt: -1 });
+      return User.find({}).sort({ createdAt: -1 });
     },
     user: async (parent, { username }) => {
       console.info(username);
-      return await User.findOne({ path: { User: username } }, "-password")
+      return await User.findOne({ username }, "-password")
         .populate({ path: "userPosts" })
         .populate({ path: "profile" })
         .populate({ path: "campaigns" });
@@ -123,7 +124,6 @@ const resolvers = {
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
-
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
@@ -232,7 +232,8 @@ const resolvers = {
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { profiles: profile._id } }
+          { $addToSet: { profiles: profile._id } },
+          console.info(context.user)
         );
         return profile;
       }
@@ -309,14 +310,14 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
-      const character = await Character.create({ characterName, npc  });
+      const character = await Character.create({ characterName, npc });
       if (character) {
-          await Campaign.findOneAndUpdate(
-            { _id: campaignId },
-            { $addToSet: { characters: character._id } }
-          );
+        await Campaign.findOneAndUpdate(
+          { _id: campaignId },
+          { $addToSet: { characters: character._id } }
+        );
       }
-      return character
+      return character;
     },
     // start removes
     removeUser: async (parent, args, context) => {
@@ -398,12 +399,22 @@ const resolvers = {
     removeCharacter: async (parent, { characters, campaignId }) => {
       const removeCharacter = await Campaign.findOneAndUpdate(
         { _id: campaignId },
-        { $pull: { characters: {$in: [characters]} } },
+        { $pull: { characters: { $in: [characters] } } },
         { new: true }
       );
       return removeCharacter;
     },
-    modifyCharacter: async (parent, {characterName, characterStatus, motivations, characterNotes, characterSheet, characterId}) => {
+    modifyCharacter: async (
+      parent,
+      {
+        characterName,
+        characterStatus,
+        motivations,
+        characterNotes,
+        characterSheet,
+        characterId,
+      }
+    ) => {
       const character = await Character.findOneAndUpdate(
         { _id: characterId },
         {
@@ -411,18 +422,47 @@ const resolvers = {
             characterName: characterName,
             characterStatus: characterStatus,
             characterSheet: characterSheet,
-          },
-        },
-        {
-          $addToSet: {
             motivations: motivations,
             characterNotes: characterNotes,
           },
         },
         { new: true }
       );
-      return character
-    }
+      return character;
+    },
+    modifyUser: async (
+      parent,
+      { username, email, password, newPassword, userId },
+      context
+    ) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          { $set: { username: username, email: email } },
+          { new: true, runValidators: true }
+        );
+       if (!newPassword) {
+         return user;
+       }
+        const correctPw = await user.isCorrectPassword(password);
+        if (password === newPassword) {
+          return Error("new password must not be the same as the old one");
+        } else if (correctPw) {
+          const hashedPassword = await user.hashPassword(newPassword)
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { $set: { password: hashedPassword } },
+            { new: true, runValidators: true },
+          );
+              signToken(updatedUser);
+              console.info(updatedUser)
+          return updatedUser ;
+        } else {
+          throw new AuthenticationError("Incorrect credentials");
+        }
+        
+      }
+    },
   },
 };
 
