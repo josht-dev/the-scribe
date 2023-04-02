@@ -22,7 +22,7 @@ const headspaceArray = [
         _id: "1",
         title: "Can I get some help with loot distribution?",
         subject: "",
-        body: "",
+        body: "Here is a post",
         username: "",
         comments: [
             {
