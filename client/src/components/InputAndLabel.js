@@ -1,4 +1,3 @@
-import { useSlotProps } from '@mui/base';
 import React from 'react';
 
 const styles = {
@@ -11,7 +10,6 @@ const styles = {
   },
   input: {
     width: '100%',
-    
     border: '0.1rem solid #1CB9B3',
     borderRadius: '0.25rem',
     fontSize: '2rem',
@@ -32,8 +30,7 @@ export default function InputAndLabel(props) {
         type='text' 
         name='bigBad'
         id='bigBad' 
-        readOnly 
-        value={props.value}
+        defaultValue={props.value} 
       ></input>
     </>
   );
