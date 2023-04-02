@@ -4,7 +4,7 @@ import Button from './Button';
 
 const styles = {
   section: {
-    height: '50%',
+    height: '100%',
     zIndex: '99',
     display: 'flex',
     flexDirection: 'column',
@@ -18,12 +18,12 @@ const styles = {
   addBtnDiv: {
     marginLeft: 'auto',
     float: 'right',
-    flexShrink: '0',
+
     display: 'flex',
     paddingRight: '0.5rem',
     marginBottom: '0.25rem'
   },
-  listDivSm: {
+  listDivSmTall: {
     border: '1px solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
@@ -45,7 +45,7 @@ const styles = {
     height: '100%',
     margin: '0',
     padding: '0.25rem',
-    fontSize: '1.5rem',
+    fontSize: '1rem',
     resize: 'none',
     border: 'none',
     outline: 'none'
@@ -65,16 +65,16 @@ export default function ListSm(props) {
           />
         </div>
       </div>
-      <article style={styles.listDivSm} className='list-scroll'>
-        {props.characters.map(card => {
+      <article style={styles.listDivSmTall} className='list-scroll'>
+        {props.objectives.map((card, index) => {
           return (
             <article
               style={styles.listCardSm}
-              key={card._id}
+              key={index}
             >
               <textarea
                 style={styles.listCardSmTitle}
-                defaultValue={card.characterName}
+                defaultValue={card}
               ></textarea>
             </article>
           );
