@@ -60,6 +60,18 @@ export default function SingleCampaign(props) {
   // Tell ModalLarge which data to display
   const renderModal = () => {
     if (props.openModal) {
+
+      // Grab the title depending on btn used
+      const title = () => {
+        switch (modalId) {
+          case 'main-story':
+            return 'main story'
+        
+          default:
+            break;
+        }
+      }
+
       // Display modal with data appropriate to the user clicked
 
 
@@ -67,6 +79,7 @@ export default function SingleCampaign(props) {
       return (
         <ModalLarge 
           id={modalId}
+          title={title()}
         />
       );
 
