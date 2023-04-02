@@ -14,12 +14,15 @@ const styles = {
 export default function InputAndLabel(props) {
   return (
     <div>
-      <label>
-
+      <label
+        for='bigBad' 
+      >{props.title}
       </label>
       <input
         style={styles.input} 
-        type='text'
+        type='text' 
+        name='bigBad'
+        id='bigBad' 
         readOnly 
         value={props.value}
       ></input>
