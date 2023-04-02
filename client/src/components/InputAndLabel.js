@@ -10,7 +10,7 @@ const styles = {
     textTransform: 'capitalize'
   },
   input: {
-    width: '18.75rem',
+    width: '100%',
     height: '4rem',
     border: '0.1rem solid #1CB9B3',
     borderRadius: '0.25rem',
