@@ -90,7 +90,7 @@ export default function ModalLarge(props) {
             >
               <Storyboard 
                 title='storyboard'
-                storyboards={props.modalData.storyBoard}
+                storyboards={props.modalData.storyboard}
               />
             </div>
           </section>

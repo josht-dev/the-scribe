@@ -50,10 +50,7 @@ const styles = {
   },
 }
 
-
 export default function Storyboard(props) {
-
-console.log(props);
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
@@ -72,7 +69,16 @@ console.log(props);
         </div>
       </div>
       <article style={styles.listDivSm} className='list-scroll'>
-        
+        {props.storyboards.map(card => {
+          return (
+            <article
+              style={styles.listCardSm}
+              key={card._id}
+            >
+              <span style={styles.listCardSmTitle}>test</span>
+            </article>
+          );
+        })}
       </article>
 
     </section>
