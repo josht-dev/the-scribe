@@ -24,10 +24,11 @@ const styles = {
   textBox: {
     height: '80%',
   },
-  p: {
+  textarea: {
     border: '0.1rem solid #1CB9B3',
     borderRadius: '0.25rem',
     height: '100%',
+    width: '100%',
     margin: '0',
     padding: '0.25rem'
   },
@@ -35,24 +36,34 @@ const styles = {
 
 export default function TabBox(props) {
   // UseState and handle state function for tab switching
-  const [ isActive, setIsActive ] = useState(true);
+  const [isActive, setIsActive] = useState(true);
   const handleIsActive = () => setIsActive(!isActive);
 
   return (
     <article style={styles.article}>
       <div style={styles.titleBar}>
         <span
-          style={styles.leftTitle} 
-          onClick={handleIsActive} 
+          style={styles.leftTitle}
+          onClick={handleIsActive}
         >setup</span>
         <span
-          style={styles.rightTitle} 
-          onClick={handleIsActive} 
+          style={styles.rightTitle}
+          onClick={handleIsActive}
         >resolution</span>
       </div>
       <div style={styles.textBox}>
-      <p style={styles.p} className={isActive ? '' : 'hidden list-scroll'}>{props.setup}</p>
-      <p style={styles.p} className={isActive ? 'hidden list-scroll' : ''}>{props.resolution}</p>
+        <textarea
+          style={styles.textarea}
+          className={isActive ? '' : 'hidden'}
+          value={props.setup} 
+          onChange={() => {console.log('Add an onChange for user editing')}} 
+        ></textarea>
+        <textarea
+          style={styles.textarea}
+          className={isActive ? 'hidden' : ''}
+          value={props.resolution} 
+          onChange={() => {console.log('Add an onChange for user editing')}} 
+        ></textarea>
       </div>
     </article>
   );
