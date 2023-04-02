@@ -55,8 +55,6 @@ export default function ModalLarge(props) {
     }
   }
 
-  console.log(props.modalData);
-
   // Render the modal based on the modalId sent
   const switchModal = () => {
     switch (props.id) {
