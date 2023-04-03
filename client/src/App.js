@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,11 +13,10 @@ import {
   createRoutesFromElements,
   Outlet,
 } from "react-router-dom";
+import { Box } from "@mui/system";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import About from "./components/pages/About";
-import Login from "./components/Login";
-import Register from "./components/Register";
 import Account from "./components/pages/Account";
 import Campaigns from "./components/pages/Campaigns";
 import Headspace from "./components/pages/Headspace";
@@ -26,7 +25,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "../src/assets/css/App.css";
 
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  //add to client dot env
+  uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -46,14 +46,14 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const [open, setOpen] = React.useState(false);
-  const [registerOpen, setRegisterOpen] = React.useState(false);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route
         path="/"
-        element={<Root setOpen={setOpen} setRegisterOpen={setRegisterOpen} />}
+        element={
+          <Root />
+        }
       >
         <Route path="/account" element={<Account />} />
         <Route path="/campaigns" element={<Campaigns />} />
@@ -66,8 +66,6 @@ export default function App() {
 
   return (
     <>
-      <Login open={open} setOpen={setOpen} />
-      <Register open={registerOpen} setOpen={setRegisterOpen} />
       <ApolloProvider client={client}>
         <RouterProvider router={router} />
       </ApolloProvider>
@@ -75,14 +73,16 @@ export default function App() {
   );
 }
 
-const Root = ({ setOpen, setRegisterOpen }) => {
+const Root = () => {
   return (
     <>
-      {/* CssBaseline is just a css reset */}
-      <CssBaseline />
-      <Navbar setOpen={setOpen} setRegisterOpen={setRegisterOpen} />
-      <Outlet />
-      <Footer />
+      <Box className="App" sx={{ minHeight: "100vh" }}>
+        {/* CssBaseline is just a css reset */}
+        <CssBaseline />
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </Box>
     </>
   );
 };
