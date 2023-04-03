@@ -23,6 +23,7 @@ export default function Button(props) {
         id={props.id} 
         style={styles.titleBtn} 
         onClick={() => {
+          console.log('onclick hit for ' + props.id);
           props.handleModalId(props.id);
           props.handleModalOpen();
         }}

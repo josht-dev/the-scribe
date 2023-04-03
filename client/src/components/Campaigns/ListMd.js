@@ -18,10 +18,11 @@ const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'end',
-    paddingRight: '0.5rem'
+    paddingRight: '0.5rem',
+    fontSize: '0.75rem'
   },
   listDivMd: {
-    border: '1px solid #1CB9B3',
+    border: '0.1rem solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5'
@@ -61,7 +62,7 @@ export default function ListMd(props) {
         </div>
       </div>
       <article style={styles.listDivMd} className='list-scroll'>
-        {props.adventures.map(card => {
+        {props.adventures.flatMap(card => {
           return (
             <article
               style={styles.listCardMd}

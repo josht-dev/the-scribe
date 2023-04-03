@@ -55,10 +55,7 @@ const campaignArray = [
         characterStatus: 'missing',
         characterSheet: '',
         npc: false,
-        campaignId: [
-          1,
-          2
-        ],
+        campaignId: 1,
         motivations: [
           'Live life to the fullest',
           'Gain fame',
@@ -68,6 +65,17 @@ const campaignArray = [
           'Live life to the fullest',
         ],
         characterNotes: [
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
           'the character has gone missing after the big explosion'
         ]
       },
@@ -248,6 +256,46 @@ const campaignArray = [
         ],
         setup: 'This is the setup for the story.',
         resolution: 'Here is how the story was resolved for later reference.'
+      },
+      {
+        _id: '2',
+        title: '',
+        timeline: '',
+        bigBad: 'Dr. Evil side 1',
+        main: false,
+        side: true,
+        player: false,
+        storyboard: [
+          'This is a general note for the gm to keep in mind',
+          'This adversary did a thing',
+          'This is a secret evil corporation!',
+        ],
+        objectives: [
+          'find the castle',
+          'save the princess'
+        ],
+        setup: 'This is the setup for the story.',
+        resolution: 'Here is how the story was resolved for later reference.'
+      },
+      {
+        _id: '3',
+        title: '',
+        timeline: '',
+        bigBad: 'Dr. Evil side 2',
+        main: false,
+        side: true,
+        player: false,
+        storyboard: [
+          'This is a general note for the gm to keep in mind',
+          'This adversary did a thing',
+          'This is a secret evil corporation!',
+        ],
+        objectives: [
+          'find the castle',
+          'save the princess'
+        ],
+        setup: 'This is the setup for the story.',
+        resolution: 'Here is how the story was resolved for later reference.'
       }
     ]
   },
@@ -255,55 +303,82 @@ const campaignArray = [
     _id: 2,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 3,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 4,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 5,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 6,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 7,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 8,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 9,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
   {
     _id: 10,
     title: 'title',
     game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33'
+    modifiedAt: '2023-01-08 16:42:33',
+    adventures: [],
+    characters: [],
+    story: []
   },
 ];
 
@@ -389,7 +464,7 @@ function Campaigns() {
             <span style={styles.titleBtn}>campaigns</span>
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
-            {tabList.map(item => {
+            {tabList.flatMap(item => {
               return (<Tab
                 currentTab={currentTab}
                 handleTabChange={handleTabChange}

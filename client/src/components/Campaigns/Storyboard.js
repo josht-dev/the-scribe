@@ -22,17 +22,11 @@ const styles = {
     flexShrink: '0',
     display: 'flex',
     paddingRight: '0.5rem',
-    marginBottom: '0.25rem'
-  },
-  sortBtnDiv: {
-    float: 'right',
-    flexShrink: '0',
-    display: 'flex',
-    paddingRight: '0.5rem',
-    marginBottom: '0.25rem'
+    marginBottom: '0.25rem',
+    fontSize: '0.75rem'
   },
   listDiv: {
-    border: '1px solid #1CB9B3',
+    border: '0.1rem solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5',
@@ -74,7 +68,7 @@ export default function Storyboard(props) {
         </div>
       </div>
       <article style={styles.listDiv} className='list-scroll'>
-        {props.storyboards.map((card, index) => {
+        {props.storyboards.flatMap((card, index) => {
           return (
             <article
               style={styles.listCard}

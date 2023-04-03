@@ -18,13 +18,13 @@ const styles = {
   addBtnDiv: {
     marginLeft: 'auto',
     float: 'right',
-
     display: 'flex',
     paddingRight: '0.5rem',
-    marginBottom: '0.25rem'
+    marginBottom: '0.25rem',
+    fontSize: '0.75rem'
   },
   listDivSmTall: {
-    border: '1px solid #1CB9B3',
+    border: '0.1rem solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     flexGrow: 1,
     backgroundColor: '#F5F5F5',
@@ -66,7 +66,7 @@ export default function ListSm(props) {
         </div>
       </div>
       <article style={styles.listDivSmTall} className='list-scroll'>
-        {props.objectives.map((card, index) => {
+        {props.objectives.flatMap((card, index) => {
           return (
             <article
               style={styles.listCardSm}

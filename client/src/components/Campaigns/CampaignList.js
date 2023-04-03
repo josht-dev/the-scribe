@@ -3,7 +3,7 @@ import React from "react";
 // Styling object
 const styles = {
   listDivLarge: {
-    border: '1px solid #1CB9B3',
+    border: '0.1rem solid #1CB9B3',
     borderRadius: '0 0.25rem 0.25rem 0.25rem',
     margin: '0 0.5rem 0.5rem 0.5rem',
     height: '42.25rem',
@@ -74,7 +74,7 @@ export default function CampaignList(props) {
 
   return (
     <section style={styles.listDivLarge} className='list-scroll'>
-      {props.campaignArray.map(card => {
+      {props.campaignArray.flatMap(card => {
         return (
           <article
             style={styles.listCardLarge}
