@@ -422,7 +422,7 @@ const styles = {
 
 
 function Campaigns() {
-  const [tabList, setTabList] = useState([{ id: -1, campaignTitle: 'your campaigns' }]);
+  const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
 
   // Current selected tab state
   const [currentTab, setCurrentTab] = useState('-1');

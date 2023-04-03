@@ -32,7 +32,7 @@ export default function CampaignTabs(props) {
       data-campaignid={props.tab.id}
       onClick={onTabClick}
     >
-      {props.tab.campaignTitle}
+      {props.tab.title}
     </span>
   );
 }

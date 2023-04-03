@@ -52,7 +52,7 @@ export default function CampaignList(props) {
 
     const propObj = {
       id: id(),
-      campaignTitle: title()
+      title: title()
     }
 
     // Check if tab with campaignid/key already exists
