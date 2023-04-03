@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
 import Button from "../Campaigns/Button";
 import ListMd from "../Campaigns/ListMd";
-// import ListSm from "../Campaigns/ListSm";
-import ModalLarge from "../Campaigns/ModalLarge";
+
 
 // Component styles
 const styles = {
@@ -41,109 +40,18 @@ const styles = {
 };
 
 export default function SingleHeadspace(props) {
-  // Modal useState code
-  const [modalId, setModalId] = useState("none");
-  const handleModalId = (id) => setModalId(id);
-
-  const [openModal, setOpenModal] = useState(false);
-  // Handle opening/closing this modal
-  const handleModalOpen = () => {
-    setOpenModal(!openModal);
-  };
-
-  // Tell ModalLarge which data to display
-  const renderModal = () => {
-    if (openModal) {
-      // Grab the title depending on btn used
-      const title = () => {
-        switch (modalId) {
-          case "main-story":
-            return "main story";
-
-          default:
-            break;
-        }
-      };
-
-      // Set the campaign data to send to ModalLarge
-      const modalData = () => {
-        switch (modalId) {
-          case "main-story":
-            const data = props.campaign.story.find((story) => {
-              return story.main;
-            });
-            return data;
-          default:
-            break;
-        }
-      };
-
-      // Display modal with data appropriate to the user clicked
-
-      // REMOVE - temp/testing code
-      return (
-        <ModalLarge
-          id={modalId}
-          title={title()}
-          modalData={modalData()}
-          openModal={openModal}
-          handleModalOpen={handleModalOpen}
-        />
-      );
-    } else {
-      // Modal is closed
-      return;
-    }
-  };
-
+  console.log("props")
+  console.log(props)
   return (
     <>
-    {renderModal()}
-    <section style={styles.section} >
+      <section style={styles.section}>
         <div style={styles.titleLeft}>
           <TitleLarge
-            placeholder='headspace post title'
-            title={props.headspace.title}
+            placeholder="headspace post title"
+            title={props.headspaceArray.title}
           />
         </div>
-        <div style={styles.titleRight}>
-          <TitleLarge
-            placeholder='game system'
-            title={props.campaign.game}
-          />
-        </div>
-        <div style={styles.btnBar}>
-          <Button 
-            title='main story' 
-            id='main-story' 
-            handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}
-          />
-          <Button 
-            title='side quests' 
-            id='side-quests' 
-            handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}
-          />
-          <Button 
-            title='player plots' 
-            id='player-plots' 
-            handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}
-          />
-          <Button 
-            title='timeline' 
-            id='timeline' 
-            handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}
-          />
-        </div>
-        <section style={styles.adventureList}>
-          <ListMd 
-            adventures={props.campaign.adventures}
-          />
-        </section>
-    </section >
+      </section>
     </>
   );
 }

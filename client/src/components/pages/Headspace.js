@@ -141,7 +141,7 @@ const styles = {
 
 export default function Headspace() {
   const [tabList, setTabList] = useState([
-    { id: -1, campaignTitle: "Headspace" },
+    { id: -1, title: "Headspace" },
   ]);
 
   // Current selected tab state
@@ -152,13 +152,13 @@ export default function Headspace() {
 
   // Render main content modal/page
   const renderPage = () => {
-    if (currentTab === -1) {
+    if (currentTab == -1) {
       // Render the list of headspace posts
       return (
         <HeadspaceList
           tabList={tabList}
           setTabList={setTabList}
-          HeadspaceArray={headspaceArray}
+          headspaceArray={headspaceArray}
         />
       );
     } else {
@@ -167,7 +167,7 @@ export default function Headspace() {
         return item._id === currentTab;
       });
       // Render a single headspace post
-      return <SingleHeadspace campaign={headspaceArray[tabIndex]} />;
+      return <SingleHeadspace headspaceArray={headspaceArray[tabIndex]} />;
     }
   }
 
@@ -182,7 +182,7 @@ export default function Headspace() {
             <span style={styles.titleBtn}>Headspace</span>
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
-            {tabList.map(item => {
+            {tabList.flatMap(item => {
               return (<Tab
                 currentTab={currentTab}
                 handleTabChange={handleTabChange}

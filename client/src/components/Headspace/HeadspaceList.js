@@ -52,7 +52,7 @@ export default function HeadspaceList(props) {
 
     const propObj = {
       id: id(),
-      userPostTitle: title()
+      title: title()
     }
 
     // Check if tab with campaignid/key already exists
