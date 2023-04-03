@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import LabelInModal from './LabelInModal';
 import InputAndLabel from '../InputAndLabel';
 import ListSmTall from './ListSmTall';
@@ -31,6 +31,9 @@ export default function ModalLarge(props) {
       gridGap: '0.25rem'
     },
     optionalBtns: {
+      display: 'none' /*
+        props.id === 'player-plots' || props.id === 'side-quests'
+          ? 'initial' : 'none'*/,
       gridColumn: '2 / span 1',
       gridRow: '1 / span 1',
     },
@@ -75,6 +78,17 @@ export default function ModalLarge(props) {
       marginBottom: '0.5rem'
     }
   }
+
+  // TODO - FUTURE FEATURE TO ADD MULTIPLE SIDE STORIES AND PLAYER PLOTS
+  // Hold the useState for the dropdown of some modals
+  /*
+  const [ dropdown, setDropdown ] = useState([]);
+
+  const handleDropdown = () => {
+
+  }
+  */
+
   // If the props.modalData is an array, handle differently
   const storyIsArray = Array.isArray(props.modalData);
 

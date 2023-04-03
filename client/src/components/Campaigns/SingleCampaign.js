@@ -85,6 +85,8 @@ export default function SingleCampaign(props) {
       // Set the campaign data to send to ModalLarge
       const modalData = () => {
         let data;
+        // REMOVE THIS LATER
+        let oneStory;
         switch (modalId) {
           case 'main-story':
             // Check if story exists
@@ -111,6 +113,7 @@ export default function SingleCampaign(props) {
 
             return data;
           case 'side-quests':
+            // TODO - Set back to allow story array
             data = props.campaign.story.flatMap(story => {
               if (story.side) {
                 return story;
@@ -118,8 +121,26 @@ export default function SingleCampaign(props) {
                 return [];
               }
             });
-            return data;
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: true,
+                player: false,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return /*data*/ oneStory;
           case 'player-plots':
+            // TODO - Set back to allow story array
             data = props.campaign.story.flatMap(story => {
               if (story.player) {
                 return story;
@@ -127,7 +148,24 @@ export default function SingleCampaign(props) {
                 return [];
               }
             });
-            return data;
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: false,
+                player: true,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return /*data*/ oneStory;
           default:
             break;
         }
