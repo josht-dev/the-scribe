@@ -55,10 +55,15 @@ const styles = {
 }
 
 export default function ListSm(props) {
-
   // Check if this is a character
   const isCharacter = (props.type === 'pc' || props.type === 'npc')
     ? true : false;
+
+  // A useState to hold the character list and update
+  const [characters, setCharacters] = useState(props.characters);
+  const handleCharacter = (character) => {
+
+  };
 
   const cardOutput = (card) => {
     if (isCharacter) {
@@ -68,6 +73,11 @@ export default function ListSm(props) {
             style={styles.listCardSmTitle}
             defaultValue={card.characterName}
             readOnly
+            onClick={() => {
+              props.handleSetChar(props._id);
+              props.handleModalId(props.type);
+              props.handleModalOpen();
+            }}
           ></textarea>
         </>
       );
@@ -82,12 +92,6 @@ export default function ListSm(props) {
       );
     }
   }
-
-  // A useState to hold the character list and update
-  const [characters, setCharacters] = useState(props.characters);
-  const handleCharacter = (character) => {
-
-  };
 
   return (
     <section style={styles.section}>

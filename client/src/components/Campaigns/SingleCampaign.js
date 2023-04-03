@@ -53,6 +53,9 @@ export default function SingleCampaign(props) {
       pcs.push(char);
     }
   });
+  // A useState to old the currently selected character
+  const [currentChar, setCurrentChar] = useState('');
+  const handleSetChar = (id) => setCurrentChar(id);
 
   // Modal useState code
   const [modalId, setModalId] = useState('none');
@@ -67,7 +70,7 @@ export default function SingleCampaign(props) {
   // Tell ModalLarge which data to display
   const renderModal = () => {
     if (openModal) {
-
+      console.log(' renderModal hit for: ' + modalId);
       // Grab the title depending on btn used
       const title = () => {
         switch (modalId) {
@@ -76,12 +79,16 @@ export default function SingleCampaign(props) {
           case 'side-quests':
             return 'side story';
           case 'player-plots':
-            return 'player plots'
+            return 'player plots';
+          case 'pc':
+            return 'player character';
+          case 'npc':
+            return 'non-player character';
           default:
             break;
         }
       }
-
+      console.log('title = ' + title());
       // Set the campaign data to send to ModalLarge
       const modalData = () => {
         let data;
@@ -166,6 +173,16 @@ export default function SingleCampaign(props) {
             }
 
             return /*data*/ oneStory;
+          case 'pc':
+            data = props.campaign.characters.find(char => {
+              return char._id == currentChar;
+            });
+            return data;
+          case 'npc':
+            data = props.campaign.characters.find(char => {
+              return char._id == currentChar;
+            });
+            return data;
           default:
             break;
         }
@@ -178,6 +195,7 @@ export default function SingleCampaign(props) {
       return (
         <ModalLarge
           id={modalId}
+          characterid={currentChar}
           title={title()}
           modalData={modalData()}
           openModal={openModal}
@@ -211,17 +229,19 @@ export default function SingleCampaign(props) {
         <section style={styles.charactersContainer}>
           <ListSm
             title='player characters'
-            characters={pcs} 
-            type='pc' 
+            characters={pcs}
+            type='pc'
             openModal={openModal}
             handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar}
           />
           <ListSm
             title='non-player characters'
-            characters={npcs} 
-            type='npc' 
+            characters={npcs}
+            type='npc'
             openModal={openModal}
             handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar}
           />
         </section>
         <div style={styles.btnBar}>
@@ -233,21 +253,22 @@ export default function SingleCampaign(props) {
           />
           <Button
             title='side quests'
-            id='side-quests'
+            id='side-quests' 
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
           <Button
             title='player plots'
-            id='player-plots'
+            id='player-plots' 
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
           <Button
             title='future feature'
             id='timeline'
-            /*handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}*/
+            type='timeline' 
+          /*handleModalOpen={handleModalOpen}
+          handleModalId={handleModalId}*/
           />
         </div>
         <section style={styles.adventureList}>

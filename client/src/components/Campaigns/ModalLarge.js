@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import LabelInModal from './LabelInModal';
 import InputAndLabel from '../InputAndLabel';
 import ListSmTall from './ListSmTall';
@@ -7,6 +7,7 @@ import Storyboard from './Storyboard';
 import Button from './Button';
 
 export default function ModalLarge(props) {
+  console.log('modalLarge hit for: ' + props.id);
   // Component styling
   const styles = {
     modalBackdrop: {
@@ -83,17 +84,25 @@ export default function ModalLarge(props) {
   // Hold the useState for the dropdown of some modals
   /*
   const [ dropdown, setDropdown ] = useState([]);
-
-  const handleDropdown = () => {
-
-  }
+  const handleDropdown = () => {}
   */
 
+  // Is this a story from a campaign btn
+  const isStory = () => {
+    if (props.id === 'main-story' ||
+      props.id === 'side-quests' ||
+      props.id === 'player-plots') {
+      return true;
+    } else { return false }
+  }
   // If the props.modalData is an array, handle differently
   const storyIsArray = Array.isArray(props.modalData);
+  console.log('is story an array: ' + storyIsArray);
+  console.log('what is the type: ' + props.type);
 
-  // Render the modal based on the modalId sent
-  const switchModal = () => {
+  // Function to generate return data for the btn's on the single campaign page
+  const campaignBtns = () => {
+    console.log('campaignBtns hit');
     // Switch label based on modal sent
     const inputLabel = () => {
       if (props.id === 'player-plots') {
@@ -149,6 +158,13 @@ export default function ModalLarge(props) {
         </div>
       </section>
     );
+  }
+
+  // Render the modal based on the modalId sent
+  const switchModal = () => {
+    if (isStory()) {
+      return campaignBtns();
+    }
   }
 
   return (
