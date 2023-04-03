@@ -76,7 +76,7 @@ export default function SingleCampaign(props) {
           case 'side-quests':
             return 'side story';
           case 'player-plots':
-            return 'side story'
+            return 'player plots'
           default:
             break;
         }
