@@ -5,10 +5,9 @@ const storySchema = new Schema({
         type: String,
         required: true
   },
-  characters: [
+  objectives: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Character",
+      type:String
     },
   ],
   title: {
