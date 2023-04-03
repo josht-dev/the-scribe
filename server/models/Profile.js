@@ -9,12 +9,12 @@ const profileSchema = new Schema(
       maxLength: 150,
       required: true,
     },
-    // campaigns: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Campaign",
-    //   },
-    // ],
+    campaigns: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Campaign",
+      },
+    ],
     profileUser: {
       type: String,
       required: true,

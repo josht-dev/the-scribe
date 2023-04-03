@@ -9,7 +9,6 @@ const {
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
-const mongoose = require("mongoose");
 
 const resolvers = {
   Query: {
@@ -20,8 +19,7 @@ const resolvers = {
       console.info(username);
       return await User.findOne({ username }, "-password")
         .populate({ path: "userPosts" })
-        .populate({ path: "profile" })
-        .populate({ path: "campaigns" });
+        .populate({ path: "profile" });
     },
     userPosts: async () => {
       return UserPost.find()
@@ -46,9 +44,7 @@ const resolvers = {
         .populate({ path: "characters" });
     },
     stories: async () => {
-      return Story.find()
-        .sort({ createdAt: 1 })
-        .populate({ path: "characters" });
+      return Story.find().sort({ createdAt: 1 });
     },
     story: async (parent, { storyId }) => {
       return Story.findOne({ _id: storyId }).populate({ path: "characters" });
@@ -92,14 +88,10 @@ const resolvers = {
       });
     },
     adventures: async () => {
-      return Adventure.find()
-        .sort({ createdAt: 1 })
-        .populate({ path: "characters" });
+      return Adventure.find().sort({ createdAt: 1 });
     },
     adventure: async (parent, { adventureId }) => {
-      return Adventure.findOne({ _id: adventureId }).populate({
-        path: "characters",
-      });
+      return Adventure.findOne({ _id: adventureId });
     },
     individual: async (parent, args, context) => {
       if (context.user) {
@@ -232,8 +224,7 @@ const resolvers = {
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { profiles: profile._id } },
-          console.info(context.user)
+          { $addToSet: { profiles: profile._id } }
         );
         return profile;
       }
@@ -241,21 +232,26 @@ const resolvers = {
         "You must be logged in to view your profile!"
       );
     },
-    addCampaign: async (parent, { gameName, ruleSet, genre }, context) => {
-      if (context.user) {
-        const campaign = await Campaign.create({
-          profileUser: context.user.username,
-          gameName,
-          ruleSet,
-          genre,
-        });
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
+    addCampaign: async (
+      parent,
+      { gameName, ruleSet, genre, profileId },
+      context
+    ) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      const campaign = await Campaign.create({
+        gameName,
+        ruleSet,
+        genre,
+      });
+      if (campaign) {
+        await Profile.findOneAndUpdate(
+          { _id: profileId },
           { $addToSet: { campaigns: campaign._id } }
         );
-        return campaign;
       }
-      throw new AuthenticationError("You need to be logged in!");
+      return campaign;
     },
     addStory: async (
       parent,
@@ -370,6 +366,55 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+    removeProfile: async (parent, { profileId }, context) => {
+      if (context.user) {
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { profile: profileId } }
+        );
+        
+        const campId = await Profile.find({ _id: profileId }, "campaigns");
+        const storyArr = [];
+        const adventureArr = [];
+        const characterArr = [];
+        console.info(campId)
+        for (i = 0; i < campId[0].campaigns.length; i++) {
+          const storedArr = await Campaign.findOne(
+            { _id: campId[0].campaigns[i] },
+            "adventures characters storyOutline"
+          );
+          if (storedArr.storyOutline[0]) {
+            storedArr.storyOutline.forEach((x) => {
+              storyArr.push(x);
+            });
+          }
+          if (storedArr.adventures[0]) {
+            storedArr.adventures.forEach((x) => {
+              adventureArr.push(x);
+            });
+          }
+          if (storedArr.characters[0]) {
+            storedArr.characters.forEach((x) => {
+              characterArr.push(x);
+            });
+          }
+        }
+
+         await Campaign.deleteMany({
+           _id: { $in: campId },
+         });
+           await Profile.findOneAndDelete({
+             _id: profileId,
+           });
+         await Adventure.deleteMany({ _id: { $in: adventureArr } });
+         await Story.deleteMany({ _id: { $in: storyArr } });
+        
+         await Character.deleteMany({ _id: { $in: characterArr } });
+         
+        
+        return
+      }
+    },
     updateUserPost: async (parent, { userPostId, title, subject, body }) => {
       return await UserPost.findOneAndUpdate(
         { _id: userPostId },
@@ -441,27 +486,77 @@ const resolvers = {
           { $set: { username: username, email: email } },
           { new: true, runValidators: true }
         );
-       if (!newPassword) {
-         return user;
-       }
+        if (!newPassword) {
+          return user;
+        }
         const correctPw = await user.isCorrectPassword(password);
         if (password === newPassword) {
           return Error("new password must not be the same as the old one");
         } else if (correctPw) {
-          const hashedPassword = await user.hashPassword(newPassword)
+          const hashedPassword = await user.hashPassword(newPassword);
           const updatedUser = await User.findOneAndUpdate(
             { _id: userId },
             { $set: { password: hashedPassword } },
-            { new: true, runValidators: true },
+            { new: true, runValidators: true }
           );
-              signToken(updatedUser);
-              console.info(updatedUser)
-          return updatedUser ;
+          signToken(updatedUser);
+          return updatedUser;
         } else {
           throw new AuthenticationError("Incorrect credentials");
         }
-        
       }
+    },
+    modifyStory: async (
+      parent,
+      {
+        title,
+        timeline,
+        bigBad,
+        main,
+        side,
+        player,
+        storyBoard,
+        objectives,
+        storyId,
+      }
+    ) => {
+      const story = Story.findOneAndUpdate(
+        { _id: storyId },
+        {
+          $set: {
+            title: title,
+            timeline: timeline,
+            bigBad: bigBad,
+            main: main,
+            side: side,
+            player: player,
+            storyBoard: storyBoard,
+            objectives: objectives,
+          },
+        },
+        { new: true }
+      );
+      return story;
+    },
+    modifyAdventure: async (
+      parent,
+      { title, setup, resolution, notes, objectives, encounters, adventureId }
+    ) => {
+      const adventure = Adventure.findOneAndUpdate(
+        { _id: adventureId },
+        {
+          $set: {
+            title: title,
+            setup: setup,
+            resolution: resolution,
+            notes: notes,
+            objectives: objectives,
+            encounters: encounters,
+          },
+        },
+        { new: true }
+      );
+      return adventure;
     },
   },
 };
