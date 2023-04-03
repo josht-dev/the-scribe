@@ -18,10 +18,10 @@ const styles = {
   addBtnDiv: {
     marginLeft: 'auto',
     float: 'right',
-
     display: 'flex',
     paddingRight: '0.5rem',
-    marginBottom: '0.25rem'
+    marginBottom: '0.25rem',
+    fontSize: '0.75rem'
   },
   listDivSmTall: {
     border: '0.1rem solid #1CB9B3',

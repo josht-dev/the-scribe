@@ -18,7 +18,8 @@ const styles = {
     width: '100%',
     display: 'flex',
     justifyContent: 'end',
-    paddingRight: '0.5rem'
+    paddingRight: '0.5rem',
+    fontSize: '0.75rem'
   },
   listDivMd: {
     border: '0.1rem solid #1CB9B3',

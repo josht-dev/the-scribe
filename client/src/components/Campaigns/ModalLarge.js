@@ -4,6 +4,7 @@ import InputAndLabel from '../InputAndLabel';
 import ListSmTall from './ListSmTall';
 import TabBox from './TabBox';
 import Storyboard from './Storyboard';
+import Button from './Button';
 
 export default function ModalLarge(props) {
   // Component styling
@@ -28,6 +29,26 @@ export default function ModalLarge(props) {
       gridTemplateColumns: 'repeat(6, 1fr)',
       gridTemplateRows: 'repeat(12, 1fr)',
       gridGap: '0.25rem'
+    },
+    optionalBtns: {
+      gridColumn: '2 / span 1',
+      gridRow: '1 / span 1',
+    },
+    sortBtnDiv: {
+      float: 'left',
+      flexShrink: '0',
+      display: 'flex',
+      padding: '0.25rem',
+      margin: '0.5rem 0.5rem 0 0.5rem',
+      fontSize: '0.75rem'
+    },
+    addBtnDiv: {
+      float: 'right',
+      flexShrink: '0',
+      display: 'flex',
+      padding: '0.25rem',
+      margin: '0.5rem 0.5rem 0 0.5rem',
+      fontSize: '0.75rem'
     },
     mainAdversary: {
       gridColumn: '1 / span 2',
@@ -73,6 +94,18 @@ export default function ModalLarge(props) {
         <LabelInModal
           title={props.title}
         />
+        <div style={styles.optionalBtns}>
+          <div style={styles.addBtnDiv}>
+            <Button
+              title='+'
+            />
+          </div>
+          <div style={styles.sortBtnDiv}>
+            <Button
+              title='plots'
+            />
+          </div>
+        </div>
         <div style={styles.mainAdversary}>
           <InputAndLabel
             label={inputLabel()}
@@ -87,8 +120,8 @@ export default function ModalLarge(props) {
         </div>
         <div style={styles.tabBox}>
           <TabBox
-            setup={storyIsArray ? '' : props.modalData.setup} 
-            resolution={storyIsArray ? '' : props.modalData.resolution} 
+            setup={storyIsArray ? '' : props.modalData.setup}
+            resolution={storyIsArray ? '' : props.modalData.resolution}
           />
         </div>
         <div
@@ -96,7 +129,7 @@ export default function ModalLarge(props) {
         >
           <Storyboard
             title='storyboard'
-            isArray={storyIsArray} 
+            isArray={storyIsArray}
             storyboards={storyIsArray ? [] : props.modalData.storyboard}
           />
         </div>

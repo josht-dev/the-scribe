@@ -22,14 +22,8 @@ const styles = {
     flexShrink: '0',
     display: 'flex',
     paddingRight: '0.5rem',
-    marginBottom: '0.25rem'
-  },
-  sortBtnDiv: {
-    float: 'right',
-    flexShrink: '0',
-    display: 'flex',
-    paddingRight: '0.5rem',
-    marginBottom: '0.25rem'
+    marginBottom: '0.25rem',
+    fontSize: '0.75rem'
   },
   listDiv: {
     border: '0.1rem solid #1CB9B3',
