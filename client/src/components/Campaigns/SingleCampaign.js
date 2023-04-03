@@ -53,6 +53,11 @@ export default function SingleCampaign(props) {
       pcs.push(char);
     }
   });
+  // A useState to old the currently selected character
+  const [currentChar, setCurrentChar] = useState('');
+  const handleSetChar = (id) => {
+    setCurrentChar(id) 
+  };
 
   // Modal useState code
   const [modalId, setModalId] = useState('none');
@@ -67,24 +72,115 @@ export default function SingleCampaign(props) {
   // Tell ModalLarge which data to display
   const renderModal = () => {
     if (openModal) {
-
       // Grab the title depending on btn used
       const title = () => {
         switch (modalId) {
           case 'main-story':
-            return 'main story'
-        
+            return 'main story';
+          case 'side-quests':
+            return 'side story';
+          case 'player-plots':
+            return 'player plots';
+          case 'pc':
+            return 'player character';
+          case 'npc':
+            return 'non-player character';
           default:
             break;
         }
       }
-
       // Set the campaign data to send to ModalLarge
       const modalData = () => {
+        let data;
+        // REMOVE THIS LATER
+        let oneStory;
         switch (modalId) {
           case 'main-story':
-            const data = props.campaign.story.find((story) => {
-              return story.main;
+            // Check if story exists
+            if (props.campaign.story[0]) {
+              data = props.campaign.story.find(story => {
+                return story.main;
+              });
+            } else {
+              // TODO - Check back when connected to backend
+              // for empty _id field for story[{_id: ??}]
+              data = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: true,
+                side: false,
+                player: false,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return data;
+          case 'side-quests':
+            // TODO - Set back to allow story array
+            data = props.campaign.story.flatMap(story => {
+              if (story.side) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: true,
+                player: false,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return /*data*/ oneStory;
+          case 'player-plots':
+            // TODO - Set back to allow story array
+            data = props.campaign.story.flatMap(story => {
+              if (story.player) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: false,
+                player: true,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return /*data*/ oneStory;
+          case 'pc':
+            data = props.campaign.characters.find(char => {
+              return char._id == currentChar;
+            });
+            return data;
+          case 'npc':
+            data = props.campaign.characters.find(char => {
+              return char._id == currentChar;
             });
             return data;
           default:
@@ -97,12 +193,13 @@ export default function SingleCampaign(props) {
 
       // REMOVE - temp/testing code
       return (
-        <ModalLarge 
+        <ModalLarge
           id={modalId}
-          title={title()} 
-          modalData={modalData()} 
-          openModal={openModal} 
-          handleModalOpen={handleModalOpen} 
+          characterid={currentChar}
+          title={title()}
+          modalData={modalData()}
+          openModal={openModal}
+          handleModalOpen={handleModalOpen}
         />
       );
 
@@ -115,8 +212,8 @@ export default function SingleCampaign(props) {
 
   return (
     <>
-    {renderModal()}
-    <section style={styles.section} >
+      {renderModal()}
+      <section style={styles.section} >
         <div style={styles.titleLeft}>
           <TitleLarge
             placeholder='campaign title'
@@ -130,47 +227,58 @@ export default function SingleCampaign(props) {
           />
         </div>
         <section style={styles.charactersContainer}>
-          <ListSm 
+          <ListSm
             title='player characters'
-            characters={pcs} 
+            characters={pcs}
+            type='pc'
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
           />
-          <ListSm 
-            title='non-player characters' 
-            characters={npcs} 
+          <ListSm
+            title='non-player characters'
+            characters={npcs}
+            type='npc'
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
           />
         </section>
         <div style={styles.btnBar}>
-          <Button 
-            title='main story' 
-            id='main-story' 
+          <Button
+            title='main story'
+            id='main-story'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
-          <Button 
-            title='side quests' 
+          <Button
+            title='side quests'
             id='side-quests' 
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
-          <Button 
-            title='player plots' 
+          <Button
+            title='player plots'
             id='player-plots' 
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
-          <Button 
-            title='timeline' 
-            id='timeline' 
-            handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}
+          <Button
+            title='future feature'
+            id='timeline'
+            type='timeline' 
+          /*handleModalOpen={handleModalOpen}
+          handleModalId={handleModalId}*/
           />
         </div>
         <section style={styles.adventureList}>
-          <ListMd 
+          <ListMd
             adventures={props.campaign.adventures}
           />
         </section>
-    </section >
+      </section >
     </>
   );
 }

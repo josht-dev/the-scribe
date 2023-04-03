@@ -4,7 +4,7 @@ const styles = {
   titleInput: {
     width: '100%',
     height: '4.5rem',
-    border: '1px solid #1CB9B3',
+    border: '0.1rem solid #1CB9B3',
     borderRadius: '0.25rem',
     textTransform: 'uppercase',
     fontSize: '2.25rem',
