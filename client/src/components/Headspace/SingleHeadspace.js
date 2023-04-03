@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
 import Button from "../Campaigns/Button";
 import ListMd from "../Campaigns/ListMd";
-
+import TextField from "@mui/material/TextField";
 
 // Component styles
 const styles = {
@@ -40,8 +40,6 @@ const styles = {
 };
 
 export default function SingleHeadspace(props) {
-  console.log("props")
-  console.log(props)
   return (
     <>
       <section style={styles.section}>
@@ -50,6 +48,14 @@ export default function SingleHeadspace(props) {
             placeholder="headspace post title"
             title={props.headspaceArray.title}
           />
+        </div>
+        <div>
+          {/* <TextField
+          id="outlined-multiline-flexible"
+          label="userPost"
+          rows={4}
+          defaultValue={props.headspaceArray.body}
+          /> */}
         </div>
       </section>
     </>
