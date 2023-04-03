@@ -72,8 +72,10 @@ export default function SingleCampaign(props) {
       const title = () => {
         switch (modalId) {
           case 'main-story':
-            return 'main story'
+            return 'main story';
           case 'side-quests':
+            return 'side story';
+          case 'player-plots':
             return 'side story'
           default:
             break;
@@ -106,7 +108,7 @@ export default function SingleCampaign(props) {
                 resolution: '',
               };
             }
-            
+
             return data;
           case 'side-quests':
             data = props.campaign.story.flatMap(story => {
@@ -116,7 +118,16 @@ export default function SingleCampaign(props) {
                 return [];
               }
             });
-            return data
+            return data;
+          case 'player-plots':
+            data = props.campaign.story.flatMap(story => {
+              if (story.player) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            return data;
           default:
             break;
         }
@@ -127,12 +138,12 @@ export default function SingleCampaign(props) {
 
       // REMOVE - temp/testing code
       return (
-        <ModalLarge 
+        <ModalLarge
           id={modalId}
-          title={title()} 
-          modalData={modalData()} 
-          openModal={openModal} 
-          handleModalOpen={handleModalOpen} 
+          title={title()}
+          modalData={modalData()}
+          openModal={openModal}
+          handleModalOpen={handleModalOpen}
         />
       );
 
@@ -145,8 +156,8 @@ export default function SingleCampaign(props) {
 
   return (
     <>
-    {renderModal()}
-    <section style={styles.section} >
+      {renderModal()}
+      <section style={styles.section} >
         <div style={styles.titleLeft}>
           <TitleLarge
             placeholder='campaign title'
@@ -160,47 +171,47 @@ export default function SingleCampaign(props) {
           />
         </div>
         <section style={styles.charactersContainer}>
-          <ListSm 
+          <ListSm
             title='player characters'
-            characters={pcs} 
+            characters={pcs}
           />
-          <ListSm 
-            title='non-player characters' 
-            characters={npcs} 
+          <ListSm
+            title='non-player characters'
+            characters={npcs}
           />
         </section>
         <div style={styles.btnBar}>
-          <Button 
-            title='main story' 
-            id='main-story' 
+          <Button
+            title='main story'
+            id='main-story'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
-          <Button 
-            title='side quests' 
-            id='side-quests' 
+          <Button
+            title='side quests'
+            id='side-quests'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
-          <Button 
-            title='player plots' 
-            id='player-plots' 
+          <Button
+            title='player plots'
+            id='player-plots'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
-          <Button 
-            title='timeline' 
-            id='timeline' 
+          <Button
+            title='timeline'
+            id='timeline'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
         </div>
         <section style={styles.adventureList}>
-          <ListMd 
+          <ListMd
             adventures={props.campaign.adventures}
           />
         </section>
-    </section >
+      </section >
     </>
   );
 }
