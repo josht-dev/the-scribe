@@ -74,7 +74,7 @@ export default function ListSm(props) {
             defaultValue={card.characterName}
             readOnly
             onClick={() => {
-              props.handleSetChar(props._id);
+              props.handleSetChar(card._id);
               props.handleModalId(props.type);
               props.handleModalOpen();
             }}

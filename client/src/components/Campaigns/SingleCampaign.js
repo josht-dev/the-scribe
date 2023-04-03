@@ -55,7 +55,9 @@ export default function SingleCampaign(props) {
   });
   // A useState to old the currently selected character
   const [currentChar, setCurrentChar] = useState('');
-  const handleSetChar = (id) => setCurrentChar(id);
+  const handleSetChar = (id) => {
+    setCurrentChar(id) 
+  };
 
   // Modal useState code
   const [modalId, setModalId] = useState('none');
@@ -70,7 +72,6 @@ export default function SingleCampaign(props) {
   // Tell ModalLarge which data to display
   const renderModal = () => {
     if (openModal) {
-      console.log(' renderModal hit for: ' + modalId);
       // Grab the title depending on btn used
       const title = () => {
         switch (modalId) {
@@ -88,7 +89,6 @@ export default function SingleCampaign(props) {
             break;
         }
       }
-      console.log('title = ' + title());
       // Set the campaign data to send to ModalLarge
       const modalData = () => {
         let data;
@@ -233,7 +233,8 @@ export default function SingleCampaign(props) {
             type='pc'
             openModal={openModal}
             handleModalOpen={handleModalOpen}
-            handleSetChar={handleSetChar}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
           />
           <ListSm
             title='non-player characters'
@@ -241,7 +242,8 @@ export default function SingleCampaign(props) {
             type='npc'
             openModal={openModal}
             handleModalOpen={handleModalOpen}
-            handleSetChar={handleSetChar}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
           />
         </section>
         <div style={styles.btnBar}>

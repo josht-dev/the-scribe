@@ -5,9 +5,9 @@ import ListSmTall from './ListSmTall';
 import TabBox from './TabBox';
 import Storyboard from './Storyboard';
 import Button from './Button';
+import TitleLarge from './TitleLarge';
 
 export default function ModalLarge(props) {
-  console.log('modalLarge hit for: ' + props.id);
   // Component styling
   const styles = {
     modalBackdrop: {
@@ -54,10 +54,22 @@ export default function ModalLarge(props) {
       margin: '0.5rem 0.5rem 0 0.5rem',
       fontSize: '0.75rem'
     },
+    removeBtnDiv: {
+      float: 'right',
+      gridColumn: '6 / span 1',
+      gridRow: '1 / span 1',
+      padding: '0.25rem',
+      fontSize: '0.75rem'
+    },
     mainAdversary: {
       gridColumn: '1 / span 2',
       gridRow: '2 / span 1',
       marginLeft: '0.5rem'
+    },
+    charName: {
+      gridColumn: '1 / span 3',
+      gridRow: '2 / span 1',
+      padding: '0 0.5rem'
     },
     objectives: {
       gridColumn: '1 / span 2',
@@ -67,18 +79,91 @@ export default function ModalLarge(props) {
     },
     tabBox: {
       gridColumn: '3 / span 4',
-      gridRow: '1 / span 3',
+      gridRow: '3 / span 10',
       marginRight: '0.5rem',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      marginBottom: '1.2rem'
     },
     storyDiv: {
       gridColumn: '3 / span 4',
       gridRow: '4 / span 9',
       marginRight: '0.5rem',
       marginBottom: '0.5rem'
+    },
+    statusDiv: {
+      gridColumn: '4 / span 3',
+      gridRow: '2 / span 1'
+    },
+    section: {
+      height: '95%',
+      width: '100%'
+    },
+    titleBar: {
+      width: '100%',
+      height: '1.5rem',
+      margin: '0.25rem 0',
+      display: 'flex',
+      textAlign: 'center'
+    },
+    rightTitle: {
+      borderLeft: '0.1rem solid #1CB9B3',
+      width: '50%'
+    },
+    leftTitle: {
+      borderRight: '0.1rem solid #1CB9B3',
+      width: '50%'
+    },
+    charNotesDiv: {
+      height: '100%',
+      border: '0.1rem solid #1CB9B3',
+      borderRadius: '0.25rem',
+      flexGrow: 1,
+      backgroundColor: '#F5F5F5',
+    },
+    noteCards: {
+      
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap'
+    },
+    addNote: {
+      float: 'right',
+      marginLeft: 'auto',
+      display: 'flex',
+      paddingRight: '0.5rem',
+      marginBottom: '0.25rem',
+      fontSize: '0.75rem'
+    },
+    listCardSm: {
+      backgroundColor: '#fff',
+      boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+      borderRadius: '0.25rem',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      margin: '0.25rem',
+      height: '20%',
+      width: '48%',
+      border: '1px solid black'
+    },
+    listCardSmTitle: {
+      width: '100%',
+      height: '100%',
+      margin: '0',
+      padding: '0.25rem',
+      fontSize: '1rem',
+      resize: 'none',
+      border: 'none',
+      outline: 'none'
     }
   }
+
+  // Needed for the character notes / character sheet
+  // UseState and handle state function for tab switching
+  const [isActive, setIsActive] = useState(true);
+  const handleIsActive = () => setIsActive(!isActive);
 
   // TODO - FUTURE FEATURE TO ADD MULTIPLE SIDE STORIES AND PLAYER PLOTS
   // Hold the useState for the dropdown of some modals
@@ -97,8 +182,13 @@ export default function ModalLarge(props) {
   }
   // If the props.modalData is an array, handle differently
   const storyIsArray = Array.isArray(props.modalData);
-  console.log('is story an array: ' + storyIsArray);
-  console.log('what is the type: ' + props.type);
+
+  // Is this a character
+  const isCharacter = () => {
+    if (props.id === 'pc' || props.id === 'npc') {
+      return true;
+    } else { return false }
+  }
 
   // Function to generate return data for the btn's on the single campaign page
   const campaignBtns = () => {
@@ -160,10 +250,94 @@ export default function ModalLarge(props) {
     );
   }
 
+  // Function to generate return data for the character card clicked
+  const characterClick = () => {
+    return (
+      <section style={styles.modal} id='ModalLarge'>
+        <LabelInModal
+          title={props.title}
+        />
+        <div style={styles.removeBtnDiv}>
+          <Button
+            title='remove'
+          />
+        </div>
+        <div style={styles.charName}>
+          <TitleLarge
+            title={props.modalData.characterName}
+            placeholder={'character name'}
+          />
+        </div>
+        <div style={styles.statusDiv}>
+          <InputAndLabel
+            label='character status'
+            value={props.modalData.characterStatus}
+          />
+        </div>
+        <div style={styles.objectives}>
+          <ListSmTall
+            title='motivations'
+            objectives={props.modalData.motivations}
+          />
+        </div>
+        <div style={styles.tabBox}>
+          <section style={styles.section}>
+            <div style={styles.titleBar}>
+              <span
+                style={styles.leftTitle}
+                className={isActive ? 'selectTabBox' : ''}
+                onClick={handleIsActive}
+              >character notes</span>
+              <span
+                style={styles.rightTitle}
+                className={isActive ? '' : 'selectTabBox'}
+                onClick={handleIsActive}
+              >character sheet</span>
+              <div style={styles.addNote}>
+                <Button
+                  title='+'
+                />
+              </div>
+            </div>
+            <article 
+            style={styles.charNotesDiv}
+            className={isActive ? 'list-scroll' : 'hidden list-scroll'}
+            >
+              <div style={styles.noteCards} >
+              {props.modalData.characterNotes.flatMap((card, index) => {
+                return (
+                  <article
+                    style={styles.listCardSm}
+                    key={index}
+                  >
+                    <textarea
+                      style={styles.listCardSmTitle}
+                      defaultValue={card}
+                    ></textarea>
+                  </article>
+                );
+              })}
+              </div>
+            </article>
+            <article
+            className={isActive ? 'hidden list-scroll' : 'list-scroll'}
+            >
+            <span style={styles.listCardSm}>COMING SOON</span>
+            </article>
+          </section>
+        </div>
+
+      </section>
+    );
+  }
+
   // Render the modal based on the modalId sent
   const switchModal = () => {
     if (isStory()) {
       return campaignBtns();
+    }
+    if (isCharacter()) {
+      return characterClick();
     }
   }
 

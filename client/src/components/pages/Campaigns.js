@@ -55,10 +55,7 @@ const campaignArray = [
         characterStatus: 'missing',
         characterSheet: '',
         npc: false,
-        campaignId: [
-          1,
-          2
-        ],
+        campaignId: 1,
         motivations: [
           'Live life to the fullest',
           'Gain fame',
@@ -68,6 +65,17 @@ const campaignArray = [
           'Live life to the fullest',
         ],
         characterNotes: [
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
+          'the character has gone missing after the big explosion',
           'the character has gone missing after the big explosion'
         ]
       },
