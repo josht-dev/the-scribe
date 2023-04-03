@@ -211,11 +211,17 @@ export default function SingleCampaign(props) {
         <section style={styles.charactersContainer}>
           <ListSm
             title='player characters'
-            characters={pcs}
+            characters={pcs} 
+            type='pc' 
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
           />
           <ListSm
             title='non-player characters'
-            characters={npcs}
+            characters={npcs} 
+            type='npc' 
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
           />
         </section>
         <div style={styles.btnBar}>
@@ -238,10 +244,10 @@ export default function SingleCampaign(props) {
             handleModalId={handleModalId}
           />
           <Button
-            title='timeline'
+            title='future feature'
             id='timeline'
-            handleModalOpen={handleModalOpen}
-            handleModalId={handleModalId}
+            /*handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}*/
           />
         </div>
         <section style={styles.adventureList}>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LabelListSm from './LabelListSm';
 import Button from './Button';
 
+// Component styling
 const styles = {
   section: {
     height: '50%',
@@ -54,6 +55,40 @@ const styles = {
 }
 
 export default function ListSm(props) {
+
+  // Check if this is a character
+  const isCharacter = (props.type === 'pc' || props.type === 'npc')
+    ? true : false;
+
+  const cardOutput = (card) => {
+    if (isCharacter) {
+      return (
+        <>
+          <textarea
+            style={styles.listCardSmTitle}
+            defaultValue={card.characterName}
+            readOnly
+          ></textarea>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <textarea
+            style={styles.listCardSmTitle}
+            defaultValue={card.characterName}
+          ></textarea>
+        </>
+      );
+    }
+  }
+
+  // A useState to hold the character list and update
+  const [characters, setCharacters] = useState(props.characters);
+  const handleCharacter = (character) => {
+
+  };
+
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
@@ -73,10 +108,7 @@ export default function ListSm(props) {
               style={styles.listCardSm}
               key={card._id}
             >
-              <textarea
-                style={styles.listCardSmTitle}
-                defaultValue={card.characterName}
-              ></textarea>
+              {cardOutput(card)}
             </article>
           );
         })}
