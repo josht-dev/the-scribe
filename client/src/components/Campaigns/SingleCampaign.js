@@ -85,9 +85,28 @@ export default function SingleCampaign(props) {
         let data;
         switch (modalId) {
           case 'main-story':
-            data = props.campaign.story.find(story => {
-              return story.main;
-            });
+            // Check if story exists
+            if (props.campaign.story[0]) {
+              data = props.campaign.story.find(story => {
+                return story.main;
+              });
+            } else {
+              // TODO - Check back when connected to backend
+              // for empty _id field for story[{_id: ??}]
+              data = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: true,
+                side: false,
+                player: false,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+            
             return data;
           case 'side-quests':
             data = props.campaign.story.flatMap(story => {
