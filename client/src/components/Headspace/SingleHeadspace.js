@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
+import { useQuery } from "@apollo/client";
+import { QUERY_SINGLE_USERPOST } from "../utils/queries";
 
 // Component styles
 const styles = {
@@ -58,7 +60,8 @@ const styles = {
 };
 
 export default function SingleHeadspace(props) {
-  console.log(props);
+  const { data } = useQuery(QUERY_SINGLE_USERPOST);
+  const userPost = data?.userPost || [];
   return (
     <>
       <section style={styles.section}>
@@ -66,7 +69,7 @@ export default function SingleHeadspace(props) {
           {/* Post Title */}
           <TitleLarge
             placeholder="headspace post title"
-            title={props.headspaceArray.title}
+            title={userPost.title}
           />
         </div>
         {/* Headspace Post Body (Column 1 of the Grid) */}
@@ -75,12 +78,12 @@ export default function SingleHeadspace(props) {
             <textarea
               style={styles.postInput}
               type="text"
-              defaultValue={props.headspaceArray.body}
+              defaultValue={userPost.body}
             ></textarea>
           </div>
           {/* Comments */}
           {/* <div style={styles.commentSection}>
-            {props.headspaceArray.comments.map((card) => {
+            {props.userPosts.comments.map((card) => {
               <div style={styles.commentCard} key={card._id}>
                 <textarea defaultValue={card.commentBody}></textarea>
               </div>;
