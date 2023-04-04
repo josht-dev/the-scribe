@@ -65,7 +65,10 @@ export default function ListSm(props) {
     const newList = list.concat(
       { _id: itemId, characterName: 'IM NEW!' }
     );
+    console.log('old');
+    console.log(props.characters);
     setList(newList);
+    console.log(props.characters);
   };
 
   // Check if this is a character

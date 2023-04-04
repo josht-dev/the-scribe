@@ -98,7 +98,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    user(username: String!): User
+    user: User
     userPosts: [UserPost]!
     userPost(userPostId: ID!): UserPost
     campaigns: [Campaign]!
