@@ -72,7 +72,7 @@ const styles = {
       <section style={styles.section}>
       <div>
         <span style={styles.titleBtn}>Contact Us</span>
-        <div style={styles.inputSection}>
+          <div style={styles.inputSection}>
           <input style={styles.inputName} type="name" placeholder="Name">
           </input>
           <input style={styles.inputEmail} type="email" placeholder="Email">
