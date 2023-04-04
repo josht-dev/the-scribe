@@ -4,7 +4,7 @@ import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
 import { gql, useQuery } from "@apollo/client";
-import { QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries'
+import { QUERY_CAMPAIGNS, QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries'
 import { InMemoryCache } from '@apollo/client';
 
 
@@ -406,7 +406,8 @@ const styles = {
 
 
 function Campaigns() {
-
+const { loading, data } = useQuery(QUERY_CAMPAIGNS);
+const campaigns = data?.campaigns || [];
 let test = Auth.getProfile();
 
 console.log(test);
@@ -459,7 +460,7 @@ console.log(test.data.args._doc);
   const handleTabChange = (tab) => setCurrentTab(tab);
 
   // Pulling list into a variable so it can be added to and saved
-  const initialList = campaignArray;
+  const initialList = campaigns;
   const [allCampaigns, setAllCampaigns] = useState([]);
   useEffect(() => { setAllCampaigns(initialList) }, []);
 
