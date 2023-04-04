@@ -268,7 +268,6 @@ export default function SingleCampaign(props) {
           <Button
             title='future feature'
             id='timeline'
-            type='timeline' 
           /*handleModalOpen={handleModalOpen}
           handleModalId={handleModalId}*/
           />

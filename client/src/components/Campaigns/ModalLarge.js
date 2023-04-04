@@ -251,16 +251,21 @@ export default function ModalLarge(props) {
 
   // Function to generate return data for the character card clicked
   const characterClick = () => {
+
+    // TODO - Add this btn back later with an onClick
+    /*
+    <div style={styles.removeBtnDiv}>
+          <Button
+            title='remove'
+          />
+        </div>
+    */
+
     return (
       <section style={styles.modal} id='ModalLarge'>
         <LabelInModal
           title={props.title}
         />
-        <div style={styles.removeBtnDiv}>
-          <Button
-            title='remove'
-          />
-        </div>
         <div style={styles.charName}>
           <TitleLarge
             title={props.modalData.characterName}

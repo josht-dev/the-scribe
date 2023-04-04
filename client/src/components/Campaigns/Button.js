@@ -17,16 +17,46 @@ const styles = {
 };
 
 export default function Button(props) {
-  return (
-    <div style={styles.titleDiv}>
-      <span 
-        id={props.id} 
-        style={styles.titleBtn} 
-        onClick={() => {
-          props.handleModalId(props.id);
-          props.handleModalOpen();
-        }}
-      >{props.title}</span>
-    </div>
-  );
+  // Output btns depending on type sent over in prop
+  const isMainBtn = (
+    props.id === 'main-story' ||
+    props.id === 'side-quests' ||
+    props.id === 'player-plots'
+  )
+    ? true : false;
+
+  // Different ouptut for different buttons
+  if (isMainBtn) {
+    return (
+      <div style={styles.titleDiv}>
+        <span
+          id={props.id}
+          style={styles.titleBtn}
+          onClick={() => {
+            props.handleModalId(props.id);
+            props.handleModalOpen();
+          }}
+        >{props.title}</span>
+      </div>
+    );
+  } else if (props.id === 'timeline') {
+    // Timeline is a future feature
+    return (
+      <div style={styles.titleDiv}>
+        <span
+          id={props.id}
+          style={styles.titleBtn}
+        >{props.title}</span>
+      </div>
+    );
+  } else {
+    return (
+      <div style={styles.titleDiv}>
+        <span
+          id={props.id}
+          style={styles.titleBtn}
+        >{props.title}</span>
+      </div>
+    );
+  }
 }
