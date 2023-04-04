@@ -3,6 +3,13 @@ import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
+import { gql, useQuery } from "@apollo/client";
+import { QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries'
+import { InMemoryCache } from '@apollo/client';
+
+
+import Auth from '../../utils/auth';
+
 
 // Testing data
 const campaignArray = [
@@ -396,7 +403,53 @@ const styles = {
 };
 
 
+
+
 function Campaigns() {
+
+let test = Auth.getProfile();
+
+console.log(test);
+console.log('test data');
+console.log(test.data.args._doc);
+
+
+// const { loading, data } = useQuery(QUERY_THOUGHTS);
+//   const thoughts = data?.thoughts || [];
+
+  // const { todo } = client.readQuery({
+  //   query: READ_TODO,
+  //   // Provide any required variables in this object.
+  //   // Variables of mismatched types will return `null`.
+  //   variables: {
+  //     id: 5,
+  //   },
+  // });
+//   const { data, loading, error } = useQuery(QUERY_USERS);
+
+// function getUser() {
+//   return useQuery(QUERY_USERS);
+// }
+//     const user = useQuery(QUERY_USERS);
+//     //console.log('user query');
+//     //console.log(user);
+
+
+  // const { loading, error, data } = useQuery(GET_DOGS);
+  // const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
+  //   variables: { breed },
+  // });
+  
+  
+ //const profileId = user.data.user.profile[0]._id;
+ ////console.log(profileId);
+
+  //const profile = useQuery(QUERY_SINGLE_PROFILE, {profileId: 'toasterrage'});
+ 
+  //console.log(profile);
+
+
+
   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
 
   // Current selected tab state
@@ -412,12 +465,12 @@ function Campaigns() {
 
   // test
   //let allCampaigns = initialList;
-  console.log('initial allcampaign data');
-  console.log(allCampaigns);
+  //console.log('initial allcampaign data');
+  //console.log(allCampaigns);
   // const setAllCampaigns = (data) => {
   //   allCampaigns = data;
-  //   console.log('new all campaign data');
-  //   console.log(allCampaigns);
+  //   //console.log('new all campaign data');
+  //   //console.log(allCampaigns);
   // }
 
   // The onClick for adding new items
@@ -440,10 +493,10 @@ function Campaigns() {
   //const [currentCampaign, setCurrentCampaign] = useState();
   let currentCampaign = useRef('');
   // const setCurrentCampaign = (id) => {currentCampaign = id}
-  console.log('currentCampaign: ' + currentCampaign.current);
+  //console.log('currentCampaign: ' + currentCampaign.current);
   const handleCurrentCampaign = (data) => {
-    console.log('setting current campaign');
-    console.log(data);
+    //console.log('setting current campaign');
+    //console.log(data);
     // setCurrentCampaign(data);
     currentCampaign = data;
   }
@@ -454,7 +507,7 @@ function Campaigns() {
   /*The data obj takes a value to update or an array to update*/
   const handleSave = () => {
     // Get current data
-    console.log(currentCampaign);
+    //console.log(currentCampaign);
 
     //let newCampaign = 
     // update story array
@@ -489,8 +542,8 @@ function Campaigns() {
       }
       // Set current campaign
       handleCurrentCampaign(data);
-      console.log('check current campaign data');
-      console.log(currentCampaign);
+      //console.log('check current campaign data');
+      //console.log(currentCampaign);
       return <SingleCampaign
         campaign={data}
       />

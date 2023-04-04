@@ -15,11 +15,14 @@ const resolvers = {
     users: async () => {
       return User.find({}).sort({ createdAt: -1 });
     },
-    user: async (parent, { username }) => {
-      return await User.findOne({ username }, "-password")
+    user: async (parent, args, context) => {
+      if(context.user) {
+        return await User.findOne({ username: context.user.username }, "-password")
         .populate({ path: "userPosts" })
         .populate({ path: "profile" });
-    },
+    }
+      }
+      ,
     userPosts: async () => {
       return UserPost.find()
         .sort({ createdAt: 1 })
@@ -106,6 +109,7 @@ const resolvers = {
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
+
       const token = signToken(user);
         
       if (user) {
@@ -121,7 +125,17 @@ const resolvers = {
       // return { token, user };
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email })
+      .populate({ path: "profile" })
+
+      const profile = await Profile.findOne({_id: user.profile[0]._id})
+        .populate({path: 'campaigns'});
+
+      const campaignArr = await Campaign.find({_id: { $in: profile.campaigns }})
+      // .populate({path: 'campaigns'});
+
+      user[campaignArr] = campaignArr;
+        console.info(user);
 
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
@@ -134,6 +148,7 @@ const resolvers = {
       }
 
       const token = signToken(user);
+      console.log(token);
 
       return { token, user };
     },
