@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
@@ -388,6 +388,11 @@ const styles = {
     margin: '0.5rem 0',
     padding: '.5rem 1.5rem',
   },
+  saveBtnDiv: {
+    fontSize: '1rem',
+    margin: '0.5rem 0',
+    padding: '.5rem 1.5rem',
+  }
 };
 
 
@@ -400,24 +405,68 @@ function Campaigns() {
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
 
-// Pulling list into a variable so it can be added to
-const initialList = campaignArray;
-const [list, setList] = useState(initialList);
-// The onClick for adding new items
-const handleAdd = () => {
-  // Deal with needing an unique id while item has not been added to db yet
-  const itemId = `none-${list.length++}`;
-  const newList = list.concat({ 
-    _id: itemId,
-    title: 'new campaign!',
-    game: 'game time',
-    modifiedAt: '',
-    adventures: [],
-    characters: [],
-    story: []
-  });
-  setList(newList);
-};
+  // Pulling list into a variable so it can be added to and saved
+  const initialList = campaignArray;
+  const [allCampaigns, setAllCampaigns] = useState([]);
+  useEffect(() => { setAllCampaigns(initialList) }, []);
+
+  // test
+  //let allCampaigns = initialList;
+  console.log('initial allcampaign data');
+  console.log(allCampaigns);
+  // const setAllCampaigns = (data) => {
+  //   allCampaigns = data;
+  //   console.log('new all campaign data');
+  //   console.log(allCampaigns);
+  // }
+
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    const itemId = `none-${allCampaigns.length++}`;
+    const newList = allCampaigns.concat({
+      _id: itemId,
+      title: 'new campaign!',
+      game: 'game time',
+      modifiedAt: '',
+      adventures: [],
+      characters: [],
+      story: []
+    });
+    setAllCampaigns(newList);
+    setCurrentTab(currentTab);
+  };
+
+  //const [currentCampaign, setCurrentCampaign] = useState();
+  let currentCampaign = useRef('');
+  // const setCurrentCampaign = (id) => {currentCampaign = id}
+  console.log('currentCampaign: ' + currentCampaign.current);
+  const handleCurrentCampaign = (data) => {
+    console.log('setting current campaign');
+    console.log(data);
+    // setCurrentCampaign(data);
+    currentCampaign = data;
+  }
+
+
+
+  // Update campaign with saved data
+  /*The data obj takes a value to update or an array to update*/
+  const handleSave = () => {
+    // Get current data
+    console.log(currentCampaign);
+
+    //let newCampaign = 
+    // update story array
+
+    // update adventures array
+
+    // update characters array
+
+    // update entire campaign
+
+
+  }
 
   // Render main content modal/page
   const renderPage = () => {
@@ -426,37 +475,50 @@ const handleAdd = () => {
       return <CampaignList
         tabList={tabList}
         setTabList={setTabList}
-        campaignArray={campaignArray}
-        list={list}
+        campaignArray={allCampaigns}
+        list={allCampaigns}
       />
     } else {
       let data;
       // Get data for currentTab
-      for (const x in list) {
-        if (list[x]._id == currentTab) {
-           data = list[x];
-           break;
+      for (const x in allCampaigns) {
+        if (allCampaigns[x]._id == currentTab) {
+          data = allCampaigns[x];
+          break;
         }
       }
-      console.log(data);
-
+      // Set current campaign
+      handleCurrentCampaign(data);
+      console.log('check current campaign data');
+      console.log(currentCampaign);
       return <SingleCampaign
         campaign={data}
       />
-
-      // const tabIndex = list.findIndex((item, index) => {
-        
-      //   console.log('tabIndex find hit');
-      //   console.log(currentTab);
-      //   console.log(item);
-      //   console.log('array meth index: ' + index);
-      //   return item._id == currentTab;
-      // });
-      // Render a single campaign
-      // return <SingleCampaign
-      //   campaign={list[tabIndex]}
-      // />
     }
+  }
+
+  // Render a save btn when on a campaign
+  function SaveBtn() {
+    // this btn should only rentder on single campaign pages
+    if (currentTab != -1) {
+      return (
+        <div>
+        <div
+          style={styles.addBtnDiv}
+          onClick={() => {
+            handleSave()
+          }}
+        >
+          <Button
+            title='save'
+          />
+        </div>
+        </div>
+      );
+    } else {
+      return (<></>)
+    }
+
   }
 
   // Return the large modal/page
@@ -476,9 +538,9 @@ const handleAdd = () => {
             >
               <Button
                 title='new'
-                adventure={true}
               />
             </div>
+            <SaveBtn />
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
             {tabList.flatMap(item => {
