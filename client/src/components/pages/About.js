@@ -7,7 +7,7 @@ import LinkedInLogo from "../../assets/icons/linkedin-logo.svg";
 const devArray = [
   {
     id: 0,
-    campaignTitle: "ARTIE",
+    title: "ARTIE",
     gitHub: "https://github.com/artiecannv",
     linkedIn: "https://www.linkedin.com/in/arthur-cann-62b213248/",
     about:
@@ -15,7 +15,7 @@ const devArray = [
   },
   {
     id: 1,
-    campaignTitle: "BRENDAN",
+    title: "BRENDAN",
     gitHub: "https://github.com/loudwhisperer",
     linkedIn: "https://www.linkedin.com/in/brendan-borowski-886813230",
     about: "I am a young Full Stack Programmer self-taught and a recent graduate from the University of Denver Full Stack Bootcamp. I come from humble roots in South Florida and at a young age on my own dime all over America seeking out the ways different geographies ebb and flow. Long time game designer, I have spent my life playing and writing tabletop RPG's in the pursuit of fun inclusive times had with friends and will continue to dedicate my time and attention too both pursuits.",
@@ -23,14 +23,14 @@ const devArray = [
   //! Get Christin's LinkedIn Profile 
   {
     id: 2,
-    campaignTitle: "CHRISTIN",
+    title: "CHRISTIN",
     gitHub: "https://github.com/porkchoppy/",
     linkedIn: "https://www.linkedin.com/in/christin-carter-04a92544/",
     about: "I live in Longmont, CO with my two children and a plethora of various animals. Hobbies I enjoy include cooking, cross stitch, keeping exotic pets, and lifting weights. Having worked in administration/management for the bulk of my adult life, I decided to pursue a career switch with a web development bootcamp. It was there I found my love of SQL databases and I look forward to furthering my education and skillset. I love that coding is ever-evolving and there is always something new to learn.",
   },
   {
     id: 3,
-    campaignTitle: "JOSH",
+    title: "JOSH",
     gitHub: "https://github.com/josht-dev",
     linkedIn: "https://www.linkedin.com/in/joshua-taylor-43ab14145",
     about: "My name is Josh Taylor, and I am originally from Tulsa, OK. My wife and I moved to Longmont, CO, in 2019 and never looked back! We love hiking with our 2 pups in the mountains and playing board games with friends. During the pandemic, I realized I had lost interest in my quality assurance job and started to contemplate other prospects. While I have a solid eye for detail that helps me in the QA role, I wanted to participate in the creation of something a bit more. Thus, in 2023 I will complete a certification in full-stack development. I am told that my strongest values are being honest, patient, and detail-oriented. I look forward to applying these values at my next opportunity!",
