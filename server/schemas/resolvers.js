@@ -16,7 +16,6 @@ const resolvers = {
       return User.find({}).sort({ createdAt: -1 });
     },
     user: async (parent, { username }) => {
-      console.info(username);
       return await User.findOne({ username }, "-password")
         .populate({ path: "userPosts" })
         .populate({ path: "profile" });
@@ -108,25 +107,34 @@ const resolvers = {
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
-      return { token, user };
+        
+      if (user) {
+        const profile = await Profile.create({
+          profileUser: user.username,
+        })
+        await User.findOneAndUpdate(
+          { _id: user._id },
+          { $addToSet: { profile: profile._id } }
+        )
+        return { token, user, profile };
+      }
+      // return { token, user };
     },
     login: async (parent, { email, password }) => {
-      
       const user = await User.findOne({ email });
- 
+
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
-      
+
       const correctPw = await user.isCorrectPassword(password);
-         
+
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-      
-        
+
       const token = signToken(user);
-       
+
       return { token, user };
     },
     addUserPost: async (parent, { title, body, subject }, context) => {
@@ -218,16 +226,15 @@ const resolvers = {
     //    }
     //    throw new AuthenticationError("You need to be logged in!");
     // },
-    addProfile: async (parent, { about }, context) => {
+    addProfile: async (parent, args, context) => {
       if (context.user) {
         const profile = await Profile.create({
           profileUser: context.user.username,
-          about,
         });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { profiles: profile._id } }
+          { $addToSet: { profile: profile._id } }
         );
         return profile;
       }
@@ -237,7 +244,7 @@ const resolvers = {
     },
     addCampaign: async (
       parent,
-      { gameName, ruleSet, genre, profileId },
+      { gameName, profileId },
       context
     ) => {
       if (!context.user) {
@@ -245,8 +252,6 @@ const resolvers = {
       }
       const campaign = await Campaign.create({
         gameName,
-        ruleSet,
-        genre,
       });
       if (campaign) {
         await Profile.findOneAndUpdate(
@@ -284,12 +289,11 @@ const resolvers = {
 
       throw new Error("No story found by that name!!");
     },
-    addAdventure: async (parent, { title, campaign, campaignId }, context) => {
+    addAdventure: async (parent, { title, campaignId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("You need to be logged in!");
       }
       const adventure = await Adventure.create({
-        campaign,
         title,
       });
       if (adventure) {
@@ -376,12 +380,12 @@ const resolvers = {
           { _id: context.user._id },
           { $pull: { profile: profileId } }
         );
-        
+
         const campId = await Profile.find({ _id: profileId }, "campaigns");
         const storyArr = [];
         const adventureArr = [];
         const characterArr = [];
-        console.info(campId)
+        console.info(campId);
         for (i = 0; i < campId[0].campaigns.length; i++) {
           const storedArr = await Campaign.findOne(
             { _id: campId[0].campaigns[i] },
@@ -404,19 +408,18 @@ const resolvers = {
           }
         }
 
-         await Campaign.deleteMany({
-           _id: { $in: campId },
-         });
-           await Profile.findOneAndDelete({
-             _id: profileId,
-           });
-         await Adventure.deleteMany({ _id: { $in: adventureArr } });
-         await Story.deleteMany({ _id: { $in: storyArr } });
-        
-         await Character.deleteMany({ _id: { $in: characterArr } });
-         
-        
-        return
+        await Campaign.deleteMany({
+          _id: { $in: campId },
+        });
+        await Profile.findOneAndDelete({
+          _id: profileId,
+        });
+        await Adventure.deleteMany({ _id: { $in: adventureArr } });
+        await Story.deleteMany({ _id: { $in: storyArr } });
+
+        await Character.deleteMany({ _id: { $in: characterArr } });
+
+        return;
       }
     },
     updateUserPost: async (parent, { userPostId, title, subject, body }) => {

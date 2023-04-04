@@ -13,129 +13,128 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation AddUser($username: String!, $email: String!, $password: String!) {
+  mutation addUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
         username
+        profile {
+          _id
+        }
       }
     }
   }
 `;
 
 export const ADD_USERPOST = gql`
-  mutation addUserPost($title: String!, $body: String!, $username: String!) {
-    addUserPost(title: $title, body: $body, username: $username) {
-      title
-      body
-      user {
-        _id
-        username
-      }
-    }
-  }
-`;
-
-export const ADD_COMMENT = gql`
-  mutation addComment($commentBody: String!, $userPostId: ID!) {
-    addComment(commentBody: $commentBody, userPostId: $userPostId) {
+  mutation addUserPost($title: String!, $body: String!, $subject: String!) {
+    addUserPost(title: $title, body: $body, subject: $subject) {
       _id
-      commentBody
-      userPost {
-        _id
-      }
+      body
+      subject
+      title
+      username
     }
   }
 `;
 
-export const ADD_REACTION = gql`
-  mutation addReaction($commentId: ID!, $reactionBody: String!) {
-    addReaction(commentId: $commentId, reactionBody: $reactionBody) {
-      comments {
-        _id
-      }
-      reactionBody
-    }
-  }
-`;
+//future dev
+// export const ADD_COMMENT = gql`
+//   mutation addComment($commentBody: String!, $userPostId: ID!) {
+//     addComment(commentBody: $commentBody, userPostId: $userPostId) {
+//       _id
+//       commentBody
+//       userPost {
+//         _id
+//       }
+//     }
+//   }
+// `;
+
+// export const ADD_REACTION = gql`
+//   mutation addReaction($commentId: ID!, $reactionBody: String!) {
+//     addReaction(commentId: $commentId, reactionBody: $reactionBody) {
+//       comments {
+//         _id
+//       }
+//       reactionBody
+//     }
+//   }
+// `;
 
 export const ADD_PROFILE = gql`
-  mutation addProfile($username: String!, $about: String!) {
-    addProfile(username: $username, about: $about) {
-      user {
-        _id
-        username
-      }
+  mutation addProfile($about: String) {
+    addProfile(about: $about) {
+      _id
       about
+      profilePicture
+      profileUser
     }
   }
 `;
 
 export const ADD_CAMPAIGN = gql`
-  mutation addCampaign(
-    $profileId: ID!
-    $gameName: String!
-    $ruleSet: String!
-    $genre: String!
-  ) {
-    addCampaign(
-      profileId: $profileId
-      gamename: $gameName
-      ruleSet: $ruleSet
-      genre: $genre
-    ) {
-      profile {
-        _id
-      }
+  mutation addCampaign($gameName: String!, $profileId: ID!) {
+    addCampaign(gameName: $gameName, profileId: $profileId) {
+      _id
       gameName
-      ruleSet
-      genre
     }
   }
 `;
 
 export const ADD_STORY = gql`
   mutation addStory(
-    $campaignId: ID!
-    $main: String!
-    $side: String!
-    $player: String!
-    $title: String!
+    $title: String
+    $main: Boolean
+    $side: Boolean
+    $player: Boolean
+    $campaignId: ID
   ) {
     addStory(
-      campaignId: $campaignId
+      title: $title
       main: $main
       side: $side
       player: $player
-      title: $title
+      campaignId: $campaignId
     ) {
-      campaign {
-        _id
-      }
+      _id
+      bigBad
+      campaign
       main
-      side
+      objectives
       player
+      side
+      storyBoard
+      timeline
       title
     }
   }
 `;
 
 export const ADD_ADVENTURE = gql`
-  mutation addAdventure($campaignId: ID!, $title: String!) {
-    addAdventure(campaignId: $campaignId, title: $title) {
-      campaign {
-        _id
-      }
+  mutation addAdventure($title: String!, $campaignId: ID!) {
+    addAdventure(title: $title, campaignId: $campaignId) {
+      _id
       title
     }
   }
 `;
 
 export const ADD_CHARACTER = gql`
-  mutation addCharacter($characterName: String!) {
-    addCharacter(characterName: $characterName) {
+  mutation AddCharacter(
+    $characterName: String!
+    $npc: Boolean!
+    $campaignId: ID!
+  ) {
+    addCharacter(
+      characterName: $characterName
+      npc: $npc
+      campaignId: $campaignId
+    ) {
+      _id
       characterName
+      npc
     }
   }
 `;
