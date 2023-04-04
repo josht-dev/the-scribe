@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
+import Button from '../Campaigns/Button';
 
 // Testing data
 const campaignArray = [
@@ -423,7 +424,15 @@ const styles = {
   tabContainer: {
     margin: '0.5rem 0.5rem 0 0.5rem',
     display: 'flex'
-  }
+  },
+  addBtnDiv: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'start',
+    fontSize: '1rem',
+    margin: '0.5rem 0',
+    padding: '.5rem 1.5rem',
+  },
 };
 
 
@@ -453,7 +462,7 @@ function Campaigns() {
         return item._id == currentTab;
       });
       // Render a single campaign
-      return <SingleCampaign 
+      return <SingleCampaign
         campaign={campaignArray[tabIndex]}
       />
     }
@@ -461,13 +470,24 @@ function Campaigns() {
 
   // Return the large modal/page
   return (
-    <main 
-      style={styles.container} 
+    <main
+      style={styles.container}
     >
       <section style={styles.section}>
         <>
           <div style={styles.titleDiv}>
             <span style={styles.titleBtn}>campaigns</span>
+            <div
+              style={styles.addBtnDiv}
+              onClick={() => {
+          
+              }}
+            >
+              <Button
+                title='new'
+                adventure={true}
+              />
+            </div>
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
             {tabList.flatMap(item => {
