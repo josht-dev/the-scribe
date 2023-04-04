@@ -27,6 +27,30 @@ const styles = {
       "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
     borderRadius: "0.25rem",
     color: "#fff",
+    display: "flex",
+  },
+  inputName: {
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    display: "flex",
+    padding: "0.5rem", 
+    margin: "2rem",
+  },
+  inputEmail: {
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    display: "flex",
+    padding: "0.5rem",
+    margin: "2rem",
+  },
+  inputMessage: {
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    display: "flex",
+    padding: "0.5rem"
   },
   submitButton: {
     margin: "0.5rem",
@@ -35,9 +59,8 @@ const styles = {
     backgroundColor: "#1CB9B3",
     boxShadow:
       "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
-    borderRadius: "0.25rem",
-    color: "#fff",
-  }, 
+      color: "#fff",
+  }
   };
   
   function Contact() {
@@ -46,11 +69,11 @@ const styles = {
       <section style={styles.section}>
       <div>
         <span style={styles.titleBtn}>Contact Us</span>
-          <input type="name" placeholder="Name" id="name">
+          <input style={styles.inputName} type="name" placeholder="Name">
           </input>
-          <input type="email" placeholder="Email" id="email">
+          <input style={styles.inputEmail} type="email" placeholder="Email">
           </input>
-          <input type="message" id="message">
+          <input style={styles.inputMessage} type="message" id="message">
           </input>
           <button style={styles.submitButton}>Submit</button>
       </div>
