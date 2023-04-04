@@ -111,19 +111,22 @@ const resolvers = {
       return { token, user };
     },
     login: async (parent, { email, password }) => {
+      
       const user = await User.findOne({ email });
-
+ 
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
+      
       const correctPw = await user.isCorrectPassword(password);
-
+         
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
       }
-
+      
+        
       const token = signToken(user);
-
+       
       return { token, user };
     },
     addUserPost: async (parent, { title, body, subject }, context) => {
@@ -316,41 +319,42 @@ const resolvers = {
       return character;
     },
     // start removes
-    removeUser: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findOneAndDelete({
-          username: context.user.username,
-        });
-        if (user) {
-          const profile = await Profile.findOneAndDelete({
-            username: context.user.profile,
-          });
-          if (profile) {
-            const campaign = await Campaign.findOneAndDelete({
-              campaigns: context.user.campaigns,
-            });
-            if (campaign) {
-              const story = await Story.findOneAndDelete({
-                campaignId: campaign.storyOutline,
-              });
-            }
-            if (campaign) {
-              const character = await Character.findOneAndDelete({
-                campaignId: campaign.characters,
-              });
-            }
-            if (campaign) {
-              const adventure = await Adventure.findOneAndDelete({
-                campaignId: campaign.adventures,
-              });
-            }
-          }
-        }
-        return User.findOneAndDelete({
-          username: context.user.username,
-        });
-      }
-    },
+    // for future dev
+    // removeUser: async (parent, args, context) => {
+    //   if (context.user) {
+    //     const user = await User.findOneAndDelete({
+    //       username: context.user.username,
+    //     });
+    //     if (user) {
+    //       const profile = await Profile.findOneAndDelete({
+    //         username: context.user.profile,
+    //       });
+    //       if (profile) {
+    //         const campaign = await Campaign.findOneAndDelete({
+    //           campaigns: context.user.campaigns,
+    //         });
+    //         if (campaign) {
+    //           const story = await Story.findOneAndDelete({
+    //             campaignId: campaign.storyOutline,
+    //           });
+    //         }
+    //         if (campaign) {
+    //           const character = await Character.findOneAndDelete({
+    //             campaignId: campaign.characters,
+    //           });
+    //         }
+    //         if (campaign) {
+    //           const adventure = await Adventure.findOneAndDelete({
+    //             campaignId: campaign.adventures,
+    //           });
+    //         }
+    //       }
+    //     }
+    //     return User.findOneAndDelete({
+    //       username: context.user.username,
+    //     });
+    //   }
+    // },
     removeUserPost: async (parent, { userPostId }, context) => {
       if (context.user) {
         const userPost = await UserPost.findOneAndDelete({
