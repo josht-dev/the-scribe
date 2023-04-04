@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9d2185ad.css",
+    "main.js": "/static/js/main.cdcc5646.js",
+    "static/media/background-img.svg": "/static/media/background-img.62610350f67bd42da9c0.svg",
+    "static/media/the-scribe-logo 1.svg": "/static/media/the-scribe-logo 1.294ea4736bb436b5c9d248287bff0916.svg",
+    "static/media/github-logo.svg": "/static/media/github-logo.f167be160676080e7fda8d214f64b2af.svg",
+    "static/media/donate-icon.svg": "/static/media/donate-icon.8f324f8f9f91374c7e1c930ce5c3d39f.svg",
+    "static/media/devs-icon.svg": "/static/media/devs-icon.6e9f2b8bd5a6f74a753d0bb6f2533319.svg",
+    "static/media/contact-icon.svg": "/static/media/contact-icon.69a26d783d5772cc6343f6352e63eb5d.svg",
+    "static/media/linkedin-logo.svg": "/static/media/linkedin-logo.917b471ccaf259da109723b57d872feb.svg",
+    "index.html": "/index.html",
+    "main.9d2185ad.css.map": "/static/css/main.9d2185ad.css.map",
+    "main.cdcc5646.js.map": "/static/js/main.cdcc5646.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9d2185ad.css",
+    "static/js/main.cdcc5646.js"
+  ]
+}

@@ -2,9 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const adventureSchema = new Schema(
   {
-    campaignId: {
-      type: Schema.Types.ObjectId,
-      ref: "Campaign",
+    
+    campaign: {
+      type: String,
+      required: true
     },
     title: {
       type: String,
@@ -26,12 +27,13 @@ const adventureSchema = new Schema(
         type: String,
       },
     ],
-    characters: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Character",
-      },
-    ],
+    //for future use
+    // characters: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Character",
+    //   },
+    // ],
     encounters: [
       {
         type: String,

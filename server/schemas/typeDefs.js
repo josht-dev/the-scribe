@@ -6,16 +6,16 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    userPosts(userPostId: ID!): UserPost
+    userPosts: [UserPost]!
+    profile: [Profile]!
   }
 
   type UserPost {
-    _id: ID
-    title: String
-    subject: String
-    body: String
-    createdAt: Date
-    username(userId: ID!): User
+    _id: ID!
+    title: String!
+    subject: String!
+    body: String!
+    username: String!
     comments: [Comment]!
   }
 
@@ -26,90 +26,81 @@ const typeDefs = gql`
 
   type Comment {
     _id: ID
-    postId(userPostId: ID!): UserPost
     commentBody: String
-    username(userId: ID!): User
-    createdAt: Date
-    reactions: [reactionSchema]!
+    commentWriter: String
   }
 
   type Reaction {
     _id: ID
-    reactionId(commentId: ID!): Comment
     reactionBody: String
-    username(userId: ID!): User
-    createdAt: Date
+    reactionWriter: String
   }
 
   type Profile {
     _id: ID
     about: String
-    campaigns(campaignId: ID!): Campaigns
-    username(userId: ID!): User
+    profileUser: String
     profilePicture: String
+    campaigns: [Campaign]
   }
 
   type Campaign {
     _id: ID
     gameName: String
     ruleSet: String
-    createdAt: Date
     genre: String
-    notes: String
-    storyOutline(storyId: ID!): Story
-    adventures(adventureId: ID!): Adventure
-    characters(characterId: ID!): Character
+    notes: [String]
+    storyOutline: [Story]
+    adventures: [Adventure]
+    characters: [Character]
+    currentDateInGame: String
   }
 
   type Story {
     _id: ID
-    campaignId(campaignId: ID!): Campaign
-    characters(characterId: ID!): Character
+    campaign: String
+    objectives: [String]
     timeline: String
     bigBad: String
     main: Boolean
     side: Boolean
     player: Boolean
-    storyBoard: String
+    storyBoard: [String]
     title: String
   }
 
   type Character {
+    _id: ID
     characterName: String
     characterStatus: String
-    motivations: String
-    characterNotes: String
+    motivations: [String]
+    characterNotes: [String]
     characterSheet: String
     npc: Boolean
-    campaignId(campaignId: ID!): Campaign
   }
 
   type Adventure {
+    _id: ID
     title: String
     setup: String
     resolution: String
-    notes: String
-    objectives: String
-    characters(characterId: ID!): Character
-    encounters: String
-    campaignId(campaignId: ID!): Campaign
+    notes: [String]
+    objectives: [String]
+    encounters: [String]
+    campaign: String
   }
 
   type Query {
-    users: [User]!
-    user(userId: ID!): User
+    users: [User]
+    user(username: String!): User
     userPosts: [UserPost]!
     userPost(userPostId: ID!): UserPost
     campaigns: [Campaign]!
     campaign(campaignId: ID!): Campaign
     stories: [Story]!
     story(storyId: ID!): Story
-    reactions: [Reaction]!
-    reaction(reactionId: ID!): Reaction
     profiles: [Profile]!
     profile(profileId: ID!): Profile
-    comments: [Comment]!
-    comment(commentId: ID!): Comment
     characters: [Character]!
     character(characterId: ID!): Character
     adventures: [Adventure]!
@@ -119,21 +110,50 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
-    modifyUser(username: String!, email: String!, password: String!): User
+    modifyUser(
+      username: String!
+      email: String!
+      password: String
+      newPassword: String
+      userId: ID
+    ): User
     removeUser(userId: ID!): User
     login(email: String!, password: String!): Auth
-    addUserPost(title: String!, username: ID!, body: String!): UserPost
-    modifyUserPost(title: String!, username: ID!, body: String!): UserPost
+    addUserPost(title: String!, body: String!, subject: String!): UserPost
+    updateUserPost(
+      title: String!
+      body: String!
+      subject: String!
+      userPostId: ID!
+    ): UserPost
     removeUserPost(userPostId: ID!): UserPost
-    addCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
-    modifyCampaign(gameName: String!, ruleSet: String, genre: String): Campaign
+    addCampaign(
+      gameName: String!
+      ruleSet: String
+      genre: String
+      profileId: ID!
+    ): Campaign
+    modifyCampaign(
+      gameName: String!
+      ruleSet: String!
+      genre: String
+      notes: [String]
+      currentDateInGame: String
+      campaignId: ID!
+    ): Campaign
+    removeCharacter(characters: ID, campaignId: ID): Campaign
     removeCampaign(campaignId: ID!, userId: ID): Campaign
     addStory(
       title: String
-      campaignId: ID!
       main: Boolean
       side: Boolean
       player: Boolean
+      campaign: String
+      storyBoard: [String]
+      objectives: [String]
+      bigBad: String
+      timeline: String
+      campaignId: ID
     ): Story
     modifyStory(
       title: String
@@ -142,29 +162,43 @@ const typeDefs = gql`
       main: Boolean
       side: Boolean
       player: Boolean
-      storyBoard: String
+      storyBoard: [String]
+      objectives: [String]
+      storyId: ID
     ): Story
     removeStory(storyId: ID!): Story
-    addReaction(reactionBody: String!, username: ID!): Reaction
+    addReaction(reactionBody: String!, commentId: ID!): UserPost
     modifyReaction(reactionBody: String!): Reaction
     removeReaction(reactionId: ID!): Reaction
-    addProfile(username: ID!, about: String): Profile
+    addProfile(about: String!): Profile
     modifyProfile(about: String!, profilePicture: String!): Profile
-    removeProfile(profileId: ID!, userId: ID): Profile
-    addComment(commentBody: String!): Comment
+    removeProfile(profileId: ID!): Profile
+    addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
-    addCharacter(characterName: String!): Character
-    modifyCharacter(characterName: String!): Character
-    removeCharacter(characterId: ID!, userId: ID): Character
-    addAdventure(title: String!): Adventure
+    addCharacter(
+      characterName: String!
+      npc: Boolean!
+      campaignId: ID!
+    ): Character
+    modifyCharacter(
+      characterName: String!
+      characterStatus: String
+      motivations: [String]
+      characterNotes: [String]
+      characterSheet: String
+      characterId: ID
+    ): Character
+    deleteCharacter(characterId: ID!, userId: ID): Character
+    addAdventure(title: String!, campaign: String!, campaignId: ID!): Adventure
     modifyAdventure(
       title: String!
       setup: String
       resolution: String
-      notes: String
-      objectives: String
-      encounters: String
+      notes: [String]
+      objectives: [String]
+      encounters: [String]
+      adventureId: ID
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
   }

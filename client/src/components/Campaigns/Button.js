@@ -20,7 +20,13 @@ export default function Button(props) {
   return (
     <div style={styles.titleDiv}>
       <span 
-        style={styles.titleBtn}
+        id={props.id} 
+        style={styles.titleBtn} 
+        onClick={() => {
+          console.log('onclick hit for ' + props.id);
+          props.handleModalId(props.id);
+          props.handleModalOpen();
+        }}
       >{props.title}</span>
     </div>
   );

@@ -1,14 +1,13 @@
 const { Schema, model } = require("mongoose");
 
 const storySchema = new Schema({
-  campaignId: {
-        type: Schema.Types.ObjectId,
-        ref: "Campaign",
+  campaign: {
+        type: String,
+        required: true
   },
-  characters: [
+  objectives: [
     {
-      type: Schema.Types.ObjectId,
-      ref: "Character",
+      type:String
     },
   ],
   title: {
@@ -40,7 +39,7 @@ const storySchema = new Schema({
     id: false,
   });
 
-  storySchema.virtal("switchBooleans")
+  storySchema.virtual("switchBooleans")
   .get(function () {
     return [this.side, this.main, this.player];
   })
