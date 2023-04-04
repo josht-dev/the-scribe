@@ -85,6 +85,13 @@ export default function ModalLarge(props) {
       flexDirection: 'column',
       marginBottom: '1.2rem'
     },
+    tabBoxStory: {
+      gridColumn: '3 / span 4',
+      gridRow: '1 / span 3',
+      marginRight: '0.5rem',
+      display: 'flex',
+      flexDirection: 'column'
+    },
     storyDiv: {
       gridColumn: '3 / span 4',
       gridRow: '4 / span 9',
@@ -93,7 +100,8 @@ export default function ModalLarge(props) {
     },
     statusDiv: {
       gridColumn: '4 / span 3',
-      gridRow: '2 / span 1'
+      gridRow: '2 / span 1',
+      marginRight: '0.5rem'
     },
     section: {
       height: '95%',
@@ -243,7 +251,7 @@ export default function ModalLarge(props) {
             objectives={storyIsArray ? [] : props.modalData.objectives}
           />
         </div>
-        <div style={styles.tabBox}>
+        <div style={styles.tabBoxStory}>
           <TabBox
             setup={storyIsArray ? '' : props.modalData.setup}
             resolution={storyIsArray ? '' : props.modalData.resolution}
