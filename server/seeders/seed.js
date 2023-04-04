@@ -25,10 +25,29 @@ db.once("open", async () => {
     await Character.deleteMany({});
 
     await User.create(userSeeds);
+
+  // for(i=0; i < userPostSeeds.length; i++){
+  //   const {_id, username} = await UserPost.create(userPostSeeds[i])
+  //   const user = await User.findOneAndUpdate(
+  //     {username: username},
+  //     {
+  //       $addToSet: {
+  //         userPosts: _id
+  //       },
+  //     }
+  //     )
+  //     if(user){
+  //       const {_id, commentWriter, commentId} = await UserPost.findOneAndUpdate(
+  //         {_id: _id},
+  //       )
+  //     }
+  // }
   } catch (err) {
     console.error(err);
     process.exit(1);
   }
+
+
   console.log("all done!");
   process.exit(0);
 });
