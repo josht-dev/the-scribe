@@ -192,7 +192,6 @@ export default function ModalLarge(props) {
 
   // Function to generate return data for the btn's on the single campaign page
   const campaignBtns = () => {
-    console.log('campaignBtns hit');
     // Switch label based on modal sent
     const inputLabel = () => {
       if (props.id === 'player-plots') {
