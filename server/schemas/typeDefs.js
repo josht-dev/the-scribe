@@ -199,6 +199,7 @@ const typeDefs = gql`
       adventureId: ID
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
+    addComment(commentBody: String!):UserPost
   }
 `;
 
