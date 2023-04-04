@@ -20,7 +20,6 @@ const devArray = [
     linkedIn: "https://www.linkedin.com/in/brendan-borowski-886813230",
     about: "I am a young Full Stack Programmer self-taught and a recent graduate from the University of Denver Full Stack Bootcamp. I come from humble roots in South Florida and at a young age on my own dime all over America seeking out the ways different geographies ebb and flow. Long time game designer, I have spent my life playing and writing tabletop RPG's in the pursuit of fun inclusive times had with friends and will continue to dedicate my time and attention too both pursuits.",
   },
-  //! Get Christin's LinkedIn Profile 
   {
     id: 2,
     title: "CHRISTIN",
