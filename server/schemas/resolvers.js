@@ -565,9 +565,21 @@ const resolvers = {
       );
       return adventure;
     },
-    // addComment: async (parent, {commentBody}) => {
-    //   const addComment = UserPost.findOneAndUpdate
-    // }
+    addComment: async (parent, {commentBody, userPostId}, context) => {
+      if(context.user){
+      const addComment = UserPost.findOneAndUpdate(
+        {_id: userPostId},
+        {$set:
+          {
+            commentBody: commentBody,
+            commentWriter: context.user.username
+        }
+      },
+      {new:true}
+      )
+    }
+    return addComment
+    }
   },
 };
 
