@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
-import Button from "../Campaigns/Button";
-import ListMd from "../Campaigns/ListMd";
-import TextField from "@mui/material/TextField";
+import { Card, CardContent, Typography } from "@mui/material/";
 
 // Component styles
 const styles = {
@@ -12,51 +10,87 @@ const styles = {
     margin: "0 0.5rem 0.5rem 0.5rem",
     height: "42.25rem",
     padding: "0.5rem",
+    // display: "grid",
+    // gridTemplateColumns: "repeat(6, 1fr)",
+    // gridTemplateRows: "repeat(12 ,1fr)",
+    // gridGap: "0.25rem",
+  },
+  pandCSection: {
     display: "grid",
-    gridTemplateColumns: "repeat(6, 1fr)",
-    gridTemplateRows: "repeat(12 ,1fr)",
+    gridTemplateColumns: "1fr 1fr",
+    gridTemplateRows: "1fr",
     gridGap: "0.25rem",
+    height: "calc(100% - 4.5rem)",
+    width: "100%",
+    border: "1px solid red",
   },
-  titleLeft: {
-    gridColumn: "1 / span 3",
-  },
-  titleRight: {
-    gridColumn: "4 / span 3",
-  },
-  charactersContainer: {
-    gridColumn: "1 / span 2",
-    gridRow: "2 / span 11",
-  },
-  btnBar: {
-    gridColumn: "3 / span 4",
-    gridRowStart: "2",
+  postInput: {
     display: "flex",
-    justifyContent: "space-around",
+    gridColumn: "1 / span 1",
+    resize: "none",
+    width: "100%",
+    height: "80%",
+    fontSize: "1.5rem",
+    fontWeight: 500,
+    padding: "0.5rem",
+    margin: "0.5rem",
+    border: "1px solid #1CB9B3",
+    borderRadius: "0 0.25rem 0.25rem 0.25rem",
+    lineHeight: "3rem",
   },
-  adventureList: {
-    gridColumn: "3 / span 4",
-    gridRow: "3 / span 10",
+  commentSection: {
+    gridColumn: "2 / span 1",
+  },
+  commentCard: {
+    display: "flex",
+    width: "30%",
+    height: "4rem",
+    border: "none",
+    fontSize: "1rem",
+    fontWeight: 500,
+    padding: "0.5rem",
+    margin: "0.5rem",
+    borderRadius: "0 0.25rem 0.25rem 0.25rem",
+  },
+  test: {
+    gridColumn: "1 / span 1",
+    border: "1px solid black",
   },
 };
 
 export default function SingleHeadspace(props) {
+  console.log(props);
   return (
     <>
       <section style={styles.section}>
-        <div style={styles.titleLeft}>
+        <div>
+          {/* Post Title */}
           <TitleLarge
             placeholder="headspace post title"
             title={props.headspaceArray.title}
           />
         </div>
+        {/* Headspace Post Body (Column 1 of the Grid) */}
+        <section style={styles.pandCSection}>
         <div>
-          {/* <TextField
-          id="outlined-multiline-flexible"
-          label="userPost"
-          rows={4}
-          defaultValue={props.headspaceArray.body}
-          /> */}
+          <textarea
+            style={styles.postInput}
+            type="text"
+            defaultValue={props.headspaceArray.body}
+          ></textarea>
         </div>
+        </section>
+        
+        {/* Comments */}
+        {/* <div style={styles.commentSection}>
+              {props.headspaceArray.comments.map((card) => {
+                <div style={styles.commentCard} key={card._id}>
+                  test
+                  <textarea defaultValue={card.commentBody}></textarea>
+                </div>;
+              })}
+            </div>
+        </div> */}
       </section>
     </>
   );

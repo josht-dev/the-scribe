@@ -31,7 +31,7 @@ const headspaceArray = [
     comments: [
       {
         _id: "C1",
-        commentBody: "Wow, you can comment on Posts, too!",
+        commentBody: "Wow, you can comment on posts, too!",
         commentWriter: "artiecannv",
       },
     ],
@@ -39,7 +39,7 @@ const headspaceArray = [
   },
   {
     _id: "2",
-    title: "New Player Chacters",
+    title: "New Player Characters",
     subject: "",
     body: "Using the post system to show off the new charcter models I've made.",
     username: "randomguy21",

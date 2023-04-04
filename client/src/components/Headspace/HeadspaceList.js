@@ -85,8 +85,7 @@ export default function HeadspaceList(props) {
           >
             <span style={styles.listCardLargeTitle}>{card.title}</span>
             <div style={styles.listCardLargeDetails}>
-              <span>game: {card.game}</span>
-              <span>Updated: {card.modifiedAt}</span>
+              <span>Created At: {card.createdAt}</span>
             </div>
           </article>
         );
