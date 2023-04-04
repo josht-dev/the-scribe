@@ -171,7 +171,6 @@ const typeDefs = gql`
     addProfile(about: String): Profile
     modifyProfile(about: String!, profilePicture: String!): Profile
     removeProfile(profileId: ID!): Profile
-    addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
     addCharacter(
@@ -199,7 +198,7 @@ const typeDefs = gql`
       adventureId: ID
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
-    addComment(commentBody: String!):UserPost
+    addComment(commentBody: String!, userPostId: ID):UserPost
   }
 `;
 
