@@ -421,11 +421,6 @@ const handleAdd = () => {
 
   // Render main content modal/page
   const renderPage = () => {
-    console.log('renderpage list');
-    console.log(list);
-    console.log('renderpage tablist');
-    console.log(tabList);
-    
     if (currentTab == -1) {
       // Render the list of campaigns
       return <CampaignList
@@ -435,23 +430,32 @@ const handleAdd = () => {
         list={list}
       />
     } else {
-      console.log('render page currenttab');
-      console.log(currentTab);
-      // Get index of currentTab based on _id
-      const tabIndex = list.findIndex(item => {
-        console.log('tabIndex find hit');
-        console.log(currentTab);
-        console.log(item);
-        return item._id == currentTab;
-      });
-      console.log('tabindex');
-      console.log(tabIndex);
-      console.log('campaign to send');
-      console.log(list[tabIndex]);
-      // Render a single campaign
+      let data;
+      // Get data for currentTab
+      for (const x in list) {
+        if (list[x]._id == currentTab) {
+           data = list[x];
+           break;
+        }
+      }
+      console.log(data);
+
       return <SingleCampaign
-        campaign={list[tabIndex]}
+        campaign={data}
       />
+
+      // const tabIndex = list.findIndex((item, index) => {
+        
+      //   console.log('tabIndex find hit');
+      //   console.log(currentTab);
+      //   console.log(item);
+      //   console.log('array meth index: ' + index);
+      //   return item._id == currentTab;
+      // });
+      // Render a single campaign
+      // return <SingleCampaign
+      //   campaign={list[tabIndex]}
+      // />
     }
   }
 
@@ -467,8 +471,6 @@ const handleAdd = () => {
             <div
               style={styles.addBtnDiv}
               onClick={() => {
-                console.log('list at onclick')
-                console.log(list)
                 handleAdd()
               }}
             >

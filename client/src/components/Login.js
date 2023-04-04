@@ -32,7 +32,6 @@ export default function Login({ openModal, setOpenModal, loggedIn, setLoggedIn} 
   };
 
   const logged = async (event) => {
-    console.log(event.target);
     event.preventDefault();
     try {
       const { data } = await login({
