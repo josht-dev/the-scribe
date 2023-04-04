@@ -565,6 +565,9 @@ const resolvers = {
       );
       return adventure;
     },
+    // addComment: async (parent, {commentBody}) => {
+    //   const addComment = UserPost.findOneAndUpdate
+    // }
   },
 };
 
