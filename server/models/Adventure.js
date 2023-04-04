@@ -5,7 +5,6 @@ const adventureSchema = new Schema(
     
     campaign: {
       type: String,
-      required: true
     },
     title: {
       type: String,

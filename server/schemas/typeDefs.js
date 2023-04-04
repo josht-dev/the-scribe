@@ -129,8 +129,6 @@ const typeDefs = gql`
     removeUserPost(userPostId: ID!): UserPost
     addCampaign(
       gameName: String!
-      ruleSet: String
-      genre: String
       profileId: ID!
     ): Campaign
     modifyCampaign(
@@ -170,10 +168,9 @@ const typeDefs = gql`
     addReaction(reactionBody: String!, commentId: ID!): UserPost
     modifyReaction(reactionBody: String!): Reaction
     removeReaction(reactionId: ID!): Reaction
-    addProfile(about: String!): Profile
+    addProfile(about: String): Profile
     modifyProfile(about: String!, profilePicture: String!): Profile
     removeProfile(profileId: ID!): Profile
-    addComment(commentBody: String!, userPostId: ID!): UserPost
     modifyComment(commentBody: String!): Comment
     removeComment(commentId: ID!): Comment
     addCharacter(
@@ -190,7 +187,7 @@ const typeDefs = gql`
       characterId: ID
     ): Character
     deleteCharacter(characterId: ID!, userId: ID): Character
-    addAdventure(title: String!, campaign: String!, campaignId: ID!): Adventure
+    addAdventure(title: String!, campaignId: ID!): Adventure
     modifyAdventure(
       title: String!
       setup: String
@@ -201,6 +198,7 @@ const typeDefs = gql`
       adventureId: ID
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
+    addComment(commentBody: String!, userPostId: ID):UserPost
   }
 `;
 

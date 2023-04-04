@@ -7,7 +7,6 @@ const profileSchema = new Schema(
       type: String,
       minLength: 10,
       maxLength: 150,
-      required: true,
     },
     campaigns: [
       {

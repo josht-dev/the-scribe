@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const storySchema = new Schema({
   campaign: {
         type: String,
-        required: true
+      
   },
   objectives: [
     {
@@ -11,7 +11,8 @@ const storySchema = new Schema({
     },
   ],
   title: {
-    type: String
+    type: String,
+    required: true
   },
   timeline: {
     type: String

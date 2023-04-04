@@ -26,8 +26,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "../src/assets/css/App.css";
 
 const httpLink = createHttpLink({
-  //add to client dot env
-  uri: "http://localhost:3001/graphql",
+ 
+  uri: "/graphql",
+  //uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
