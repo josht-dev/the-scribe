@@ -341,52 +341,7 @@ const campaignArray = [
     adventures: [],
     characters: [],
     story: []
-  },
-  {
-    _id: 6,
-    title: 'title',
-    game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33',
-    adventures: [],
-    characters: [],
-    story: []
-  },
-  {
-    _id: 7,
-    title: 'title',
-    game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33',
-    adventures: [],
-    characters: [],
-    story: []
-  },
-  {
-    _id: 8,
-    title: 'title',
-    game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33',
-    adventures: [],
-    characters: [],
-    story: []
-  },
-  {
-    _id: 9,
-    title: 'title',
-    game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33',
-    adventures: [],
-    characters: [],
-    story: []
-  },
-  {
-    _id: 10,
-    title: 'title',
-    game: 'dnd',
-    modifiedAt: '2023-01-08 16:42:33',
-    adventures: [],
-    characters: [],
-    story: []
-  },
+  }
 ];
 
 // Styling object
@@ -445,25 +400,57 @@ function Campaigns() {
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
 
-
+// Pulling list into a variable so it can be added to
+const initialList = campaignArray;
+const [list, setList] = useState(initialList);
+// The onClick for adding new items
+const handleAdd = () => {
+  // Deal with needing an unique id while item has not been added to db yet
+  const itemId = `none-${list.length++}`;
+  const newList = list.concat({ 
+    _id: itemId,
+    title: 'new campaign!',
+    game: 'game time',
+    modifiedAt: '',
+    adventures: [],
+    characters: [],
+    story: []
+  });
+  setList(newList);
+};
 
   // Render main content modal/page
   const renderPage = () => {
+    console.log('renderpage list');
+    console.log(list);
+    console.log('renderpage tablist');
+    console.log(tabList);
+    
     if (currentTab == -1) {
       // Render the list of campaigns
       return <CampaignList
         tabList={tabList}
         setTabList={setTabList}
         campaignArray={campaignArray}
+        list={list}
       />
     } else {
+      console.log('render page currenttab');
+      console.log(currentTab);
       // Get index of currentTab based on _id
-      const tabIndex = campaignArray.findIndex(item => {
+      const tabIndex = list.findIndex(item => {
+        console.log('tabIndex find hit');
+        console.log(currentTab);
+        console.log(item);
         return item._id == currentTab;
       });
+      console.log('tabindex');
+      console.log(tabIndex);
+      console.log('campaign to send');
+      console.log(list[tabIndex]);
       // Render a single campaign
       return <SingleCampaign
-        campaign={campaignArray[tabIndex]}
+        campaign={list[tabIndex]}
       />
     }
   }
@@ -480,7 +467,9 @@ function Campaigns() {
             <div
               style={styles.addBtnDiv}
               onClick={() => {
-          
+                console.log('list at onclick')
+                console.log(list)
+                handleAdd()
               }}
             >
               <Button
