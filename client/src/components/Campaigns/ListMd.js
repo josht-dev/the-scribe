@@ -12,9 +12,9 @@ export default function ListMd(props) {
     setCardState({_id: id, expanded: !cardState.expanded});
   }
 */
-
+const adventures = (props.adventures) ? props.adventures : [];
 // Pulling adventures into a variable so it can be added to
-const initialList = props.adventures;
+const initialList = adventures;
 const [ list, setList] = useState(initialList);
 // The onClick for adding new items
 const handleAdd = () => {
@@ -25,7 +25,8 @@ const handleAdd = () => {
   );
   setList(newList);
 };
-  
+
+
   // Component styling
   const styles = {
     section: {
@@ -107,7 +108,7 @@ const handleAdd = () => {
     } else {
       return (
         <>
-          {props.adventures.flatMap(card => {
+          {list.flatMap(card => {
             return (
               <article
                 style={styles.listCardMd}

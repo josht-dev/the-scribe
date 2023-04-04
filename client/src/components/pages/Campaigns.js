@@ -4,7 +4,7 @@ import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
 import { gql, useQuery } from "@apollo/client";
-import { QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries'
+import { QUERY_SINGLE_PROFILE, QUERY_USERS, QUERY_CAMPAIGNS, QUERY_SINGLE_CAMPAIGN } from '../../utils/queries'
 import { InMemoryCache } from '@apollo/client';
 
 
@@ -12,6 +12,7 @@ import Auth from '../../utils/auth';
 
 
 // Testing data
+/*
 const campaignArray = [
   {
     _id: 1,
@@ -350,7 +351,7 @@ const campaignArray = [
     story: []
   }
 ];
-
+*/
 // Styling object
 const styles = {
   container: {
@@ -407,11 +408,33 @@ const styles = {
 
 function Campaigns() {
 
-let test = Auth.getProfile();
+  const { loading, data } = useQuery(QUERY_CAMPAIGNS);
+   const campaigns = data?.campaigns || [];
 
-console.log(test);
-console.log('test data');
-console.log(test.data.args._doc);
+  // const campaigns = async () => {
+  //   const allCampaigns = await data?.campaigns;
+  // }
+ 
+
+  // console.log(campaigns());
+
+// let myCampaigns = Auth.getProfile().data.args._doc.profile[0].campaigns;
+
+// const getMyCampaigns = async () => {
+//   let data = await campaigns();
+
+//   const myData = await data.filter((arr) => {
+//     return myCampaigns.includes(arr._id);
+//   });
+// console.log(myData);
+//   return myData;
+// }
+
+// let myData = campaigns.filter((arr) => {
+//        return myCampaigns.includes(arr._id);
+//      });
+
+// console.log(myData);
 
 
 // const { loading, data } = useQuery(QUERY_THOUGHTS);
@@ -459,10 +482,14 @@ console.log(test.data.args._doc);
   const handleTabChange = (tab) => setCurrentTab(tab);
 
   // Pulling list into a variable so it can be added to and saved
-  const initialList = campaignArray;
+  const initialList = campaigns;
   const [allCampaigns, setAllCampaigns] = useState([]);
-  useEffect(() => { setAllCampaigns(initialList) }, []);
+   useEffect(() => { 
+    setAllCampaigns(initialList)
+      
+    }, []);
 
+ 
   // test
   //let allCampaigns = initialList;
   //console.log('initial allcampaign data');
@@ -479,8 +506,8 @@ console.log(test.data.args._doc);
     const itemId = `none-${allCampaigns.length++}`;
     const newList = allCampaigns.concat({
       _id: itemId,
-      title: 'new campaign!',
-      game: 'game time',
+      gameName: 'new campaign!',
+      ruleSet: 'game time',
       modifiedAt: '',
       adventures: [],
       characters: [],
