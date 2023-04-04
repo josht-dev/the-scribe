@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LabelListSm from './LabelListSm';
 import Button from './Button';
 
@@ -55,20 +55,34 @@ const styles = {
 }
 
 export default function Storyboard(props) {
+  // Pulling list into a variable so it can be added to
+  const initialList = props.storyboards;
+  const [list, setList] = useState(initialList);
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    const newList = list.concat('NEW!');
+    setList(newList);
+  };
   return (
     <section style={styles.section}>
       <div style={styles.titleBar}>
         <LabelListSm
           title={props.title}
         />
-        <div style={styles.addBtnDiv}>
+        <div 
+          style={styles.addBtnDiv}
+          onClick={() => {
+            handleAdd();
+          }}
+        >
           <Button
             title='+'
           />
         </div>
       </div>
       <article style={styles.listDiv} className='list-scroll'>
-        {props.storyboards.flatMap((card, index) => {
+        {list.flatMap((card, index) => {
           return (
             <article
               style={styles.listCard}

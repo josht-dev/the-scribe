@@ -55,15 +55,22 @@ const styles = {
 }
 
 export default function ListSm(props) {
+  // Pulling list into a variable so it can be added to
+  const initialList = props.characters;
+  const [list, setList] = useState(initialList);
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    const itemId = `none-${list.length++}`;
+    const newList = list.concat(
+      { _id: itemId, characterName: 'IM NEW!' }
+    );
+    setList(newList);
+  };
+
   // Check if this is a character
   const isCharacter = (props.type === 'pc' || props.type === 'npc')
     ? true : false;
-
-  // A useState to hold the character list and update
-  const [characters, setCharacters] = useState(props.characters);
-  const handleCharacter = (character) => {
-
-  };
 
   const cardOutput = (card) => {
     if (isCharacter) {
@@ -99,14 +106,19 @@ export default function ListSm(props) {
         <LabelListSm
           title={props.title}
         />
-        <div style={styles.addBtnDiv}>
+        <div
+          style={styles.addBtnDiv}
+          onClick={() => {
+            handleAdd();
+          }}
+        >
           <Button
             title='+'
           />
         </div>
       </div>
       <article style={styles.listDivSm} className='list-scroll'>
-        {props.characters.flatMap(card => {
+        {list.flatMap(card => {
           return (
             <article
               style={styles.listCardSm}

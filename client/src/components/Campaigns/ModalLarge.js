@@ -160,6 +160,16 @@ export default function ModalLarge(props) {
     }
   }
 
+  // Pulling list into a variable so it can be added to
+  const initialList = props.modalData.characterNotes;
+  const [list, setList] = useState(initialList);
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    const newList = list.concat('NEW!');
+    setList(newList);
+  };
+
   // Needed for the character notes / character sheet
   // UseState and handle state function for tab switching
   const [isActive, setIsActive] = useState(true);
@@ -297,7 +307,12 @@ export default function ModalLarge(props) {
                 className={isActive ? '' : 'selectTabBox'}
                 onClick={handleIsActive}
               >character sheet</span>
-              <div style={styles.addNote}>
+              <div 
+                style={styles.addNote}
+                onClick={() => {
+                  handleAdd()
+                }}
+              >
                 <Button
                   title='+'
                 />
@@ -308,7 +323,7 @@ export default function ModalLarge(props) {
             className={isActive ? 'list-scroll' : 'hidden list-scroll'}
             >
               <div style={styles.noteCards} >
-              {props.modalData.characterNotes.flatMap((card, index) => {
+              {list.flatMap((card, index) => {
                 return (
                   <article
                     style={styles.listCardSm}
