@@ -15,16 +15,25 @@ export default function ListMd(props) {
 
 // Pulling adventures into a variable so it can be added to
 const initialList = props.adventures;
-const [ list, setList] = useState(initialList);
-// The onClick for adding new items
-const handleAdd = () => {
-  // Deal with needing an unique id while item has not been added to db yet
-  const itemId = `none-${list.length++}`;
-  const newList = list.concat(
-    {_id: itemId, title: 'NEW ITEM!', playDate: '', status: ''}
-  );
-  setList(newList);
-};
+console.log('initial lsit');
+console.log(initialList);
+
+const [ adventureList, setAdventureList] = useState();
+const handleSetAdventureList = () => {
+  const newArr = [{
+    playDate: '',
+    status: '',
+    title: 'NEW ADVENTURE',
+    _Id: 'none'
+  }];
+  setAdventureList(adventureList.concat(newArr));
+}
+useEffect(() => {
+  setAdventureList(props.adventures);
+}, []);
+
+console.log(props.adventures);
+console.log(adventureList);
   
   // Component styling
   const styles = {
@@ -89,7 +98,7 @@ const handleAdd = () => {
     if (props.type === 'text') {
       return (
         <>
-          {list.flatMap(card => {
+          {adventureList.flatMap(card => {
             return (
               <article
                 style={styles.listCardMd}
@@ -138,7 +147,7 @@ const handleAdd = () => {
           style={styles.addBtnDiv}
           onClick={() => {
             console.log('I was clicked!');
-            handleAdd();
+            handleSetAdventureList();
           }}
         >
           <Button

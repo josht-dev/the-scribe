@@ -49,6 +49,16 @@ export default function Button(props) {
         >{props.title}</span>
       </div>
     );
+  } else if (props.adventure) {
+    // Btn for adventures
+    return (
+      <div style={styles.titleDiv}>
+        <span
+          id={props.id}
+          style={styles.titleBtn}
+        >{props.title}</span>
+      </div>
+    );
   } else {
     return (
       <div style={styles.titleDiv}>
