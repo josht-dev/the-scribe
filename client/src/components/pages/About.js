@@ -25,8 +25,8 @@ const devArray = [
     id: 2,
     campaignTitle: "CHRISTIN",
     gitHub: "https://github.com/porkchoppy/",
-    linkedIn: "#",
-    about: "Just some nerdy girl who is learning to code and loves jumping spiders. I live in Longmont, CO with my husband, our two children, and a plethora of pets. Hobbies I enjoy include cooking, reading, cross stitch, and walking. My coding adventure has just begun, and I look forward to learning so much more.",
+    linkedIn: "https://www.linkedin.com/in/christin-carter-04a92544/",
+    about: "I live in Longmont, CO with my two children and a plethora of various animals. Hobbies I enjoy include cooking, cross stitch, keeping exotic pets, and lifting weights. Having worked in administration/management for the bulk of my adult life, I decided to pursue a career switch with a web development bootcamp. It was there I found my love of SQL databases and I look forward to furthering my education and skillset. I love that coding is ever-evolving and there is always something new to learn.",
   },
   {
     id: 3,

@@ -1,13 +1,6 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
-const {User} = require("./models/User");
-const Adventure = require("./models/Adventure");
-const {Campaign} = require("./models/Campaign");
-const Character = require("./models/Character");
-const Profile = require("./models/Profile");
-const Story = require("./models/Story");
-const UserPost = require("./models/UserPost");
 
 
 const { typeDefs, resolvers } = require("./schemas");
@@ -21,7 +14,6 @@ const server = new ApolloServer({
   resolvers,
   context: 
   authMiddleware,
-  camp: Campaign
 });
 
 app.use(express.urlencoded({ extended: false }));

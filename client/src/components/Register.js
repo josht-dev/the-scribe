@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Link,
   Button,
@@ -9,18 +9,48 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material/";
+import { ADD_USER } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
+import Auth from "../utils/auth";
 
-export default function Register({open, setOpen}) {
-
-
+export default function Register({ openModal, setOpenModal }) {
   const handleClose = () => {
-    setOpen(false);
+    setOpenModal(false);
+  };
+
+  const initialState = {
+    username: "",
+    email: "",
+    password: "",
+  };
+
+  const [values, setValues] = useState(initialState);
+  const [addUser] = useMutation(ADD_USER);
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const signup = async () => {
+    try {
+      const { data } = await addUser({
+        variables: {
+          username: values.username,
+          email: values.email,
+          password: values.password,
+        },
+      });
+      const token = data.addUser.token;
+      Auth.login(token);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
     <div>
       {/* Register Form */}
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={openModal} onClose={handleClose} component="form">
         <DialogTitle
           sx={{ textAlign: "center", fontWeight: "bold", fontSize: "2.5rem" }}
         >
@@ -39,10 +69,12 @@ export default function Register({open, setOpen}) {
             margin="dense"
             id="username"
             label="Username"
-            type="email"
+            type="string"
             fullWidth
             variant="outlined"
             sx={{ width: "85%" }}
+            value={values.username}
+            onChange={handleChange("username")}
           />
           <TextField
             autoFocus
@@ -53,16 +85,20 @@ export default function Register({open, setOpen}) {
             fullWidth
             variant="outlined"
             sx={{ width: "85%" }}
+            value={values.email}
+            onChange={handleChange("email")}
           />
           <TextField
             autoFocus
             margin="dense"
             id="password"
             label="Password"
-            type="email"
+            type="password"
             fullWidth
             variant="outlined"
             sx={{ width: "85%" }}
+            value={values.password}
+            onChange={handleChange("password")}
           />
         </DialogContent>
         <DialogActions
@@ -73,7 +109,10 @@ export default function Register({open, setOpen}) {
           }}
         >
           <Button
-            onClick={handleClose}
+            onClick={() => {
+              handleClose();
+              signup();
+            }}
             sx={{
               my: 2,
               color: "white",
@@ -87,6 +126,7 @@ export default function Register({open, setOpen}) {
             Create an Account
           </Button>
         </DialogActions>
+
         <DialogContent sx={{ textAlign: "center" }}>
           <DialogContentText>Already a Member?</DialogContentText>
           <Link href="/login" underline="always">
@@ -95,5 +135,49 @@ export default function Register({open, setOpen}) {
         </DialogContent>
       </Dialog>
     </div>
+
+    // <div>
+    //   <Paper open={open} onClose={handleClose}>
+    //     <Typography variant="h5" component="h3">
+    //       Create an Account
+    //     </Typography>
+
+    //     <form
+    //       onSubmit={(event) => {
+    //         console.log("on click hit");
+    //         handleClose();
+    //         signup(event);
+    //       }}
+    //     >
+    //       <TextField
+    //         label="UserName"
+    //         id="margin-normal"
+    //         name="username"
+    //         defaultValue={values.username}
+    //         helperText="Enter your username"
+    //         onChange={handleChange("username")}
+    //       />
+    //       <TextField
+    //         label="Email"
+    //         id="margin-normal"
+    //         name="email"
+    //         defaultValue={values.email}
+    //         helperText="e.g. name@gmail.com"
+    //         onChange={handleChange("email")}
+    //       />
+    //       <TextField
+    //         label="Password"
+    //         id="margin-normal"
+    //         name="password"
+    //         defaultValue={values.password}
+    //         helperText="e.g. name@gmail.com"
+    //         onChange={handleChange("password")}
+    //       />
+    //       <Button type="submit" variant="contained" color="primary">
+    //         Subscribe <Icon>send</Icon>
+    //       </Button>
+    //     </form>
+    //   </Paper>
+    // </div>
   );
 }

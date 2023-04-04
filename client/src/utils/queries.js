@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_USERS = gql`
-  query user($username: String!) {
+  query getSingleuser($username: String!) {
     user(username: $username) {
       _id
       username
@@ -20,11 +20,13 @@ export const QUERY_USERPOSTS = gql`
   query getUserPosts {
     userPosts {
       _id
-      title
       body
-      user {
-        _id
-        username
+      subject
+      title
+      username
+      comments {
+        commentBody
+        commentWriter
       }
     }
   }
@@ -34,69 +36,108 @@ export const QUERY_SINGLE_USERPOST = gql`
   query getSingleUserPost($userPostId: ID!) {
     userPost(userPostId: $userPostId) {
       _id
-      title
       body
-      user {
-        _id
-        username
-      }
-    }
-  }
-`;
-
-export const QUERY_COMMENTS = gql`
-  query getComments {
-    comments {
-      _id
-      commentBody
-      userPost {
-        _id
-      }
-    }
-  }
-`;
-export const QUERY_SINGLE_COMMENT = gql`
-  query getSingleComment($commentId: ID!) {
-    comments(commentId: $commentId) {
-      _id
-      commentBody
-      userPost {
-        _id
-      }
-    }
-  }
-`;
-
-export const QUERY_REACTIONS = gql`
-  query getReactions($commentId: ID!) {
-    reactions(commentId: $commentId) {
+      subject
+      title
+      username
       comments {
-        _id
+        commentBody
+        commentWriter
       }
-      reactionBody
     }
   }
 `;
+
+// for future dev
+// export const QUERY_COMMENTS = gql`
+//   query getComments {
+//     comments {
+//       _id
+//       commentBody
+//       userPost {
+//         _id
+//       }
+//     }
+//   }
+// `;
+// export const QUERY_SINGLE_COMMENT = gql`
+//   query getSingleComment($commentId: ID!) {
+//     comments(commentId: $commentId) {
+//       _id
+//       commentBody
+//       userPost {
+//         _id
+//       }
+//     }
+//   }
+// `;
+
+// export const QUERY_REACTIONS = gql`
+//   query getReactions($commentId: ID!) {
+//     reactions(commentId: $commentId) {
+//       comments {
+//         _id
+//       }
+//       reactionBody
+//     }
+//   }
+// `;
 
 export const QUERY_PROFILES = gql`
-  query getProfiles {
-    profiles {
-      user {
-        _id
-        username
-      }
-      about
+  query getProfile($profileId: ID!) {
+    profile(profileId: $profileId) {
+      _id
+      profileUser
+      profilePicture
     }
   }
 `;
 export const QUERY_SINGLE_PROFILE = gql`
-  query getSingleProfile($userId: ID!) {
-    profile($userID: userId) {
-      user {
-        _id
-        username
-      }
+  query getSingleProfile($profileId: ID!) {
+    profile(profileId: $profileId) {
+      _id
       about
+      profilePicture
+      profileUser
+      campaigns {
+        _id
+        currentDateInGame
+        gameName
+        genre
+        notes
+        ruleSet
+        adventures {
+          _id
+          campaign
+          encounters
+          notes
+          objectives
+          resolution
+          setup
+          title
+        }
+        characters {
+          _id
+          characterName
+          characterNotes
+          characterSheet
+          characterStatus
+          motivations
+          npc
+        }
+        storyOutline {
+          _id
+          bigBad
+          campaign
+          main
+          objectives
+          player
+          side
+          storyBoard
+          timeline
+          title
+        }
+      }
     }
   }
 `;
@@ -104,12 +145,9 @@ export const QUERY_SINGLE_PROFILE = gql`
 export const QUERY_CAMPAIGNS = gql`
   query getCampaigns {
     campaigns {
-      profile {
-        _id
-      }
+      _id
       gameName
       ruleSet
-      genre
     }
   }
 `;
@@ -117,12 +155,42 @@ export const QUERY_SINGLE_CAMPAIGN = gql`
   query getSingleCampaign($campaignId: ID!) {
     campaign(campaignId: $campaignId) {
       _id
-      profile {
-        _id
-      }
+      currentDateInGame
       gameName
-      ruleSet
       genre
+      notes
+      ruleSet
+      adventures {
+        _id
+        campaign
+        encounters
+        notes
+        objectives
+        resolution
+        setup
+        title
+      }
+      characters {
+        _id
+        characterName
+        characterNotes
+        characterSheet
+        characterStatus
+        motivations
+        npc
+      }
+      storyOutline {
+        _id
+        bigBad
+        campaign
+        main
+        objectives
+        player
+        side
+        storyBoard
+        timeline
+        title
+      }
     }
   }
 `;
@@ -131,26 +199,30 @@ export const QUERY_STORIES = gql`
   query getStories {
     stories {
       _id
-      campaign {
-        _id
-      }
-      main
       side
       player
+      main
+      bigBad
+      campaign
+      objectives
+      storyBoard
+      timeline
       title
     }
   }
 `;
 export const QUERY_SINGLE_STORY = gql`
-  query getSingleStory($storyId: ID!) {
+  query getSinleStory($storyId: ID!) {
     story(storyId: $storyId) {
       _id
-      campaign {
-        _id
-      }
+      bigBad
+      campaign
       main
-      side
+      objectives
       player
+      side
+      storyBoard
+      timeline
       title
     }
   }
@@ -160,9 +232,12 @@ export const QUERY_ADVENTURES = gql`
   query getAdventures {
     adventures {
       _id
-      campaign {
-        _id
-      }
+      campaign
+      encounters
+      notes
+      objectives
+      resolution
+      setup
       title
     }
   }
@@ -171,9 +246,12 @@ export const QUERY_SINGLE_ADVENTURE = gql`
   query getSingleAdventure($adventureId: ID!) {
     adventure(adventureId: $adventureId) {
       _id
-      campaign {
-        _id
-      }
+      campaign
+      encounters
+      notes
+      objectives
+      resolution
+      setup
       title
     }
   }
@@ -182,14 +260,26 @@ export const QUERY_SINGLE_ADVENTURE = gql`
 export const QUERY_CHARACTERS = gql`
   query getCharacters {
     characters {
+      _id
       characterName
+      characterNotes
+      characterSheet
+      characterStatus
+      motivations
+      npc
     }
   }
 `;
 export const QUERY_SINGLE_CHARACTER = gql`
-  query getSingleCharacter($characterName: String!) {
-    character(characterName: $characterName) {
+  query getSingleCharacter($characterId: ID!) {
+    character(characterId: $characterId) {
+      _id
       characterName
+      characterNotes
+      characterSheet
+      characterStatus
+      motivations
+      npc
     }
   }
 `;
