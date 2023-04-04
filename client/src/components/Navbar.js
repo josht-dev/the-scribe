@@ -220,7 +220,12 @@ export default function Navbar() {
               }}
             >
               {notLog.map((notLog) => (
-                <Link to={notLog.link} key={notLog.id} onClick={handleLinkClick}>
+                <Link
+                  to={notLog.link}
+                  key={notLog.id}
+                  onClick={handleLinkClick}
+                 
+                >
                   <Button
                     onClick={handleCloseNavMenu}
                     id={notLog.id}
@@ -293,7 +298,6 @@ export default function Navbar() {
               fontSize: "3rem",
               lineHeight: "4.5rem",
               color: "black",
-              textDecoration: "none",
             }}
           >
             The Scribe
