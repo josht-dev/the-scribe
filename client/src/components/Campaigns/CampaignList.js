@@ -71,7 +71,7 @@ export default function CampaignList(props) {
     }
 
   }
-
+console.log(props.list);
   return (
     <section style={styles.listDivLarge} className='list-scroll'>
       {props.list.flatMap(card => {
@@ -80,12 +80,12 @@ export default function CampaignList(props) {
             style={styles.listCardLarge}
             key={card._id}
             data-campaignid={card._id}
-            data-title={card.title}
+            data-title={card.gameName}
             onClick={onAddBtnClick}
           >
-            <span style={styles.listCardLargeTitle}>{card.title}</span>
+            <span style={styles.listCardLargeTitle}>{card.gameName}</span>
             <div style={styles.listCardLargeDetails}>
-              <span>game: {card.game}</span>
+              <span>game: {card.ruleSet}</span>
               <span>Updated: {card.modifiedAt}</span>
             </div>
           </article>

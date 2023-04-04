@@ -128,14 +128,14 @@ const resolvers = {
       const user = await User.findOne({ email })
       .populate({ path: "profile" })
 
-      const profile = await Profile.findOne({_id: user.profile[0]._id})
-        .populate({path: 'campaigns'});
+      // const profile = await Profile.findOne({_id: user.profile[0]._id})
+      //   .populate({path: 'campaigns'});
 
-      const campaignArr = await Campaign.find({_id: { $in: profile.campaigns }})
+      // const campaignArr = await Campaign.find({_id: { $in: profile.campaigns }})
       // .populate({path: 'campaigns'});
 
-      user[campaignArr] = campaignArr;
-        console.info(user);
+  
+        // console.info(campaignArr);
 
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
@@ -148,7 +148,7 @@ const resolvers = {
       }
 
       const token = signToken(user);
-      console.log(token);
+      // console.log(token);
 
       return { token, user };
     },

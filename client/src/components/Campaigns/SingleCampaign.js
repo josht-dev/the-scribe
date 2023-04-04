@@ -45,14 +45,17 @@ export default function SingleCampaign(props) {
   const pcs = [];
 
   // Spit characters into pc's and npc's
-  props.campaign.characters.forEach(char => {
-    // check if the character is an npc and push to appropriate array
-    if (char.npc) {
-      npcs.push(char);
-    } else {
-      pcs.push(char);
-    }
-  });
+  if (props.campaign.characters) {
+    props.campaign.characters.forEach(char => {
+      // check if the character is an npc and push to appropriate array
+      if (char.npc) {
+        npcs.push(char);
+      } else {
+        pcs.push(char);
+      }
+    });
+  }
+  
   // A useState to old the currently selected character
   const [currentChar, setCurrentChar] = useState('');
   const handleSetChar = (id) => {
@@ -92,12 +95,24 @@ export default function SingleCampaign(props) {
       // Set the campaign data to send to ModalLarge
       const modalData = () => {
         let data;
+        let story;
+        if (!props.campaign.story) {
+          story = [];
+        } else {
+          story = props.campaign.story;
+        }
+        let characters;
+        if (!props.campaign.characters) {
+          characters = [];
+        } else {
+          characters = props.campaign.story;
+        }
         // REMOVE THIS LATER
         let oneStory;
         switch (modalId) {
           case 'main-story':
             // Check if story exists
-            if (props.campaign.story[0]) {
+            if (story[0]) {
               data = props.campaign.story.find(story => {
                 return story.main;
               });
@@ -121,7 +136,7 @@ export default function SingleCampaign(props) {
             return data;
           case 'side-quests':
             // TODO - Set back to allow story array
-            data = props.campaign.story.flatMap(story => {
+            data = story.flatMap(story => {
               if (story.side) {
                 return story;
               } else {
@@ -148,7 +163,7 @@ export default function SingleCampaign(props) {
             return /*data*/ oneStory;
           case 'player-plots':
             // TODO - Set back to allow story array
-            data = props.campaign.story.flatMap(story => {
+            data = story.flatMap(story => {
               if (story.player) {
                 return story;
               } else {
@@ -174,7 +189,7 @@ export default function SingleCampaign(props) {
 
             return /*data*/ oneStory;
           case 'pc':
-            data = props.campaign.characters.find(char => {
+            data = characters.find(char => {
               return char._id == currentChar;
             });
 
@@ -194,7 +209,7 @@ export default function SingleCampaign(props) {
 
             return data;
           case 'npc':
-            data = props.campaign.characters.find(char => {
+            data = characters.find(char => {
               return char._id == currentChar;
             });
 
