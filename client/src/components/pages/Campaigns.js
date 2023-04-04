@@ -547,6 +547,19 @@ console.log(test.data.args._doc);
       return <SingleCampaign
         campaign={data}
       />
+
+      // const tabIndex = list.findIndex((item, index) => {
+        
+      //   console.log('tabIndex find hit');
+      //   console.log(currentTab);
+      //   console.log(item);
+      //   console.log('array meth index: ' + index);
+      //   return item._id == currentTab;
+      // });
+      // Render a single campaign
+      // return <SingleCampaign
+      //   campaign={list[tabIndex]}
+      // />
     }
   }
 
