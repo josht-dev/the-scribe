@@ -87,7 +87,7 @@ export default function Login({ openModal, setOpenModal, loggedIn, setLoggedIn} 
               margin="dense"
               id="password"
               label="Password"
-              type="text"
+              type="password"
               fullWidth
               variant="outlined"
               sx={{ width: "85%" }}
