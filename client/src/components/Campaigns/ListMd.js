@@ -137,7 +137,6 @@ const handleAdd = () => {
         <div 
           style={styles.addBtnDiv}
           onClick={() => {
-            console.log('I was clicked!');
             handleAdd();
           }}
         >
