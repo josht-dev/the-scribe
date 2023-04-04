@@ -1,104 +1,89 @@
 import React from "react";
 
-function Contact() {
+const styles = {
+  container: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    zIndex: 2,
+  },
+  section: {
+    position: "absolute",
+    top: "10rem",
+    width: "75rem",
+    height: "50rem",
+    backgroundColor: "#fff",
+    borderRadius: ".25rem",
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    zIndex: 3,
+  },
+  titleBtn: {
+    margin: "0.5rem",
+    padding: "0.5rem 1.5rem",
+    float: "left",
+    backgroundColor: "#1CB9B3",
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    color: "#fff",
+    display: "flex",
+  },
+  inputSection: {
+    display: "flex",
+    flexDirection: "column"
+  },
+  inputName: {
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    padding: "0.5rem", 
+    margin: "1rem",
+  },
+  inputEmail: {
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    padding: "0.5rem",
+    margin: "1rem",
+  },
+  inputMessage: {
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+    borderRadius: "0.25rem",
+    padding: "10rem",
+    margin: "1rem"
+  },
+  submitButton: {
+    margin: "0.5rem",
+    padding: ".5rem 1.5rem",
+    float: "right",
+    backgroundColor: "#1CB9B3",
+    boxShadow:
+      "0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
+      color: "#fff",
+  }
+  };
+  
+  function Contact() {
     return (
-        <div>
-            <input type="name" placeholder="Name" id="name">
-            </input>
-            <input type="email" placeholder="Enter your email" id="email">
-            </input>
-            <input type="message" id="message">
-            </input>
-            <button>Submit</button>
-        </div>
+      <main style={styles.container}>
+      <section style={styles.section}>
+      <div>
+        <span style={styles.titleBtn}>Contact Us</span>
+          <div style={styles.inputSection}>
+          <input style={styles.inputName} type="name" placeholder="Name">
+          </input>
+          <input style={styles.inputEmail} type="email" placeholder="Email">
+          </input>
+          <input style={styles.inputMessage} type="message" id="message">
+          </input>
+        </div>  
+          <button style={styles.submitButton}>Submit</button>
+      </div>
+      </section>
+      </main>
     )
-}
+  }
 
-// const Contact = () => {
-//     return (
-//       <div className="flex w-full min-h-screen justify-center items-center">
-//         <div className="flex flex-col space-y-6 bg-gray-900 w-full max-w-4xl p-8 rounded-xl shadow-lg text-white">
-//           <div className="flex flex-col justify-between">
-//             <div className="underline">
-//               <h1>Let's Create Together!</h1>
-//         <div className="flex flex-col md:flex-row md:space-x-6 md:space-y-0 space-y-6 bg-gray-900 w-full max-w-4xl p-8 sm:p-12 rounded-xl shadow-lg text-white">
-//           <div className="flex flex-col space-y-8 justify-between">
-//             <div>
-//               <h1 className="underline text-bold text-4xl tracking-wide text-blue-400">
-//                 Let's Create Together!
-//               </h1>
-//             </div>
-//             <div className="flex flex-col space-y-6">
-//               <div className="inline-flex space-x-2 items-center">
-//                 <ion-icon name="call"></ion-icon>
-//                 <span>+1(307) 267 0814</span>
-//               </div>
-//               <div className="inline-flex space-x-2 items-center">
-//                 <ion-icon name="mail"></ion-icon>
-//                 <span>thefiftharthur@gmail.com</span>
-//               </div>
-//               <div className="inline-flex space-x-2 items-center">
-//                 <ion-icon name="location"></ion-icon>
-//                 <span>Fort Collins, CO</span>
-//               </div>
-//             </div>
-//             <div className="flex space-x-4 text-3xl">
-//               <a href="https://www.facebook.com/artie.cann.5">
-//                 <ion-icon name="logo-facebook"></ion-icon>
-//               </a>
-//               <a href="https://twitter.com/arthurthe05th">
-//                 <ion-icon name="logo-twitter"></ion-icon>
-//               </a>
-//               <a ahref="https://www.linkedin.com/in/arthur-cann-62b213248/">
-//                 <ion-icon name="logo-linkedin"></ion-icon>
-//               </a>
-//             </div>
-//           </div>
-//           <div>
-//             <div className="bg-white rounded-xl shadow-lg p-8 text-gray-600">
-//               <form action="" className="flex flex-col space-y-4">
-//                 <div>
-//                   <label for="" className="text-sm">
-//                     Your Name
-//                   </label>
-//                   <input
-//                     type="text"
-//                     placeholder="Your name"
-//                     className="ring-1 ring-gray-300 w-full rounded-md px-4 py-2 mt-2 outline-none focus:ring-2 focus:ring-blue-300"
-//                   ></input>
-//                 </div>
-//                 <div>
-//                   <label for="" className="text-sm">
-//                     Email Address
-//                   </label>
-//                   <input
-//                     type="email"
-//                     placeholder="Email Address"
-//                     className="ring-1 ring-gray-300 w-full rounded-md px-4 py-2 mt-2 outline-none focus:ring-2 focus:ring-blue-300"
-//                   ></input>
-//                 </div>
-//                 <div>
-//                   <label for="" className="text-sm">
-//                     Message
-//                   </label>
-//                   <textarea
-//                     placeholder="Message"
-//                     rows={4}
-//                     className="ring-1 ring-gray-300 w-full rounded-md px-4 py-2 mt-2 outline-none focus:ring-2 focus:ring-blue-300"
-//                   ></textarea>
-//                 </div>
-//                 <button className="inline-block self-end bg-blue-400 text-white font-bold rounded-lg px-6 py-2 uppercase text-sm">
-//                   Send message
-//                 </button>
-//               </form>
-//             </div>
-//             <div></div>
-//             <div></div>
-//           </div>
-//           <div></div>
-//         </div>
-//       </div>
-//     );
-//   };
-
-export default Contact
+  export default Contact
