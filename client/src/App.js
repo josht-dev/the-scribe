@@ -28,7 +28,9 @@ import "../src/assets/css/App.css";
 const httpLink = createHttpLink({
  
   uri: "/graphql",
+
   // uri: "http://localhost:3001/graphql",
+
 });
 
 const authLink = setContext((_, { headers }) => {
