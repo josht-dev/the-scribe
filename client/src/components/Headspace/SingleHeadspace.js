@@ -79,13 +79,13 @@ export default function SingleHeadspace(props) {
             ></textarea>
           </div>
           {/* Comments */}
-          <div style={styles.commentSection}>
+          {/* <div style={styles.commentSection}>
             {props.headspaceArray.comments.map((card) => {
               <div style={styles.commentCard} key={card._id}>
                 <textarea defaultValue={card.commentBody}></textarea>
               </div>;
             })}
-          </div>
+          </div> */}
         </section>
       </section>
     </>
