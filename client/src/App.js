@@ -61,6 +61,7 @@ export default function App() {
         <Route path="/headspace" element={<Headspace />} />
         <Route path="/workshop" element={<Workshop />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Route>
     )
   );
