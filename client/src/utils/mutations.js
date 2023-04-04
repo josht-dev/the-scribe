@@ -138,3 +138,13 @@ export const ADD_CHARACTER = gql`
     }
   }
 `;
+
+export const ADD_COMMENT = gql`
+mutation AddComment($commentBody: String!, $userPostId: ID) {
+  addComment(commentBody: $commentBody, userPostId: $userPostId) {
+    _id
+    commentBody
+    commentWriter
+  }
+}
+`
