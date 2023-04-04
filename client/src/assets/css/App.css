@@ -6,6 +6,10 @@
   font-family: "Montserrat", serif;
 }
 
+a {
+  text-decoration: none;
+}
+
 body {
   padding: 1rem;
   background-color: #F5F5F5 !important;
