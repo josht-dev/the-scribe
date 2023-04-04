@@ -431,8 +431,6 @@ const handleAdd = () => {
       />
     } else {
       let data;
-      console.log('render page currenttab');
-      console.log(currentTab);
       // Get data for currentTab
       for (const x in list) {
         if (list[x]._id == currentTab) {
