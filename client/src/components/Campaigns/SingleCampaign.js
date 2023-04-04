@@ -275,6 +275,7 @@ export default function SingleCampaign(props) {
         </div>
         <section style={styles.adventureList}>
           <ListMd
+            type='text'
             adventures={props.campaign.adventures}
           />
         </section>
