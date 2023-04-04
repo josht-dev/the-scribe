@@ -90,6 +90,12 @@ const typeDefs = gql`
     campaign: String
   }
 
+  type Comment {
+    _id: ID
+    commentBody: String
+    commentWriter: String
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
@@ -198,7 +204,7 @@ const typeDefs = gql`
       adventureId: ID
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
-    addComment(commentBody: String!, userPostId: ID):UserPost
+    addComment(commentBody: String!, userPostId: ID):Comment
   }
 `;
 

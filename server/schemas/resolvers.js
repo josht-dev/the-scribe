@@ -28,7 +28,7 @@ const resolvers = {
     userPost: async (parent, { userPostId }) => {
       return UserPost.findOne({ _id: userPostId }).populate({
         path: "username",
-      });
+      }).populate({path: comments});
     },
     campaigns: async () => {
       return Campaign.find()
@@ -567,18 +567,20 @@ const resolvers = {
     },
     addComment: async (parent, {commentBody, userPostId}, context) => {
       if(context.user){
-      const addComment = UserPost.findOneAndUpdate(
+      const comment = UserPost.findOneAndUpdate(
         {_id: userPostId},
-        {$set:
+        {$addToSet: { comments:
           {
             commentBody: commentBody,
             commentWriter: context.user.username
         }
+      }
       },
-      {new:true}
+      {new:true, runValidators: true}
       )
+      return comment;
     }
-    return addComment
+    
     }
   },
 };

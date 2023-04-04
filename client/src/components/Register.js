@@ -93,7 +93,7 @@ export default function Register({ openModal, setOpenModal }) {
             margin="dense"
             id="password"
             label="Password"
-            type="email"
+            type="password"
             fullWidth
             variant="outlined"
             sx={{ width: "85%" }}
@@ -110,7 +110,6 @@ export default function Register({ openModal, setOpenModal }) {
         >
           <Button
             onClick={() => {
-              console.log("on click hit");
               handleClose();
               signup();
             }}
