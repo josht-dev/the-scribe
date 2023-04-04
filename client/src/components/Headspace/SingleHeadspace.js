@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
-import { Card, CardContent, Typography } from "@mui/material/";
 
 // Component styles
 const styles = {
@@ -72,25 +71,22 @@ export default function SingleHeadspace(props) {
         </div>
         {/* Headspace Post Body (Column 1 of the Grid) */}
         <section style={styles.pandCSection}>
-        <div>
-          <textarea
-            style={styles.postInput}
-            type="text"
-            defaultValue={props.headspaceArray.body}
-          ></textarea>
-        </div>
+          <div>
+            <textarea
+              style={styles.postInput}
+              type="text"
+              defaultValue={props.headspaceArray.body}
+            ></textarea>
+          </div>
+          {/* Comments */}
+          <div style={styles.commentSection}>
+            {props.headspaceArray.comments.map((card) => {
+              <div style={styles.commentCard} key={card._id}>
+                <textarea defaultValue={card.commentBody}></textarea>
+              </div>;
+            })}
+          </div>
         </section>
-        
-        {/* Comments */}
-        {/* <div style={styles.commentSection}>
-              {props.headspaceArray.comments.map((card) => {
-                <div style={styles.commentCard} key={card._id}>
-                  test
-                  <textarea defaultValue={card.commentBody}></textarea>
-                </div>;
-              })}
-            </div>
-        </div> */}
       </section>
     </>
   );
