@@ -177,11 +177,41 @@ export default function SingleCampaign(props) {
             data = props.campaign.characters.find(char => {
               return char._id == currentChar;
             });
+
+            // Check if this is a new character
+            if (!data) {
+              data = {
+                _id: currentChar,
+                characterName: "Hi! I'm New!",
+                characterStatus: '',
+                characterSheet: '',
+                npc: 'pc',
+                campaignId: props.campaign._id,
+                motivations: [],
+                characterNotes: []
+              };
+            }
+
             return data;
           case 'npc':
             data = props.campaign.characters.find(char => {
               return char._id == currentChar;
             });
+
+            // Check if this is a new character
+            if (!data) {
+              data = {
+                _id: currentChar,
+                characterName: "Hi! I'm New!",
+                characterStatus: '',
+                characterSheet: '',
+                npc: 'npc',
+                campaignId: props.campaign._id,
+                motivations: [],
+                characterNotes: []
+              };
+            }
+
             return data;
           default:
             break;

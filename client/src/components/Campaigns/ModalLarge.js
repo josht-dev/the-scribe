@@ -122,7 +122,7 @@ export default function ModalLarge(props) {
       backgroundColor: '#F5F5F5',
     },
     noteCards: {
-      
+
       height: '100%',
       display: 'flex',
       flexDirection: 'row',
@@ -161,7 +161,10 @@ export default function ModalLarge(props) {
   }
 
   // Pulling list into a variable so it can be added to
-  const initialList = props.modalData.characterNotes;
+  const initialList =
+    (props.modalData.characterNotes) ?
+      props.modalData.characterNotes : [];
+
   const [list, setList] = useState(initialList);
   // The onClick for adding new items
   const handleAdd = () => {
@@ -307,7 +310,7 @@ export default function ModalLarge(props) {
                 className={isActive ? '' : 'selectTabBox'}
                 onClick={handleIsActive}
               >character sheet</span>
-              <div 
+              <div
                 style={styles.addNote}
                 onClick={() => {
                   handleAdd()
@@ -318,30 +321,30 @@ export default function ModalLarge(props) {
                 />
               </div>
             </div>
-            <article 
-            style={styles.charNotesDiv}
-            className={isActive ? 'list-scroll' : 'hidden list-scroll'}
+            <article
+              style={styles.charNotesDiv}
+              className={isActive ? 'list-scroll' : 'hidden list-scroll'}
             >
               <div style={styles.noteCards} >
-              {list.flatMap((card, index) => {
-                return (
-                  <article
-                    style={styles.listCardSm}
-                    key={index}
-                  >
-                    <textarea
-                      style={styles.listCardSmTitle}
-                      defaultValue={card}
-                    ></textarea>
-                  </article>
-                );
-              })}
+                {list.flatMap((card, index) => {
+                  return (
+                    <article
+                      style={styles.listCardSm}
+                      key={index}
+                    >
+                      <textarea
+                        style={styles.listCardSmTitle}
+                        defaultValue={card}
+                      ></textarea>
+                    </article>
+                  );
+                })}
               </div>
             </article>
             <article
-            className={isActive ? 'hidden list-scroll' : 'list-scroll'}
+              className={isActive ? 'hidden list-scroll' : 'list-scroll'}
             >
-            <span style={styles.listCardSm}>COMING SOON</span>
+              <span style={styles.listCardSm}>COMING SOON</span>
             </article>
           </section>
         </div>
