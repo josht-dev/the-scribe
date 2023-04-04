@@ -11,11 +11,9 @@ const campaignSchema = new Schema(
     },
     ruleSet: {
       type: String,
-      required: true,
     },
     genre: {
       type: String,
-      required: true,
     },
     notes: [
       {

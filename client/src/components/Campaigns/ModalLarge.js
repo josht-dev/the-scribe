@@ -85,6 +85,13 @@ export default function ModalLarge(props) {
       flexDirection: 'column',
       marginBottom: '1.2rem'
     },
+    tabBoxStory: {
+      gridColumn: '3 / span 4',
+      gridRow: '1 / span 3',
+      marginRight: '0.5rem',
+      display: 'flex',
+      flexDirection: 'column'
+    },
     storyDiv: {
       gridColumn: '3 / span 4',
       gridRow: '4 / span 9',
@@ -93,7 +100,8 @@ export default function ModalLarge(props) {
     },
     statusDiv: {
       gridColumn: '4 / span 3',
-      gridRow: '2 / span 1'
+      gridRow: '2 / span 1',
+      marginRight: '0.5rem'
     },
     section: {
       height: '95%',
@@ -122,7 +130,7 @@ export default function ModalLarge(props) {
       backgroundColor: '#F5F5F5',
     },
     noteCards: {
-      
+
       height: '100%',
       display: 'flex',
       flexDirection: 'row',
@@ -160,6 +168,19 @@ export default function ModalLarge(props) {
     }
   }
 
+  // Pulling list into a variable so it can be added to
+  const initialList =
+    (props.modalData.characterNotes) ?
+      props.modalData.characterNotes : [];
+
+  const [list, setList] = useState(initialList);
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    const newList = list.concat('NEW!');
+    setList(newList);
+  };
+
   // Needed for the character notes / character sheet
   // UseState and handle state function for tab switching
   const [isActive, setIsActive] = useState(true);
@@ -192,7 +213,6 @@ export default function ModalLarge(props) {
 
   // Function to generate return data for the btn's on the single campaign page
   const campaignBtns = () => {
-    console.log('campaignBtns hit');
     // Switch label based on modal sent
     const inputLabel = () => {
       if (props.id === 'player-plots') {
@@ -231,7 +251,7 @@ export default function ModalLarge(props) {
             objectives={storyIsArray ? [] : props.modalData.objectives}
           />
         </div>
-        <div style={styles.tabBox}>
+        <div style={styles.tabBoxStory}>
           <TabBox
             setup={storyIsArray ? '' : props.modalData.setup}
             resolution={storyIsArray ? '' : props.modalData.resolution}
@@ -252,16 +272,21 @@ export default function ModalLarge(props) {
 
   // Function to generate return data for the character card clicked
   const characterClick = () => {
+
+    // TODO - Add this btn back later with an onClick
+    /*
+    <div style={styles.removeBtnDiv}>
+          <Button
+            title='remove'
+          />
+        </div>
+    */
+
     return (
       <section style={styles.modal} id='ModalLarge'>
         <LabelInModal
           title={props.title}
         />
-        <div style={styles.removeBtnDiv}>
-          <Button
-            title='remove'
-          />
-        </div>
         <div style={styles.charName}>
           <TitleLarge
             title={props.modalData.characterName}
@@ -293,36 +318,41 @@ export default function ModalLarge(props) {
                 className={isActive ? '' : 'selectTabBox'}
                 onClick={handleIsActive}
               >character sheet</span>
-              <div style={styles.addNote}>
+              <div
+                style={styles.addNote}
+                onClick={() => {
+                  handleAdd()
+                }}
+              >
                 <Button
                   title='+'
                 />
               </div>
             </div>
-            <article 
-            style={styles.charNotesDiv}
-            className={isActive ? 'list-scroll' : 'hidden list-scroll'}
+            <article
+              style={styles.charNotesDiv}
+              className={isActive ? 'list-scroll' : 'hidden list-scroll'}
             >
               <div style={styles.noteCards} >
-              {props.modalData.characterNotes.flatMap((card, index) => {
-                return (
-                  <article
-                    style={styles.listCardSm}
-                    key={index}
-                  >
-                    <textarea
-                      style={styles.listCardSmTitle}
-                      defaultValue={card}
-                    ></textarea>
-                  </article>
-                );
-              })}
+                {list.flatMap((card, index) => {
+                  return (
+                    <article
+                      style={styles.listCardSm}
+                      key={index}
+                    >
+                      <textarea
+                        style={styles.listCardSmTitle}
+                        defaultValue={card}
+                      ></textarea>
+                    </article>
+                  );
+                })}
               </div>
             </article>
             <article
-            className={isActive ? 'hidden list-scroll' : 'list-scroll'}
+              className={isActive ? 'hidden list-scroll' : 'list-scroll'}
             >
-            <span style={styles.listCardSm}>COMING SOON</span>
+              <span style={styles.listCardSm}>COMING SOON</span>
             </article>
           </section>
         </div>

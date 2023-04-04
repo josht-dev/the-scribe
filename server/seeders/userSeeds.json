@@ -1,0 +1,52 @@
+[
+  {
+    "username": "Hermadite The Traveler",
+    "email": "hermadite@user.com",
+    "password": "password01"
+  },
+  {
+    "username": "Dami The Destroyer",
+    "email": "dami@user.com",
+    "password": "password02"
+  },
+  {
+    "username": "Hanneral Bonecrusherton",
+    "email": "hanneral@user.com",
+    "password": "password03"
+  },
+  {
+    "username": "Grilbek Munkirr",
+    "email": "grilbek@user.com",
+    "password": "password04"
+  },
+  {
+    "username": "Karnyl Coldmask",
+    "email": "karnyl@user.com",
+    "password": "password05"
+  },
+  {
+    "username": "Spark",
+    "email": "spark@user.com",
+    "password": "password06"
+  },
+  {
+    "username": "Drea Picard",
+    "email": "drea@user.com",
+    "password": "password07"
+  },
+  {
+    "username": "Silaqui Nailo",
+    "email": "silaqui@user.com",
+    "password": "password08"
+  },
+  {
+    "username": "Wellby High-hill",
+    "email": "welby@user.com",
+    "password": "password09"
+  },
+  {
+    "username": "Criella",
+    "email": "criella@user.com",
+    "password": "password10"
+  }
+]
