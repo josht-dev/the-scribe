@@ -1,6 +1,7 @@
-import React, { useState, useRef, Suspense } from "react";
+import React, { useState, useEffect, useContext, createContext, Suspense } from "react";
 import { gql, useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
+import { QUERY_USER_CAMPAIGNS } from '../../utils/queries';
 import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
@@ -58,42 +59,196 @@ const styles = {
   }
 };
 
-function getProfileId() {
-  const profileId = Auth.getProfile().data.profile;
 
-  // REMOVE - Testing log
-  console.log('My profile ID: ' + profileId);
+/*
+function TabList({ tabList }) {
+  let currentTab = 0;
+  let handleTabChange = 0;
+  return (
+    <div style={styles.tabContainer} id='tabContainer'>
+      {tabList.flatMap(item => {
+        return (<Tab
+          currentTab={currentTab}
+          handleTabChange={handleTabChange}
+          tab={item}
+          key={item.id}
+        />)
+      })}
+    </div>
+  );
+}
+*/
+// Render a save btn when on a campaign
 
-  return profileId;
+function SaveBtn() {
+  // this btn should only rentder on single campaign pages
+  // if (currentTab != -1) {
+  if (true) {
+    return (
+      <div>
+        <div
+          style={styles.addBtnDiv}
+          onClick={() => {
+            {/* handleSave() */ }
+          }}
+        >
+          <Button
+            title='save'
+          />
+        </div>
+      </div>
+    );
+  } else {
+    return (<></>)
+  }
 }
 
 
-function Campaign() {
 
 
+/*
+const Context = createContext();
 
-
-
-
-
-
+const ChildWithCount = () => {
+  const { count, setCount } = useContext(Context);
+  console.log('ChildWithCount re-renders');
   return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>{count}</button>
+      <p>Child</p>
+    </div>
+  );
+};
+
+const ExpensiveChild = () => {
+  console.log('ExpensiveChild re-renders');
+  return <p>Expensive child</p>;
+};
+
+const CountContext = ({ children }) => {
+  const [count, setCount] = useState(0);
+  const contextValue = { count, setCount };
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
+};
 
 
-    <>
-    <span>Testing</span>
-    </>
+<CountContext>
+      <ChildWithCount />
+      <ExpensiveChild />
+    </CountContext>
+*/
 
 
 
 
 
 
+// Grab the user's profileId that was passed back when they logged in
+const getProfileId = () => {
+  let myProfileId = Auth.getProfile().data.profile;
+
+  // REMOVE - Log used for testing
+  console.log('my profileID: ' + myProfileId);
+
+  return myProfileId;
+}
+
+// Get the profileId to send to the DB
+const profileId = getProfileId();
+const Context = createContext();
 
 
 
-
+const TabContainer = () => {
+  const { currentTab, setCurrentTab, tabList } = useContext(Context);
+  return (
+    <div style={styles.tabContainer} id='tabContainer'>
+      {tabList.flatMap(item => {
+        return (<Tab
+          currentTab={currentTab}
+          handleTabChange={setCurrentTab}
+          tab={item}
+          key={item.id}
+        />)
+      })}
+    </div>
   );
 }
 
-export default Campaign;
+
+
+
+
+
+function NewCampaign({ children }) {
+  console.log(children);
+  // Hold the state of the current tab used for switching between tabs
+  const [currentTab, setCurrentTab] = useState('-1');
+  console.log(currentTab);
+  // Hold the entire list of tabs opened by the user
+  const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
+  // Hold all the user campaign data
+  const [allCampaigns, setAllCampaigns] = useState([]);
+
+  const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
+    variables: { profileId }
+  }, { onCompleted: setAllCampaigns }
+  );
+  if (loading) { return 'Loading...' };
+  if (error) { return `Error! ${error.message}` };
+
+
+  //Store the useState to propagate it down components that need it
+  const contextValue = {
+    currentTab, setCurrentTab, tabList, setTabList, allCampaigns
+  };
+
+
+  return (
+    <main
+      style={styles.container}
+    >
+      <section style={styles.section}>
+        <div style={styles.titleDiv}>
+          <span style={styles.titleBtn}>campaigns</span>
+          <div
+            style={styles.addBtnDiv}
+            onClick={() => {
+              {/* handleAdd() */ }
+            }}
+          >
+            {/* <Button
+              title='new'
+            /> */}
+          </div>
+          {/* <SaveBtn /> */}
+        </div>
+
+
+
+        <Context.Provider value={contextValue}>
+          {children}
+        </Context.Provider>
+
+
+
+      </section>
+    </main >
+  );
+}
+
+const App = () => {
+  return (
+    <NewCampaign>
+      <TabContainer />
+
+    </NewCampaign>
+  )
+}
+
+
+
+
+
+
+export default App;

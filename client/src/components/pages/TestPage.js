@@ -1,5 +1,6 @@
 import { useQuery, gql } from '@apollo/client';
-import React, { useState, useEffect } from 'react';
+import { validate } from 'graphql';
+import React, { useState, useEffect, useRef } from 'react';
 import Auth from '../../utils/auth';
 
 /*
@@ -178,6 +179,16 @@ const styles = {
 
 
 function TestPage() {
+
+  const refTest = useRef();
+  const refTest2 = {
+    id: useRef(),
+    id2: useRef()
+  }
+const refTest3 = [
+  
+]
+
   const profileId = '642bef9c81917242133a870b';
 
 // Get the profileId so user campaigns can be pulled
@@ -190,29 +201,43 @@ console.log(typeof myCampaigns);
 return myCampaigns;
 }
 
-console.log(getProfileId());
+// console.log(getProfileId());
 
 
   const [testLoading, setTestLoading] = useState(false);
-  useEffect(() => {
-    setTestLoading(true);
-    setTimeout(() => {
-      setTestLoading(false);
-    }, 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTestLoading(true);
+  //   setTimeout(() => {
+  //     setTestLoading(false);
+  //   }, 2000);
+  // }, []);
 
 
 
 
-  const { loading, error, data } = useQuery(Query_USER_CAMPAIGNS, {
-    variables: { profileId }
-  }
-  );
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  // const { loading, error, data } = useQuery(Query_USER_CAMPAIGNS, {
+  //   variables: { profileId }
+  // }
+  // );
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
 
 
-  console.log(data);
+  // console.log(data);
+
+
+
+
+const onChange1 = (val) => {
+  console.log(val);
+  refTest.current = val;
+}
+
+const testBtn = () => {
+  console.log(refTest);
+}
+
+
 
   return (
     <main style={styles.container}>
@@ -223,6 +248,9 @@ console.log(getProfileId());
           </div>
         </>
         <p>Testing</p>
+        
+        <input type='text' ref={refTest}></input>
+        <button onClick={() => {testBtn()}}>Test me</button>
 
         <div className="container">
           {testLoading ? (
