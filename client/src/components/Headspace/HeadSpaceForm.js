@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
 import { useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { QUERY_SINGLE_USERPOST } from "../../utils/queries";
+import { ADD_USERPOST } from "../../utils/mutations";
+import { QUERY_USERPOSTS } from "../../utils/queries";
+
+import Auth from "../../utils/auth";
 
 // Component styles
 const styles = {
@@ -59,12 +64,72 @@ const styles = {
   },
 };
 
-export default function SingleHeadspace(props) {
+export default function HeadSpaceForm(props) {
+  const [userPostTitle, setUserPostTitle] = useState("");
+  const [userPostSubject, setUserPostSubject] = useState("");
+    const [userPostBody, setUserPostBody] = useState("");
+  const [characterCount, setCharacterCount] = useState(0);
+
+  const [addUserPost, { error }] = useMutation(ADD_USERPOST, {
+    update(cache, { data: { addUserPost } }) {
+      try {
+        const { userPosts } = cache.readQuery({ query: QUERY_USERPOSTS });
+
+        cache.writeQuery({
+          query: QUERY_USERPOSTS,
+          data: { userPosts: [addUserPost, ...userPosts] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await addUserPost({
+        variables: {
+        //   title,
+        //   subject,
+        //   body,
+          username: Auth.getProfile().data.username,
+        },
+      });
+
+      setUserPostTitle("");
+      setUserPostSubject("");
+    setUserPostBody("");
+      
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === "title" && value.length <= 1000) {
+      setUserPostTitle(value);
+      setCharacterCount(value.length);
+    }
+    if (name === "subject" && value.length <= 50) {
+     setUserPostSubject(value);
+      setCharacterCount(value.length);
+    }
+    if (name === "body" && value.length <= 3000) {
+      setUserPostBody(value);
+      setCharacterCount(value.length);
+    }
+  };
+
   const { data } = useQuery(QUERY_SINGLE_USERPOST);
   const userPost = data?.userPost || [];
   return (
     <>
       <section style={styles.section}>
+        
         <div>
           {/* Post Title */}
           <TitleLarge
@@ -72,7 +137,7 @@ export default function SingleHeadspace(props) {
             title={userPost.title}
           />
         </div>
-        {/* Headspace Post Body (Column 1 of the Grid) */}
+        
         <section style={styles.pandCSection}>
           <div>
             <textarea
