@@ -210,47 +210,47 @@ const typeDefs = gql`
 
     # ************TESTING SOME STUFF **************
     # The mutations below made it easier to preload some testing data
-    # newAddCampaign(
-    #   profileId: ID!
-    #   gameName: String!
-    #   ruleSet: String
-    #   genre: String
-    #   notes: [String!]
-    #   currentDateInGame: String
-    # ): Campaign
+    newAddCampaign(
+      profileId: ID!
+      gameName: String!
+      ruleSet: String
+      genre: String
+      notes: [String!]
+      currentDateInGame: String
+    ): Campaign
 
-    # newAddCharacter(
-    #   campaignId: ID!
-    #   characterName: String!
-    #   characterStatus: String
-    #   motivations: [String!]
-    #   characterNotes: [String!]
-    #   characterSheet: String
-    #   npc: Boolean!
-    # ): Character
+    newAddCharacter(
+      campaignId: ID!
+      characterName: String!
+      characterStatus: String
+      motivations: [String!]
+      characterNotes: [String!]
+      characterSheet: String
+      npc: Boolean!
+    ): Character
 
-    # newAddStory(
-    #   campaignId: ID!
-    #   objectives: [String!]
-    #   title: String!
-    #   timeline: String
-    #   bigBad: String
-    #   main: Boolean!
-    #   side: Boolean!
-    #   player: Boolean!
-    #   storyBoard: [String!]
-    # ): Story
+    newAddStory(
+      campaignId: ID!
+      objectives: [String!]
+      title: String!
+      timeline: String
+      bigBad: String
+      main: Boolean!
+      side: Boolean!
+      player: Boolean!
+      storyBoard: [String!]
+    ): Story
 
-    # newAddAdventure(
-    #   campaignId: ID!
-    #   campaign: String
-    #   title: String!
-    #   setup: String
-    #   resolution: String
-    #   notes: [String!]
-    #   objectives: [String!]
-    #   encounters: [String!]
-    # ): Adventure
+    newAddAdventure(
+      campaignId: ID!
+      campaign: String
+      title: String!
+      setup: String
+      resolution: String
+      notes: [String!]
+      objectives: [String!]
+      encounters: [String!]
+    ): Adventure
   }
 `;
 
