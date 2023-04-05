@@ -1,5 +1,6 @@
 import { useQuery, gql } from '@apollo/client';
 import React, { useState, useEffect } from 'react';
+import Auth from '../../utils/auth';
 
 /*
 const MY_QUERY = gql`
@@ -178,6 +179,18 @@ const styles = {
 
 function TestPage() {
   const profileId = '642bef9c81917242133a870b';
+
+// Get the profileId so user campaigns can be pulled
+const getProfileId = () => {
+  let myCampaigns = Auth.getProfile().data.profile;
+console.log('my profileID: ' + myCampaigns);
+console.log(myCampaigns);
+console.log(typeof myCampaigns);
+
+return myCampaigns;
+}
+
+console.log(getProfileId());
 
 
   const [testLoading, setTestLoading] = useState(false);
