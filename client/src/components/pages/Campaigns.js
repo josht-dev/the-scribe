@@ -5,9 +5,10 @@ import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
 import { gql, useQuery } from "@apollo/client";
 
-import { QUERY_CAMPAIGNS, QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries';
+import { QUERY_CAMPAIGNS, QUERY_SINGLE_PROFILE, QUERY_USERS, QUERY_USER_CAMPAIGNS } from '../../utils/queries';
 import { InMemoryCache } from '@apollo/client';
 
+import { Suspense } from 'react';
 
 import Auth from '../../utils/auth';
 
@@ -404,14 +405,45 @@ const styles = {
   }
 };
 
+// Get the profileId so user campaigns can be pulled
+const getProfileId = () => {
+  let myCampaigns = Auth.getProfile().data.username;
+console.log('my profileID: ' + myCampaigns);
+console.log(myCampaigns);
+console.log(typeof myCampaigns);
+
+return myCampaigns;
+}
+
 
 
 
 function Campaigns() {
 
+  const username = getProfileId();
+  
+  const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, { username: username });
 
-  const { loading, data } = useQuery(QUERY_CAMPAIGNS);
+  console.log('my new data');
+  console.log(data);
+
+  
+  // const { loading, error, data } = useQuery(GET_USERS)
+
+  // if (error) return <h1>Something went wrong!</h1>
+  // if (loading) return <h1>Loading...</h1>
+
+
+  //  const { loading, error, data } = useQuery(QUERY_CAMPAIGNS);
    const campaigns = data?.campaigns || [];
+
+  
+
+console.log(data);
+  // if (error) return <h1>Something went wrong!</h1>
+  // if (loading) return <h1>Loading...</h1>
+  
+
 
   // const campaigns = async () => {
   //   const allCampaigns = await data?.campaigns;
@@ -421,7 +453,6 @@ function Campaigns() {
   // console.log(campaigns());
 
 
-// let myCampaigns = Auth.getProfile().data.args._doc.profile[0].campaigns;
 
 // const getMyCampaigns = async () => {
 //   let data = await campaigns();

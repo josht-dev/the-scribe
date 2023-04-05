@@ -198,6 +198,61 @@ export const QUERY_SINGLE_CAMPAIGN = gql`
   }
 `;
 
+export const QUERY_USER_CAMPAIGNS = gql`
+  query getUserCampaigns {
+    userCampaigns {
+      token
+      user {
+        _id
+      about
+      campaigns {
+        _id
+        ruleSet
+        notes
+        genre
+        gameName
+        currentDateInGame
+        adventures {
+          _id
+          title
+          setup
+          resolution
+          notes
+          objectives
+          encounters
+          campaign
+        }
+        characters {
+          _id
+          characterName
+          characterStatus
+          motivations
+          characterNotes
+          characterSheet
+          npc
+        }
+        storyOutline {
+          _id
+          campaign
+          objectives
+          timeline
+          bigBad
+          main
+          side
+          player
+          storyBoard
+          title
+        }
+      }
+      profilePicture
+      profileUser
+      }
+    }
+  }
+`;
+
+
+
 export const QUERY_STORIES = gql`
   query getStories {
     stories {

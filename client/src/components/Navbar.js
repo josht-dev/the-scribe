@@ -35,6 +35,12 @@ export default function Navbar() {
       id: 7,
       link: "#",
     },
+    {
+      name: 'TEST',
+      id: 8,
+      link: '/TEST'
+    }
+    
   ];
   const log = [
     {
@@ -62,6 +68,11 @@ export default function Navbar() {
       id: 5,
       link: "#",
     },
+    {
+      name: 'TEST',
+      id: 8,
+      link: '/TEST'
+    }
   ];
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
