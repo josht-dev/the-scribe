@@ -9,34 +9,19 @@
 
 A multi-page application targeted towards individuals who would host tabletop games. A user can create stories, characters, side quests, or plots to share with other users on the app. This app was motivated by two of the main contributors being Game Masters throughout the duration of their lives. They wanted a social media style application where other GMs could easily share ideas and garner inspiration, with the ability to increase the depths of their in-game universes. 
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-- [Development](#development-team)
-- [Features](#features)
-
-## Installation
-
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
-
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+From our homepage you have the option to register or login. 
+![homepage screenshot](client/src/assets/images/scribe-homepage.png)
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-![homepage-screenshot](./assets/scribe-homepage.png)
-
-![campaigns-screenshot](./assets/scribe-campaigns.png)
+Once logged in you have varying options to choose from including campaigns, headspace, workshop, and account, as well as buttons at the bottom of the page for an about, contact, and dontation. 
+![campaigns screenshot](client/src/assets/images/scribe-campaigns.png)
 
 ## Credits
 
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
+These AI generator sites were utilized for creation of the logo and background. 
+Logo: https://hotpot.ai/
+Background: https://www.photoroom.com/backgrounds
 
 ## License
 
@@ -63,6 +48,3 @@ copies or substantial portions of the Software.
     <li><a href="https://github.com/artiecannv">Arthur Cann</a></li>
 </ul>
 
-## Features
-
-If your project has a lot of features, list them here.
