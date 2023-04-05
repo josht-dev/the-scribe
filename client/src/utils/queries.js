@@ -199,56 +199,53 @@ export const QUERY_SINGLE_CAMPAIGN = gql`
 `;
 
 export const QUERY_USER_CAMPAIGNS = gql`
-  query getUserCampaigns {
-    userCampaigns {
-      token
-      user {
+  query getUserCampaigns($profileId: ID!) {
+  userCampaigns(profileId: $profileId) {
+    _id
+    about
+    profileUser
+    profilePicture
+    campaigns {
+      _id
+      gameName
+      ruleSet
+      genre
+      notes
+      storyOutline {
         _id
-      about
-      campaigns {
+        campaign
+        objectives
+        timeline
+        bigBad
+        main
+        side
+        player
+        storyBoard
+        title
+      }
+      adventures {
         _id
-        ruleSet
+        title
+        setup
+        resolution
         notes
-        genre
-        gameName
-        currentDateInGame
-        adventures {
-          _id
-          title
-          setup
-          resolution
-          notes
-          objectives
-          encounters
-          campaign
-        }
-        characters {
-          _id
-          characterName
-          characterStatus
-          motivations
-          characterNotes
-          characterSheet
-          npc
-        }
-        storyOutline {
-          _id
-          campaign
-          objectives
-          timeline
-          bigBad
-          main
-          side
-          player
-          storyBoard
-          title
-        }
+        objectives
+        encounters
+        campaign
       }
-      profilePicture
-      profileUser
+      characters {
+        _id
+        characterName
+        characterStatus
+        motivations
+        characterNotes
+        characterSheet
+        npc
       }
+      currentDateInGame
     }
   }
+}
 `;
 
 
