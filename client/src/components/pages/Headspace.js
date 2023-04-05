@@ -3,7 +3,7 @@ import Tab from "../Campaigns/Tab";
 import HeadspaceList from "../Headspace/HeadspaceList";
 import SingleHeadspace from "../Headspace/SingleHeadspace";
 
-import { QUERY_THOUGHTS } from "../utils/queries";
+import { QUERY_THOUGHTS } from "../../utils/queries";
 import { useQuery } from "@apollo/client";
 import { QUERY_USERPOSTS } from "../../utils/queries";
 
@@ -173,11 +173,11 @@ export default function Headspace() {
       );
     } else {
       // Get index of currentTab based on _id
-      const tabIndex = headspaceArray.findIndex((item) => {
+      const tabIndex = userPosts.findIndex((item) => {
         return item._id === currentTab;
       });
       // Render a single headspace post
-      return <SingleHeadspace headspaceArray={headspaceArray[tabIndex]} />;
+      return <SingleHeadspace headspaceArray={userPosts[tabIndex]} />;
     }
   }
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
 import { useQuery } from "@apollo/client";
-import { QUERY_SINGLE_USERPOST } from "../utils/queries";
+import { QUERY_SINGLE_USERPOST } from "../../utils/queries";
 
 // Component styles
 const styles = {
