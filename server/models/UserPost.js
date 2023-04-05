@@ -7,7 +7,7 @@ const userPostSchema = new Schema({
     type: String,
     required: true,
     minLength: 8,
-    maxLength: 50,
+    maxLength: 1000,
   },
   subject: {
     type: String,
