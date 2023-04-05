@@ -1,15 +1,60 @@
 import { gql } from "@apollo/client";
 
 export const LOGIN_USER = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
+  mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      _id
+      email
+      password
+      username
+      profile {
         _id
-        email
+        campaigns {
+          _id
+          gameName
+          genre
+          notes
+          ruleSet
+          currentDateInGame
+          storyOutline {
+            _id
+            bigBad
+            campaign
+            main
+            objectives
+            player
+            side
+            storyBoard
+            timeline
+            title
+          }
+          adventures {
+            _id
+            campaign
+            encounters
+            notes
+            objectives
+            resolution
+            setup
+            title
+          }
+          characters {
+            _id
+            characterName
+            characterNotes
+            characterSheet
+            characterStatus
+            motivations
+            npc
+          }
+        }
       }
     }
   }
+}
+
 `;
 
 export const ADD_USER = gql`
@@ -47,10 +92,7 @@ export const ADD_USERPOST = gql`
 //       commentBody
 //       userPost {
 //         _id
-//       }
-//     }
-//   }
-// `;
+//       }const
 
 // export const ADD_REACTION = gql`
 //   mutation addReaction($commentId: ID!, $reactionBody: String!) {

@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Tab from '../Campaigns/Tab';
 import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
+import { gql, useQuery } from "@apollo/client";
+
+import { QUERY_CAMPAIGNS, QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries';
+import { InMemoryCache } from '@apollo/client';
+
+
+import Auth from '../../utils/auth';
+
 
 // Testing data
+/*
 const campaignArray = [
   {
     _id: 1,
@@ -343,7 +352,7 @@ const campaignArray = [
     story: []
   }
 ];
-
+*/
 // Styling object
 const styles = {
   container: {
@@ -388,10 +397,85 @@ const styles = {
     margin: '0.5rem 0',
     padding: '.5rem 1.5rem',
   },
+  saveBtnDiv: {
+    fontSize: '1rem',
+    margin: '0.5rem 0',
+    padding: '.5rem 1.5rem',
+  }
 };
 
 
+
+
 function Campaigns() {
+
+
+  const { loading, data } = useQuery(QUERY_CAMPAIGNS);
+   const campaigns = data?.campaigns || [];
+
+  // const campaigns = async () => {
+  //   const allCampaigns = await data?.campaigns;
+  // }
+ 
+
+  // console.log(campaigns());
+
+
+// let myCampaigns = Auth.getProfile().data.args._doc.profile[0].campaigns;
+
+// const getMyCampaigns = async () => {
+//   let data = await campaigns();
+
+//   const myData = await data.filter((arr) => {
+//     return myCampaigns.includes(arr._id);
+//   });
+// console.log(myData);
+//   return myData;
+// }
+
+// let myData = campaigns.filter((arr) => {
+//        return myCampaigns.includes(arr._id);
+//      });
+
+// console.log(myData);
+
+
+// const { loading, data } = useQuery(QUERY_THOUGHTS);
+//   const thoughts = data?.thoughts || [];
+
+  // const { todo } = client.readQuery({
+  //   query: READ_TODO,
+  //   // Provide any required variables in this object.
+  //   // Variables of mismatched types will return `null`.
+  //   variables: {
+  //     id: 5,
+  //   },
+  // });
+//   const { data, loading, error } = useQuery(QUERY_USERS);
+
+// function getUser() {
+//   return useQuery(QUERY_USERS);
+// }
+//     const user = useQuery(QUERY_USERS);
+//     //console.log('user query');
+//     //console.log(user);
+
+
+  // const { loading, error, data } = useQuery(GET_DOGS);
+  // const { loading, error, data } = useQuery(GET_DOG_PHOTO, {
+  //   variables: { breed },
+  // });
+  
+  
+ //const profileId = user.data.user.profile[0]._id;
+ ////console.log(profileId);
+
+  //const profile = useQuery(QUERY_SINGLE_PROFILE, {profileId: 'toasterrage'});
+ 
+  //console.log(profile);
+
+
+
   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
 
   // Current selected tab state
@@ -400,24 +484,72 @@ function Campaigns() {
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
 
-// Pulling list into a variable so it can be added to
-const initialList = campaignArray;
-const [list, setList] = useState(initialList);
-// The onClick for adding new items
-const handleAdd = () => {
-  // Deal with needing an unique id while item has not been added to db yet
-  const itemId = `none-${list.length++}`;
-  const newList = list.concat({ 
-    _id: itemId,
-    title: 'new campaign!',
-    game: 'game time',
-    modifiedAt: '',
-    adventures: [],
-    characters: [],
-    story: []
-  });
-  setList(newList);
-};
+  // Pulling list into a variable so it can be added to and saved
+  const initialList = campaigns;
+  const [allCampaigns, setAllCampaigns] = useState([]);
+   useEffect(() => { 
+    setAllCampaigns(initialList)
+      
+    }, []);
+
+ 
+  // test
+  //let allCampaigns = initialList;
+  //console.log('initial allcampaign data');
+  //console.log(allCampaigns);
+  // const setAllCampaigns = (data) => {
+  //   allCampaigns = data;
+  //   //console.log('new all campaign data');
+  //   //console.log(allCampaigns);
+  // }
+
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    const itemId = `none-${allCampaigns.length++}`;
+    const newList = allCampaigns.concat({
+      _id: itemId,
+      gameName: 'new campaign!',
+      ruleSet: 'game time',
+      modifiedAt: '',
+      adventures: [],
+      characters: [],
+      story: []
+    });
+    setAllCampaigns(newList);
+    setCurrentTab(currentTab);
+  };
+
+  //const [currentCampaign, setCurrentCampaign] = useState();
+  let currentCampaign = useRef('');
+  // const setCurrentCampaign = (id) => {currentCampaign = id}
+  //console.log('currentCampaign: ' + currentCampaign.current);
+  const handleCurrentCampaign = (data) => {
+    //console.log('setting current campaign');
+    //console.log(data);
+    // setCurrentCampaign(data);
+    currentCampaign = data;
+  }
+
+
+
+  // Update campaign with saved data
+  /*The data obj takes a value to update or an array to update*/
+  const handleSave = () => {
+    // Get current data
+    //console.log(currentCampaign);
+
+    //let newCampaign = 
+    // update story array
+
+    // update adventures array
+
+    // update characters array
+
+    // update entire campaign
+
+
+  }
 
   // Render main content modal/page
   const renderPage = () => {
@@ -426,20 +558,22 @@ const handleAdd = () => {
       return <CampaignList
         tabList={tabList}
         setTabList={setTabList}
-        campaignArray={campaignArray}
-        list={list}
+        campaignArray={allCampaigns}
+        list={allCampaigns}
       />
     } else {
       let data;
       // Get data for currentTab
-      for (const x in list) {
-        if (list[x]._id == currentTab) {
-           data = list[x];
-           break;
+      for (const x in allCampaigns) {
+        if (allCampaigns[x]._id == currentTab) {
+          data = allCampaigns[x];
+          break;
         }
       }
-      console.log(data);
-
+      // Set current campaign
+      handleCurrentCampaign(data);
+      //console.log('check current campaign data');
+      //console.log(currentCampaign);
       return <SingleCampaign
         campaign={data}
       />
@@ -459,6 +593,30 @@ const handleAdd = () => {
     }
   }
 
+  // Render a save btn when on a campaign
+  function SaveBtn() {
+    // this btn should only rentder on single campaign pages
+    if (currentTab != -1) {
+      return (
+        <div>
+        <div
+          style={styles.addBtnDiv}
+          onClick={() => {
+            handleSave()
+          }}
+        >
+          <Button
+            title='save'
+          />
+        </div>
+        </div>
+      );
+    } else {
+      return (<></>)
+    }
+
+  }
+
   // Return the large modal/page
   return (
     <main
@@ -476,9 +634,9 @@ const handleAdd = () => {
             >
               <Button
                 title='new'
-                adventure={true}
               />
             </div>
+            <SaveBtn />
           </div>
           <div style={styles.tabContainer} id='tabContainer'>
             {tabList.flatMap(item => {
