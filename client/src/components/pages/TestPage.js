@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 /*
 const MY_QUERY = gql`
@@ -142,10 +142,54 @@ const styles = {
     margin: "2rem"
   },
   aboutStyle: {},
+  loadContainer: {
+    width: '100%',
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'fixed',
+    background: 'rgba(0, 0, 0, 0.834)',
+    zIndex: 999,
+  },
+  spinner: {
+    width: '64px',
+    height: '64px',
+    border: '8px solid',
+    borderColor: '#3d5af1 transparent #3d5af1 transparent',
+    borderRadius: '50%',
+    animation: 'spin-anim 1.2s linear infinite'
+  },
+  spinnerContainer: {
+    height: '100vh',
+    width: '100%',
+    background: "linear-gradient(0deg, rgba(75, 32, 20, 0.85), rgba(75, 70, 20, 0.821)), url('https://source.unsplash.com/random/4000×4000') center no-repeat",
+    backgroundSize: 'cover',
+    color: '#fff',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+
 };
+
+
+
 
 function TestPage() {
   const profileId = '642bef9c81917242133a870b';
+
+
+  const [testLoading, setTestLoading] = useState(false);
+  useEffect(() => {
+    setTestLoading(true);
+    setTimeout(() => {
+      setTestLoading(false);
+    }, 2000);
+  }, []);
+
+
+
 
   const { loading, error, data } = useQuery(Query_USER_CAMPAIGNS, {
     variables: { profileId }
@@ -153,6 +197,7 @@ function TestPage() {
   );
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
+
 
   console.log(data);
 
@@ -166,8 +211,30 @@ function TestPage() {
         </>
         <p>Testing</p>
 
-      </section>
-    </main>
+        <div className="container">
+          {testLoading ? (
+            <div style={styles.loadContainer}>
+              <div style={styles.spinner}></div>
+            </div>
+          ) : (
+            <div className='main-content'>
+              <h1>TESING TESING</h1>
+              <p>This is just some testing, nothing to see, move along</p>
+              <div className='buttons'>
+                <button className='btn'>
+                  <a href='#'>Read here</a>
+                </button>
+                <button className="btn get-quote">
+                  Generate Quote
+                </button>
+              </div>
+
+            </div>
+          )}
+        </div>
+
+      </section >
+    </main >
   );
 }
 
