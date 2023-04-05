@@ -39,6 +39,11 @@ export default function Navbar() {
       name: 'TEST',
       id: 8,
       link: '/TEST'
+    },
+    {
+      name: 'newcampaign',
+      id: 9,
+      link: '/newcampaign'
     }
     
   ];
@@ -72,6 +77,11 @@ export default function Navbar() {
       name: 'TEST',
       id: 8,
       link: '/TEST'
+    },
+    {
+      name: 'newcampaign',
+      id: 9,
+      link: '/newcampaign'
     }
   ];
 
