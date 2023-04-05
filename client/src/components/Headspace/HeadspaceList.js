@@ -72,18 +72,28 @@ export default function HeadspaceList(props) {
 
   }
 
+  if(!props.userPosts.length){
+    return (
+<>
+<h3>No User Posts Here</h3>
+</>
+)
+    
+      
+  }
   return (
+
     <section style={styles.listDivLarge} className='list-scroll'>
-      {props.headspaceArray.map(card => {
+      {props.userPosts && props.userPosts.map(userPost => {
         return (
           <article
             style={styles.listCardLarge}
-            key={card._id}
-            data-campaignid={card._id}
-            data-title={card.title}
+            key={props.userPost._id}
+            data-campaignid={props.userPost._id}
+            data-title={props.userPost.title}
             onClick={onAddBtnClick}
           >
-            <span style={styles.listCardLargeTitle}>{card.title}</span>
+            <span style={styles.listCardLargeTitle}>{props.userPost.title}</span>
             <div style={styles.listCardLargeDetails}>
               <span>Created At: {card.createdAt}</span>
             </div>

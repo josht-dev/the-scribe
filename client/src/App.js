@@ -27,8 +27,15 @@ import "../src/assets/css/App.css";
 
 const httpLink = createHttpLink({
  
+<<<<<<< HEAD
   //uri: "/graphql",
   uri: "http://localhost:3001/graphql",
+=======
+  uri: "/graphql",
+
+  // uri: "http://localhost:3001/graphql",
+
+>>>>>>> 3300b38206b329d12ff4ea0c699b1f4812defa70
 });
 
 const authLink = setContext((_, { headers }) => {

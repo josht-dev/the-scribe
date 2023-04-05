@@ -4,7 +4,8 @@ import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
 import { gql, useQuery } from "@apollo/client";
-import { QUERY_SINGLE_PROFILE, QUERY_USERS, QUERY_CAMPAIGNS, QUERY_SINGLE_CAMPAIGN } from '../../utils/queries'
+
+import { QUERY_CAMPAIGNS, QUERY_SINGLE_PROFILE, QUERY_USERS } from '../../utils/queries';
 import { InMemoryCache } from '@apollo/client';
 
 
@@ -408,6 +409,7 @@ const styles = {
 
 function Campaigns() {
 
+
   const { loading, data } = useQuery(QUERY_CAMPAIGNS);
    const campaigns = data?.campaigns || [];
 
@@ -417,6 +419,7 @@ function Campaigns() {
  
 
   // console.log(campaigns());
+
 
 // let myCampaigns = Auth.getProfile().data.args._doc.profile[0].campaigns;
 
