@@ -636,7 +636,6 @@ const Campaigns = () => {
           <NewCampaign>
             <TabContainer />
             <MainContent />
-
           </NewCampaign>
         </>
       ) : (

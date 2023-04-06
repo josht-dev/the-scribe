@@ -165,7 +165,17 @@ export default function ModalLarge(props) {
       resize: 'none',
       border: 'none',
       outline: 'none'
-    }
+    },
+    closeBtnDiv: {
+      display: 'flex',
+      padding: '0.25rem',
+      marginLeft: props.id === 'player-plots' 
+        || props.id === 'side-quests' 
+        || props.id === 'main-story' 
+        ? '-1.5rem' : '-1.rem',
+      marginTop: '-0.75rem',
+      fontSize: '0.75rem'
+    },
   }
 
   // Pulling list into a variable so it can be added to
@@ -227,12 +237,17 @@ export default function ModalLarge(props) {
         <LabelInModal
           title={props.title}
         />
+        <div
+          style={styles.closeBtnDiv}
+          onClick={() => {
+            props.handleModalOpen()
+          }}
+        >
+          <Button
+            title='x'
+          />
+        </div>
         <div style={styles.optionalBtns}>
-          <div style={styles.addBtnDiv}>
-            <Button
-              title='+'
-            />
-          </div>
           <div style={styles.sortBtnDiv}>
             <Button
               title='plots'
@@ -287,6 +302,16 @@ export default function ModalLarge(props) {
         <LabelInModal
           title={props.title}
         />
+        <div
+          style={styles.closeBtnDiv}
+          onClick={() => {
+            props.handleModalOpen()
+          }}
+        >
+          <Button
+            title='x'
+          />
+        </div>
         <div style={styles.charName}>
           <TitleLarge
             title={props.modalData.characterName}
@@ -373,12 +398,6 @@ export default function ModalLarge(props) {
 
   return (
     <>
-      <div
-        style={styles.modalBackdrop}
-        onClick={(e) => {
-          if (props.openModal) { props.handleModalOpen() }
-        }}
-      ></div>
       {switchModal()}
     </>
   );
