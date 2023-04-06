@@ -4,7 +4,17 @@ import {
 } from "@mui/material";
 
 export default function Construction() {
-return(
-<Typography sx={{textSize:"50rem", display:"flex", justifyContent:"center", alignContent:"center", color:"white"}}>Currently Under Construction</Typography>
-)
+return (
+  <div
+    sx={{
+      fontSize: "50rem",
+      display: "flex",
+      justifyContent: "center",
+      alignContent: "center",
+      color: "white",
+    }}
+  >
+    <Typography>Currently Under Construction</Typography>
+  </div>
+);
 }
