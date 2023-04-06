@@ -7,7 +7,7 @@ export default function Construction() {
 return (
   <div
     sx={{
-      textSize: "50rem",
+      fontSize: "50rem",
       display: "flex",
       justifyContent: "center",
       alignContent: "center",
