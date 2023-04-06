@@ -8,17 +8,20 @@ export default function Construction() {
 return (
   <Box
     sx={{
-      fontSize: "50rem",
       display: "flex",
       justifyContent: "center",
       alignContent: "center",
       color: "white",
-      width: "20%",
-      height: "20%",
+      width: "fit-content",
+      height: "fit-content",
       backgroundColor: "#1CB9B3",
+      padding: '3rem',
+      margin: 'auto',
+      position: 'relative',
+      top: '3rem'
     }}
   >
-    <Typography component="h1">Currently Under Construction</Typography>
+    <Typography component="h1" fontSize={64} >Currently Under Construction</Typography>
   </Box>
 );
 }
