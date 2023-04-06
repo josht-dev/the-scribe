@@ -5,6 +5,6 @@ import {
 
 export default function Construction() {
 return(
-<Typography sx={{textSize:"175px"}}>Currently Under Construction</Typography>
+<Typography sx={{textSize:"175px", display:"flex", justifyContent:"center", alignContent:"center"}}>Currently Under Construction</Typography>
 )
 }
