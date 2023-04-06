@@ -253,8 +253,8 @@ export default function ModalLarge(props) {
         </div>
         <div style={styles.tabBoxStory}>
           <TabBox
-            setup={storyIsArray ? '' : props.modalData.setup}
-            resolution={storyIsArray ? '' : props.modalData.resolution}
+            setup='This field is under construction!'/*{storyIsArray ? '' : props.modalData.setup}*/
+            resolution='This field is under construction!' /*{storyIsArray ? '' : props.modalData.resolution}*/
           />
         </div>
         <div
@@ -263,7 +263,7 @@ export default function ModalLarge(props) {
           <Storyboard
             title='storyboard'
             isArray={storyIsArray}
-            storyboards={storyIsArray ? [] : props.modalData.storyboard}
+            storyboards={storyIsArray ? [] : props.modalData.storyBoard}
           />
         </div>
       </section>

@@ -269,6 +269,9 @@ const SingleCampaign = () => {
     }
   }
 
+  console.log('selected campaign: ');
+  console.log(selectedCampaign);
+
   const npcs = [];
   const pcs = [];
 
@@ -286,6 +289,11 @@ const SingleCampaign = () => {
 
   // Tell ModalLarge which data to display
   const renderModal = () => {
+
+
+    console.log('modalId: ' + modalId);
+
+
     if (openModal) {
       // Grab the title depending on btn used
       const title = () => {
@@ -308,16 +316,16 @@ const SingleCampaign = () => {
       const modalData = () => {
         let data;
         let story;
-        if (!selectedCampaign.story) {
+        if (!selectedCampaign.storyOutline) {
           story = [];
         } else {
-          story = selectedCampaign.story;
+          story = selectedCampaign.storyOutline;
         }
         let characters;
         if (!selectedCampaign.characters) {
           characters = [];
         } else {
-          characters = selectedCampaign.story;
+          characters = selectedCampaign.characters;
         }
         // REMOVE THIS LATER
         let oneStory;
@@ -325,7 +333,7 @@ const SingleCampaign = () => {
           case 'main-story':
             // Check if story exists
             if (story[0]) {
-              data = selectedCampaign.story.find(story => {
+              data = story.find(story => {
                 return story.main;
               });
             } else {
@@ -338,7 +346,7 @@ const SingleCampaign = () => {
                 main: true,
                 side: false,
                 player: false,
-                storyboard: [],
+                storyBoard: [],
                 objectives: [],
                 setup: '',
                 resolution: '',
@@ -365,7 +373,7 @@ const SingleCampaign = () => {
                 main: false,
                 side: true,
                 player: false,
-                storyboard: [],
+                storyBoard: [],
                 objectives: [],
                 setup: '',
                 resolution: '',
@@ -392,7 +400,7 @@ const SingleCampaign = () => {
                 main: false,
                 side: false,
                 player: true,
-                storyboard: [],
+                storyBoard: [],
                 objectives: [],
                 setup: '',
                 resolution: '',
@@ -447,6 +455,8 @@ const SingleCampaign = () => {
 
       // Display modal with data appropriate to the user clicked
 
+      console.log('modaldata: ');
+      console.log(modalData());
 
       // REMOVE - temp/testing code
       return (
@@ -538,12 +548,6 @@ const SingleCampaign = () => {
       </section >
     </>
   );
-
-
-
-
-
-
 }
 
 // Component that holds the main content

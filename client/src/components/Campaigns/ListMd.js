@@ -19,7 +19,8 @@ const [ list, setList] = useState(initialList);
 // The onClick for adding new items
 const handleAdd = () => {
   // Deal with needing an unique id while item has not been added to db yet
-  const itemId = `none-${list.length++}`;
+  let listLength = list.length;
+  const itemId = `none-${listLength++}`;
   const newList = list.concat(
     {_id: itemId, title: 'NEW ITEM!', playDate: '', status: ''}
   );
