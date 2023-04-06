@@ -104,18 +104,46 @@ export default function Navbar() {
     }
   };
 
+  // const convertNav = () =>{
+  //   return (
+  //     <IconButton
+  //       size="large"
+  //       edge="start"
+  //       color="inherit"
+  //       aria-label="open drawer"
+  //       sx={{ mr: 2 }}
+  //     >
+  //       <List>
+  //         {notLog.map(() => (
+  //           <ListItem button key={notLog.id}>
+  //             <ListItemText primary={notLog.name} />
+  //           </ListItem>
+  //         ))}
+  //       </List>
+  //       <MenuIcon />
+  //     </IconButton>
+  //   );
+  // }
+
   const renderlog = () => {
     if (loggedIn) {
       return (
         <>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+              justifyContent: "flex-end",
+              paddingRight: "3.5rem",
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="black"
             >
               <MenuIcon />
             </IconButton>
@@ -138,9 +166,21 @@ export default function Navbar() {
               }}
             >
               {log.map((log) => (
-                <MenuItem key={log.id} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{log.name}</Typography>
-                </MenuItem>
+                <Link to={log.link} key={log.id} onClick={handleLinkClick}>
+                  <MenuItem key={log.id} onClick={handleCloseNavMenu}>
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      id={log.id}
+                      sx={{
+                        my: 0,
+                        color: "#1CB9B3",
+                        display: "inline",
+                      }}
+                    >
+                      {log.name}
+                    </Button>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -176,14 +216,21 @@ export default function Navbar() {
     } else {
         return (
           <>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
+                justifyContent: "flex-end",
+                paddingRight: "3.5rem",
+              }}
+            >
               <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
-                color="inherit"
+                color="black"
               >
                 <MenuIcon />
               </IconButton>
@@ -206,9 +253,21 @@ export default function Navbar() {
                 }}
               >
                 {notLog.map((notLog) => (
-                  <MenuItem key={notLog.id} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{notLog.name}</Typography>
-                  </MenuItem>
+                  <Link to={notLog.link} key={notLog.id} onClick={handleLinkClick}>
+                    <MenuItem key={notLog.id} onClick={handleCloseNavMenu}>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        id={notLog.id}
+                        sx={{
+                          my: 0,
+                          color: "#1CB9B3",
+                          display: "inline",
+                        }}
+                      >
+                        {notLog.name}
+                      </Button>
+                    </MenuItem>
+                  </Link>
                 ))}
               </Menu>
             </Box>
@@ -224,7 +283,6 @@ export default function Navbar() {
                   to={notLog.link}
                   key={notLog.id}
                   onClick={handleLinkClick}
-                 
                 >
                   <Button
                     onClick={handleCloseNavMenu}

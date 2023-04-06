@@ -3,62 +3,48 @@
 ![Contributors](https://img.shields.io/github/contributors/josht-dev/the-scribe?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/josht-dev/the-scribe?style=for-the-badge)
 ![node-lts](https://img.shields.io/badge/node-16.18.0-brightgreen?style=for-the-badge)
-[![npm version](https://img.shields.io/badge/express-4.16.4-brightgreen?style=for-the-badge)](https://badge.fury.io/js/express)
 ![GitHub issues](https://img.shields.io/github/issues/josht-dev/the-scribe?style=for-the-badge)
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
-
-## Table of Contents (Optional)
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-
-## Installation
-
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+A multi-page application targeted towards individuals who would host tabletop games. A user can create stories, characters, side quests, or plots to share with other users on the app. This app was motivated by two of the main contributors being Game Masters throughout the duration of their lives. They wanted a social media style application where other GMs could easily share ideas and garner inspiration, with the ability to increase the depths of their in-game universes. 
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+From our homepage you have the option to register or login. 
+![homepage screenshot](client/src/assets/images/scribe-homepage.png)
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+Once logged in you have varying options to choose from including campaigns, headspace, workshop, and account, as well as buttons at the bottom of the page for an about, contact, and dontation. 
+![campaigns screenshot](client/src/assets/images/scribe-campaigns.png)
 
-![screenshot](./assets/screenshot.png)
 ## Credits
 
-List your collaborators, if any, with links to their GitHub profiles.
-
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
+These AI generator sites were utilized for creation of the logo and background. 
+Logo: https://hotpot.ai/
+Background: https://www.photoroom.com/backgrounds
 
 ## License
 
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
+MIT License
 
----
+Copyright (c) 2023 JoshuaTaylor
 
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## Features
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-If your project has a lot of features, list them here.
+## Development Team
 
-## How to Contribute
+<ul>
+    <li><a href="https://github.com/josht-dev">Josh Taylor</a></li>
+    <li><a href="https://github.com/loudwhisperer">Brendan Borowski</a></li>
+    <li><a href="https://github.com/porkchoppy">Christin Carter</a></li>
+    <li><a href="https://github.com/artiecannv">Arthur Cann</a></li>
+</ul>
 
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
