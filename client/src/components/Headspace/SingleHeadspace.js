@@ -82,9 +82,13 @@ export default function SingleHeadspace(props) {
   //   variables: 
   // });
   // const userPost = data?.userPost || [];
-  const initialState = props.userPost.comments;
 
-  const [comments, setComments] = useState(initialState);
+  // check if this is a new post
+  const initialComments = (props.userPost.subject === 'unsavedPost') 
+    ? [] : props.userPost.comments;
+   
+
+  const [comments, setComments] = useState(initialComments);
 
   return (
     <>
