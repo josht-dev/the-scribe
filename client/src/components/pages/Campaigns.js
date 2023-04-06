@@ -127,33 +127,6 @@ const listStyles = {
 };
 
 
-
-
-// // Render a save btn when on a campaign
-// function SaveBtn() {
-//   // this btn should only rentder on single campaign pages
-//   // if (currentTab != -1) {
-//   if (true) {
-//     return (
-//       <div>
-//         <div
-//           style={styles.addBtnDiv}
-//           onClick={() => {
-//             {/* handleSave() */ }
-//           }}
-//         >
-//           <Button
-//             title='save'
-//           />
-//         </div>
-//       </div>
-//     );
-//   } else {
-//     return (<></>)
-//   }
-// }
-
-
 // Component that renders the tabs
 const TabContainer = () => {
   const { currentTab, setCurrentTab, tabList } = useContext(Context);
@@ -170,7 +143,6 @@ const TabContainer = () => {
     </div>
   );
 }
-
 
 
 // Component that renders the list of campaigns
@@ -238,6 +210,7 @@ const CampaignList = () => {
     </section>
   );
 }
+
 
 const SingleCampaign = () => {
   const { currentTab, allCampaigns } = useContext(Context);
@@ -487,8 +460,8 @@ const SingleCampaign = () => {
             type='pc'
             openModal={openModal}
             handleModalOpen={handleModalOpen}
-            handleSetChar={handleSetChar} 
-            handleModalId={handleModalId} 
+            handleSetChar={handleSetChar}
+            handleModalId={handleModalId}
           />
           <ListSm
             title='non-player characters'
@@ -496,8 +469,8 @@ const SingleCampaign = () => {
             type='npc'
             openModal={openModal}
             handleModalOpen={handleModalOpen}
-            handleSetChar={handleSetChar} 
-            handleModalId={handleModalId} 
+            handleSetChar={handleSetChar}
+            handleModalId={handleModalId}
           />
         </section>
         <div style={campaignStyles.btnBar}>
@@ -509,13 +482,13 @@ const SingleCampaign = () => {
           />
           <Button
             title='side quests'
-            id='side-quests' 
+            id='side-quests'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
           <Button
             title='player plots'
-            id='player-plots' 
+            id='player-plots'
             handleModalOpen={handleModalOpen}
             handleModalId={handleModalId}
           />
@@ -536,6 +509,7 @@ const SingleCampaign = () => {
     </>
   );
 }
+
 
 // Component that holds the main content
 const MainContent = () => {
@@ -587,6 +561,23 @@ function NewCampaign({ children }) {
     currentTab, setCurrentTab, tabList, setTabList, allCampaigns
   };
 
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    let num = allCampaigns.length;
+    const itemId = `none-${num++}`;
+    const newList = allCampaigns.concat({
+      _id: itemId,
+      gameName: 'new campaign!',
+      ruleSet: 'game time',
+      adventures: [],
+      characters: [],
+      storyOutline: []
+    });
+    setAllCampaigns(newList);
+    setCurrentTab(currentTab);
+  };
+
   return (
     <main
       style={styles.container}
@@ -594,17 +585,33 @@ function NewCampaign({ children }) {
       <section style={styles.section}>
         <div style={styles.titleDiv}>
           <span style={styles.titleBtn}>campaigns</span>
-          <div
-            style={styles.addBtnDiv}
-            onClick={() => {
-              {/* handleAdd() */ }
-            }}
-          >
-            {/* <Button
-              title='new'
-            /> */}
-          </div>
-          {/* <SaveBtn /> */}
+
+          {currentTab == -1 ? (
+            <div
+              style={styles.addBtnDiv}
+              onClick={() => {
+                { handleAdd() }
+              }}
+            >
+              {<Button
+                title='new'
+              />}
+            </div>
+          ) : (
+            <div>
+              <div
+                style={styles.addBtnDiv}
+                onClick={() => {
+                  {/* handleSave() */ }
+                }}
+              >
+                <Button
+                  title='save'
+                />
+              </div>
+            </div>
+          )}
+
         </div>
 
         {loading ? (
