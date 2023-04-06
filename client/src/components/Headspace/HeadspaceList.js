@@ -95,7 +95,7 @@ export default function HeadspaceList(props) {
           >
             <span style={styles.listCardLargeTitle}>{props.userPost.title}</span>
             <div style={styles.listCardLargeDetails}>
-              <span>Created At: {card.createdAt}</span>
+              <span>Created At: {userPost.createdAt}</span>
             </div>
           </article>
         );
