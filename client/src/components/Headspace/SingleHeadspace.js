@@ -87,8 +87,30 @@ export default function SingleHeadspace(props) {
   const initialComments = (props.userPost.subject === 'unsavedPost') 
     ? [] : props.userPost.comments;
    
-
   const [comments, setComments] = useState(initialComments);
+
+  // saving a post
+  const [ title, setTitle ] = useState(props.userPost);
+  const [ body, setBody ] = useState(props.userPost);
+
+  const handleFormSubmit = () => {};
+
+  console.log('post user');
+  console.log(props.userPost.username);
+
+  console.log('me');
+  console.log(props.username);
+
+
+  const handleChange = (event) => {
+    console.log('handlechange hit');
+    const { name, value } = event.target;
+console.log(event);
+    console.log(name);
+    console.log(value);
+
+  };
+
 
   return (
     <>
@@ -98,31 +120,52 @@ export default function SingleHeadspace(props) {
           <TitleLarge
             placeholder="headspace post title"
             title={props.userPost.title}
+            onChange={handleChange}
           />
         </div>
         {/* Headspace Post Body (Column 1 of the Grid) */}
         <section style={styles.pandCSection}>
+
+        <form
+      
+            onSubmit={handleFormSubmit}
+          >
+
           <div style={styles.postDiv}>
 
-            
-            <textarea
+            {props.userPost.username === props.username || props.userPost.subject === 'unsavedPost' ? (
+              <textarea
               style={styles.postInput}
               type="text"
               defaultValue={props.userPost.body}
+              onChange={handleChange}
             ></textarea>
-
-
+            ) : (
+              <textarea
+              style={styles.postInput}
+              type="text"
+              defaultValue={props.userPost.body}
+              readOnly
+            ></textarea>
+            )}
+            
           </div>
           {/* Comments */}
           <div style={styles.commentSection}>
             {comments.flatMap((card, index) => {
               return (
                 <div style={styles.commentCard} key={index}>
-                  <textarea style={styles.commentText} defaultValue={card.commentBody}></textarea>
+                  <textarea 
+                    style={styles.commentText} 
+                    defaultValue={card.commentBody}
+                  ></textarea>
                 </div>
               );
             })}
           </div>
+
+          </form>
+
         </section>
       </section>
     </>

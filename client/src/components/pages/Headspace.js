@@ -7,6 +7,7 @@ import HeadpaceForm from "../Headspace/HeadSpaceForm"
 
 import { useQuery } from "@apollo/client";
 import { QUERY_USERPOSTS } from "../../utils/queries";
+import Auth from '../../utils/auth';
 
 // Styling object
 const styles = {
@@ -61,6 +62,7 @@ const styles = {
   }
 };
 
+
 export default function Headspace() {
 
   const dbData = useRef([]);
@@ -109,78 +111,87 @@ export default function Headspace() {
         return item._id === currentTab;
       });
       // Render a single headspace post
-      return <SingleHeadspace userPost={userPosts[tabIndex]} />;
+      return <SingleHeadspace userPost={userPosts[tabIndex]} username={Auth.getProfile().data.username} />;
     }
   }
-console.log(userPosts);
-// The onClick for adding new items
-const handleAdd = () => {
-  // Deal with needing an unique id while item has not been added to db yet
-  let num = userPosts.length;
-  const itemId = `none-${num++}`;
-  const newList = userPosts.concat({
-    _id: itemId,
-    username: '',
-    title: 'unsaved new post',
-    subject: 'unsavedPost',
-    body: 'you should put your thoughts here',
-    comments: []
-  });
-  setUserPosts(newList);
-  setCurrentTab(currentTab);
-};
+  console.log(userPosts);
+  // The onClick for adding new items
+  const handleAdd = () => {
+    // Deal with needing an unique id while item has not been added to db yet
+    let num = userPosts.length;
+    const itemId = `none-${num++}`;
+    const newList = userPosts.concat({
+      _id: itemId,
+      username: '',
+      title: 'unsaved new post',
+      subject: 'unsavedPost',
+      body: 'you should put your thoughts here',
+      comments: []
+    });
+    setUserPosts(newList);
+    setCurrentTab(currentTab);
+  };
 
 
   // Return the large modal/page
   return (
-    <main
-      style={styles.container}
-    >
-      <section style={styles.section}>
-        <>
-          <div style={styles.titleDiv}>
-            <span style={styles.titleBtn}>Headspace</span>
+    <>
+      {Auth.loggedIn() ? (
 
-            {currentTab == -1 ? (
-              <div
-                style={styles.addBtnDiv}
-                onClick={() => {
-                  { handleAdd() }
-                }}
-              >
-                {<Button
-                  title='new'
-                />}
+        <main
+          style={styles.container}
+        >
+          <section style={styles.section}>
+            <>
+              <div style={styles.titleDiv}>
+                <span style={styles.titleBtn}>Headspace</span>
+
+                {currentTab == -1 ? (
+                  <div
+                    style={styles.addBtnDiv}
+                    onClick={() => {
+                      { handleAdd() }
+                    }}
+                  >
+                    {<Button
+                      title='new'
+                    />}
+                  </div>
+                ) : (
+                  <div>
+                    <div
+                      style={styles.addBtnDiv}
+                      onClick={() => {
+                        {/* handleSave()  */ }
+                      }}
+                    >
+                      <Button
+                        title='save'
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div>
-                <div
-                  style={styles.addBtnDiv}
-                  onClick={() => {
-                  {/* handleSave()  */}
-                  }}
-                >
-                  <Button
-                    title='save'
-                  />
-                </div>
-              </div> 
-            )}
-          </div>
 
-          <div style={styles.tabContainer} id='tabContainer'>
-            {tabList.flatMap(item => {
-              return (<Tab
-                currentTab={currentTab}
-                handleTabChange={handleTabChange}
-                tab={item}
-                key={item.id}
-              />)
-            })}
-          </div>
-        </>
-        {renderPage()}
-      </section>
-    </main>
+              <div style={styles.tabContainer} id='tabContainer'>
+                {tabList.flatMap(item => {
+                  return (<Tab
+                    currentTab={currentTab}
+                    handleTabChange={handleTabChange}
+                    tab={item}
+                    key={item.id}
+                  />)
+                })}
+              </div>
+            </>
+            {renderPage()}
+          </section>
+        </main>
+
+      ) : (
+        <div>Please log in to view content...</div>
+      )
+      }
+    </>
   )
 }

@@ -21,6 +21,7 @@ export default function TitleLarge(props) {
       type='text' 
       placeholder={props.placeholder}  
       defaultValue={props.title} 
+      onChange={props.onChange}
     ></input>
   );
 }
