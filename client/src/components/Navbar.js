@@ -45,7 +45,7 @@ export default function Navbar() {
     {
       name: "WORKSHOP",
       id: 2,
-      link: "/workshop",
+      link: "/construction",
     },
     {
       name: "HEADSPACE",
@@ -55,7 +55,7 @@ export default function Navbar() {
     {
       name: "ACCOUNT",
       id: 4,
-      link: "/account",
+      link: "/construction",
     },
     {
       name: "LOGOUT",
