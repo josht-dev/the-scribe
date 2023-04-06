@@ -437,6 +437,9 @@ const SingleCampaign = () => {
 
   }
 
+  console.log(allCampaigns);
+  console.log(selectedCampaign);
+
   return (
     <>
       {renderModal()}
@@ -444,13 +447,13 @@ const SingleCampaign = () => {
         <div style={campaignStyles.titleLeft}>
           <TitleLarge
             placeholder='campaign title'
-            title={selectedCampaign.title}
+            title={selectedCampaign.gameName}
           />
         </div>
         <div style={campaignStyles.titleRight}>
           <TitleLarge
             placeholder='game system'
-            title={selectedCampaign.game}
+            title={selectedCampaign.ruleSet}
           />
         </div>
         <section style={campaignStyles.charactersContainer}>
