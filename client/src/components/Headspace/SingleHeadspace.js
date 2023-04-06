@@ -23,45 +23,66 @@ const styles = {
     gridGap: "0.25rem",
     height: "calc(100% - 4.5rem)",
     width: "100%",
-    border: "1px solid red",
+  },
+  postDiv: {
+    gridColumn: "1 / span 1",
+    height: '100%',
+    width: '100%',
+    padding: "0.5rem",
+    margin: "0.5rem",
   },
   postInput: {
     display: "flex",
-    gridColumn: "1 / span 1",
     resize: "none",
+    outline: 'none',
     width: "100%",
-    height: "80%",
+    height: "100%",
     fontSize: "1.5rem",
     fontWeight: 500,
-    padding: "0.5rem",
-    margin: "0.5rem",
     border: "1px solid #1CB9B3",
     borderRadius: "0 0.25rem 0.25rem 0.25rem",
     lineHeight: "3rem",
   },
   commentSection: {
     gridColumn: "2 / span 1",
+    height: '100%',
+    width: '100%',
+    padding: "0.5rem",
+    margin: "0.5rem",
+    display: 'flex',
   },
   commentCard: {
     display: "flex",
-    width: "30%",
-    height: "4rem",
-    border: "none",
+    width: "100%",
+    height: "10%",
     fontSize: "1rem",
     fontWeight: 500,
-    padding: "0.5rem",
-    margin: "0.5rem",
+    border: "1px solid #1CB9B3",
     borderRadius: "0 0.25rem 0.25rem 0.25rem",
+    padding: "0.25rem",
+    margin: "0.5rem",
   },
-  test: {
-    gridColumn: "1 / span 1",
-    border: "1px solid black",
-  },
+  commentText: {
+    display: "flex",
+    resize: "none",
+    outline: 'none',
+    border: 'none',
+    width: "100%",
+    height: "100%",
+    fontSize: "1rem",
+    fontWeight: 500,
+  }
 };
 
 export default function SingleHeadspace(props) {
-  const { data } = useQuery(QUERY_SINGLE_USERPOST);
-  const userPost = data?.userPost || [];
+  // const { loading, data } = useQuery(QUERY_SINGLE_USERPOST, {
+  //   variables: 
+  // });
+  // const userPost = data?.userPost || [];
+  const initialState = props.userPost.comments;
+
+  const [comments, setComments] = useState(initialState);
+
   return (
     <>
       <section style={styles.section}>
@@ -69,26 +90,28 @@ export default function SingleHeadspace(props) {
           {/* Post Title */}
           <TitleLarge
             placeholder="headspace post title"
-            title={userPost.title}
+            title={props.userPost.title}
           />
         </div>
         {/* Headspace Post Body (Column 1 of the Grid) */}
         <section style={styles.pandCSection}>
-          <div>
+          <div style={styles.postDiv}>
             <textarea
               style={styles.postInput}
               type="text"
-              defaultValue={userPost.body}
+              defaultValue={props.userPost.body}
             ></textarea>
           </div>
           {/* Comments */}
-          {/* <div style={styles.commentSection}>
-            {props.userPosts.comments.map((card) => {
-              <div style={styles.commentCard} key={card._id}>
-                <textarea defaultValue={card.commentBody}></textarea>
-              </div>;
+          <div style={styles.commentSection}>
+            {comments.flatMap((card, index) => {
+              return (
+                <div style={styles.commentCard} key={index}>
+                  <textarea style={styles.commentText} defaultValue={card.commentBody}></textarea>
+                </div>
+              );
             })}
-          </div> */}
+          </div>
         </section>
       </section>
     </>

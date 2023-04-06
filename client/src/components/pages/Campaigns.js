@@ -212,10 +212,11 @@ const CampaignList = () => {
 }
 
 
-const SingleCampaign = () => {
-  const { currentTab, allCampaigns } = useContext(Context);
+const SingleCampaign = (currentTabAlt) => {
+  const { currentTab, setCurrentTab, allCampaigns } = useContext(Context);
 
   //const [ selectedCampaign, setSelectedCampaign ] = useState();
+  
 
   let selectedCampaign;
   // A useState to old the currently selected character
@@ -261,6 +262,7 @@ const SingleCampaign = () => {
   // }, [currentTab]);
 
   // console.log(selectedCampaign);
+
 
   const npcs = [];
   const pcs = [];
@@ -471,12 +473,16 @@ const SingleCampaign = () => {
           <TitleLarge
             placeholder='campaign title'
             title={selectedCampaign.gameName}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
           />
         </div>
         <div style={campaignStyles.titleRight}>
           <TitleLarge
             placeholder='game system'
             title={selectedCampaign.ruleSet}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab}
           />
         </div>
         <section style={campaignStyles.charactersContainer}>
@@ -539,7 +545,11 @@ const SingleCampaign = () => {
 
 // Component that holds the main content
 const MainContent = () => {
-  const { currentTab, tabList, setTabList, allCampaigns } = useContext(Context);
+  const { currentTab, setCurrentTab, tabList, setTabList, allCampaigns } = useContext(Context);
+
+
+
+  //useEffect(() => {setCurrentTab(currentTab)}, [currentTab]);
 
   // Render the content based on what tab is currently selected
   const renderPage = () => {
@@ -561,7 +571,7 @@ const MainContent = () => {
 function NewCampaign({ children }) {
   // Hold the initial query user campaign data
   const dbData = useRef([]);
-  const selectedCampaign = useRef({});
+  //const selectedCampaign = useRef({});
 
   // Hold the state of the current tab used for switching between tabs
   const [currentTab, setCurrentTab] = useState('-1');
@@ -586,7 +596,7 @@ function NewCampaign({ children }) {
   //Store the useState to propagate it down components that need it
   const contextValue = {
     currentTab, setCurrentTab, tabList, 
-    setTabList, allCampaigns, selectedCampaign
+    setTabList, allCampaigns
   };
 
   // The onClick for adding new items
@@ -605,8 +615,6 @@ function NewCampaign({ children }) {
     setAllCampaigns(newList);
     setCurrentTab(currentTab);
   };
-
-  console.log(currentTab);
 
   return (
     <main

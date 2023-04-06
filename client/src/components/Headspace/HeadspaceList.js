@@ -72,28 +72,29 @@ export default function HeadspaceList(props) {
 
   }
 
-  if(!props.userPosts.length){
+  if (!props.userPosts.length) {
     return (
-<>
-<h3>No User Posts Here</h3>
-</>
-)
-    
-      
+      <>
+        <h3>No User Posts Here</h3>
+      </>
+    )
+
+
   }
+
   return (
 
     <section style={styles.listDivLarge} className='list-scroll'>
-      {props.userPosts && props.userPosts.map(userPost => {
+      {props.userPosts.map(userPost => {
         return (
           <article
             style={styles.listCardLarge}
-            key={props.userPost._id}
-            data-campaignid={props.userPost._id}
-            data-title={props.userPost.title}
+            key={userPost._id}
+            data-campaignid={userPost._id}
+            data-title={userPost.title}
             onClick={onAddBtnClick}
           >
-            <span style={styles.listCardLargeTitle}>{props.userPost.title}</span>
+            <span style={styles.listCardLargeTitle}>{userPost.title}</span>
             <div style={styles.listCardLargeDetails}>
               <span>Created At: {userPost.createdAt}</span>
             </div>
@@ -101,5 +102,8 @@ export default function HeadspaceList(props) {
         );
       })}
     </section>
+
+
+
   );
 }

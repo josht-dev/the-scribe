@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const styles = {
   titleInput: {
@@ -15,7 +15,6 @@ const styles = {
 }
 
 export default function TitleLarge(props) {
-
   return (
     <input
       style={styles.titleInput} 

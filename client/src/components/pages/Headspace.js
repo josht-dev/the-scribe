@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Tab from "../Campaigns/Tab";
 import HeadspaceList from "../Headspace/HeadspaceList";
 import SingleHeadspace from "../Headspace/SingleHeadspace";
@@ -48,14 +48,25 @@ const styles = {
 };
 
 export default function Headspace() {
-    const { loading, data } = useQuery(QUERY_USERPOSTS);
-    const userPosts = data?.userPosts || [];
+
+  const dbData = useRef([]);
+
+   // Current selected tab state
+ const [currentTab, setCurrentTab] = useState("-1");
+
   const [tabList, setTabList] = useState([
     { id: -1, title: "Headspace" },
   ]);
 
-  // Current selected tab state
-  const [currentTab, setCurrentTab] = useState("-1");
+  const [ userPosts, setUserPosts ] = useState([]);
+
+  useEffect(() => {setUserPosts(dbData.current)}, [dbData.current]);
+
+  const { loading, data } = useQuery(QUERY_USERPOSTS, {
+    onCompleted: (completedData) => {
+      dbData.current = completedData.userPosts;
+    }
+  });
 
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
@@ -65,16 +76,18 @@ export default function Headspace() {
     if (currentTab == -1) {
       // Render the list of headspace posts
 
-
-
       return (
-        <HeadspaceList
-          tabList={tabList}
-          setTabList={setTabList}
-          //headspaceArray={headspaceArray}
-          userPosts={userPosts}
-        />
-
+        <>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <HeadspaceList
+              tabList={tabList}
+              setTabList={setTabList}
+              userPosts={userPosts}
+            />
+          )}
+        </>
       );
     } else {
       // Get index of currentTab based on _id
@@ -82,14 +95,14 @@ export default function Headspace() {
         return item._id === currentTab;
       });
       // Render a single headspace post
-      return <SingleHeadspace headspaceArray={userPosts[tabIndex]} />;
+      return <SingleHeadspace userPost={userPosts[tabIndex]} />;
     }
   }
 
-   // Return the large modal/page
-   return (
-    <main 
-      style={styles.container} 
+  // Return the large modal/page
+  return (
+    <main
+      style={styles.container}
     >
       <section style={styles.section}>
         <>
@@ -110,4 +123,5 @@ export default function Headspace() {
         {renderPage()}
       </section>
     </main>
-)}
+  )
+}

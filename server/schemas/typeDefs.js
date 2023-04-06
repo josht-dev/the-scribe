@@ -206,7 +206,7 @@ const typeDefs = gql`
       adventureId: ID
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
-    addComment(commentBody: String!, userPostId: ID):Comment
+    addComment(commentBody: String!, userPostId: ID!):Comment
 
     # ************TESTING SOME STUFF **************
     # The mutations below made it easier to preload some testing data
