@@ -9,6 +9,7 @@ const {
 } = require("../models");
 const { signToken } = require("../utils/auth");
 const { AuthenticationError } = require("apollo-server-express");
+const { populate } = require("../models/User");
 
 const resolvers = {
   Query: {
@@ -16,13 +17,13 @@ const resolvers = {
       return User.find({}).sort({ createdAt: -1 });
     },
     user: async (parent, args, context) => {
-      if(context.user) {
+      if (context.user) {
         return await User.findOne({ username: context.user.username }, "-password")
-        .populate({ path: "userPosts" })
-        .populate({ path: "profile" });
-    }
+          .populate({ path: "userPosts" })
+          .populate({ path: "profile" });
       }
-      ,
+    }
+    ,
     userPosts: async () => {
       return UserPost.find()
         .sort({ createdAt: 1 })
@@ -31,7 +32,7 @@ const resolvers = {
     userPost: async (parent, { userPostId }) => {
       return UserPost.findOne({ _id: userPostId }).populate({
         path: "username",
-      }).populate({path: comments});
+      }).populate({ path: comments });
     },
     campaigns: async () => {
       return Campaign.find()
@@ -104,6 +105,19 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
+
+    // ************TESTING SOME STUFF **************
+
+    userCampaigns: async (parent, { profileId }, context) => {
+      const profile = await Profile.findOne(
+        { _id: profileId }, null, { strictQuery: false }
+      ).populate('campaigns').populate({
+        path: 'campaigns',
+        populate: 'adventures characters storyOutline'
+      })
+
+      return profile;
+    },
   },
 
   Mutation: {
@@ -111,7 +125,7 @@ const resolvers = {
       const user = await User.create({ username, email, password });
 
       const token = signToken(user);
-        
+
       if (user) {
         const profile = await Profile.create({
           profileUser: user.username,
@@ -125,18 +139,7 @@ const resolvers = {
       // return { token, user };
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email })
-      .populate({ path: "profile" })
-
-      // const profile = await Profile.findOne({_id: user.profile[0]._id})
-      //   .populate({path: 'campaigns'});
-
-      // const campaignArr = await Campaign.find({_id: { $in: profile.campaigns }})
-      // .populate({path: 'campaigns'});
-
-  
-        // console.info(campaignArr);
-
+      const user = await User.findOne({ email });
       if (!user) {
         throw new AuthenticationError("No user found with this email address");
       }
@@ -148,7 +151,6 @@ const resolvers = {
       }
 
       const token = signToken(user);
-      // console.log(token);
 
       return { token, user };
     },
@@ -580,22 +582,118 @@ const resolvers = {
       );
       return adventure;
     },
-    addComment: async (parent, {commentBody, userPostId}, context) => {
-      if(context.user){
-      const comment = UserPost.findOneAndUpdate(
-        {_id: userPostId},
-        {$addToSet: { comments:
+    addComment: async (parent, { commentBody, userPostId }, context) => {
+      if (context.user) {
+        const comment = UserPost.findOneAndUpdate(
+          { _id: userPostId },
           {
-            commentBody: commentBody,
-            commentWriter: context.user.username
-        }
+            $addToSet: {
+              comments:
+              {
+                commentBody: commentBody,
+                commentWriter: context.user.username
+              }
+            }
+          },
+          { new: true, runValidators: true }
+        )
+        return comment;
       }
-      },
-      {new:true, runValidators: true}
-      )
-      return comment;
-    }
-    
+
+    },
+
+    // ************TESTING SOME STUFF **************
+    // The mutations below made it easier to preload some testing data
+    newAddCampaign: async (parent, {
+      gameName,
+      profileId,
+      ruleSet,
+      genre,
+      notes,
+      currentDateInGame
+    }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      const campaign = await Campaign.create({
+        gameName, ruleSet, genre, notes, currentDateInGame
+      });
+      if (campaign) {
+        await Profile.findOneAndUpdate(
+          { _id: profileId },
+          { $addToSet: { campaigns: campaign._id } }
+        );
+      }
+      return campaign;
+    },
+    newAddCharacter: async (parent, {
+      characterName,
+      npc,
+      campaignId,
+      characterStatus,
+      motivations,
+      characterNotes,
+      characterSheet,
+    },
+      context
+    ) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      const character = await Character.create({
+        characterName, npc, characterStatus,
+        motivations, characterNotes, characterSheet,
+      });
+      if (character) {
+        await Campaign.findOneAndUpdate(
+          { _id: campaignId },
+          { $addToSet: { characters: character._id } }
+        );
+      }
+      return character;
+    },
+    newAddStory: async (parent, {
+      objectives, title, timeline, bigBad,
+      main, side, player, storyboard, campaignId
+    }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      const story = await Story.create({
+        objectives, title, timeline, bigBad,
+        main, side, player, storyboard
+      });
+
+      if (story) {
+        await Campaign.findOneAndUpdate(
+          { _id: campaignId },
+          { $addToSet: { storyOutline: story._id } }
+        );
+
+        return story;
+      }
+
+      throw new Error("No story found by that name!!");
+    },
+    newAddAdventure: async (parent, {
+      campaignId, campaign, title, setup,
+      resolution, notes, objectives, encounters
+    }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      const adventure = await Adventure.create({
+        campaign, title, setup,
+        resolution, notes, objectives, encounters
+      });
+      if (adventure) {
+        await Campaign.findOneAndUpdate(
+          { _id: campaignId },
+          { $addToSet: { adventures: adventure._id } }
+        );
+        return adventure;
+      }
+      throw new Error("No story found by that name!!");
     }
   },
 };

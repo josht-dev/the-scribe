@@ -2,7 +2,6 @@ const { Schema, model } = require("mongoose");
 
 const adventureSchema = new Schema(
   {
-    
     campaign: {
       type: String,
     },

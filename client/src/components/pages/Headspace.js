@@ -78,11 +78,11 @@ export default function Headspace() {
       );
     } else {
       // Get index of currentTab based on _id
-      const tabIndex = headspaceArray.findIndex((item) => {
+      const tabIndex = userPosts.findIndex((item) => {
         return item._id === currentTab;
       });
       // Render a single headspace post
-      return <SingleHeadspace headspaceArray={headspaceArray[tabIndex]} />;
+      return <SingleHeadspace headspaceArray={userPosts[tabIndex]} />;
     }
   }
 

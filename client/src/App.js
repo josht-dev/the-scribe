@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ApolloClient,
   InMemoryCache,
@@ -27,10 +27,8 @@ import "../src/assets/css/App.css";
 
 const httpLink = createHttpLink({
  
-  uri: "/graphql",
-
-  // uri: "http://localhost:3001/graphql",
-
+  //uri: "/graphql",
+  uri: "http://localhost:3001/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

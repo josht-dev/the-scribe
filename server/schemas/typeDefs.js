@@ -112,6 +112,8 @@ const typeDefs = gql`
     adventures: [Adventure]!
     adventure(adventureId: ID!): Adventure
     individual: User
+    # Get all the campaigns for a user
+    userCampaigns(profileId: ID!): Profile
   }
 
   type Mutation {
@@ -205,6 +207,50 @@ const typeDefs = gql`
     ): Adventure
     removeAdventure(adventureId: ID!): Adventure
     addComment(commentBody: String!, userPostId: ID):Comment
+
+    # ************TESTING SOME STUFF **************
+    # The mutations below made it easier to preload some testing data
+    newAddCampaign(
+      profileId: ID!
+      gameName: String!
+      ruleSet: String
+      genre: String
+      notes: [String!]
+      currentDateInGame: String
+    ): Campaign
+
+    newAddCharacter(
+      campaignId: ID!
+      characterName: String!
+      characterStatus: String
+      motivations: [String!]
+      characterNotes: [String!]
+      characterSheet: String
+      npc: Boolean!
+    ): Character
+
+    newAddStory(
+      campaignId: ID!
+      objectives: [String!]
+      title: String!
+      timeline: String
+      bigBad: String
+      main: Boolean!
+      side: Boolean!
+      player: Boolean!
+      storyBoard: [String!]
+    ): Story
+
+    newAddAdventure(
+      campaignId: ID!
+      campaign: String
+      title: String!
+      setup: String
+      resolution: String
+      notes: [String!]
+      objectives: [String!]
+      encounters: [String!]
+    ): Adventure
   }
 `;
 
