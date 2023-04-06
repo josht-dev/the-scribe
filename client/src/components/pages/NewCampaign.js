@@ -59,6 +59,40 @@ const styles = {
   }
 };
 
+const campaignStyles = {
+  section: {
+    border: '1px solid #1CB9B3',
+    borderRadius: '0 0.25rem 0.25rem 0.25rem',
+    margin: '0 0.5rem 0.5rem 0.5rem',
+    height: '42.25rem',
+    padding: '0.5rem',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gridTemplateRows: 'repeat(12 ,1fr)',
+    gridGap: '0.25rem'
+  },
+  titleLeft: {
+    gridColumn: '1 / span 3',
+  },
+  titleRight: {
+    gridColumn: '4 / span 3',
+  },
+  charactersContainer: {
+    gridColumn: '1 / span 2',
+    gridRow: '2 / span 11'
+  },
+  btnBar: {
+    gridColumn: '3 / span 4',
+    gridRowStart: '2',
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+  adventureList: {
+    gridColumn: '3 / span 4',
+    gridRow: '3 / span 10'
+  }
+}
+
 // Campaign list stylings
 const listStyles = {
   listDivLarge: {
@@ -116,20 +150,6 @@ const listStyles = {
 //   }
 // }
 
-
-// // Grab the user's profileId that was passed back when they logged in
-// // const getProfileId = () => {
-// //   let myProfileId = Auth.getProfile().data.profile;
-
-// //   // REMOVE - Log used for testing
-// //   console.log('my profileID: ' + myProfileId);
-
-// //   return myProfileId;
-// // }
-
-// // Get the profileId to send to the DB
-// // const profileId = getProfileId();
-// const Context = createContext();
 
 // Component that renders the tabs
 const TabContainer = () => {
@@ -219,50 +239,6 @@ const CampaignList = () => {
   );
 }
 
-const campaignStyles = {
-  section: {
-    border: '1px solid #1CB9B3',
-    borderRadius: '0 0.25rem 0.25rem 0.25rem',
-    margin: '0 0.5rem 0.5rem 0.5rem',
-    height: '42.25rem',
-    padding: '0.5rem',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
-    gridTemplateRows: 'repeat(12 ,1fr)',
-    gridGap: '0.25rem'
-  },
-  titleLeft: {
-    gridColumn: '1 / span 3',
-  },
-  titleRight: {
-    gridColumn: '4 / span 3',
-  },
-  charactersContainer: {
-    gridColumn: '1 / span 2',
-    gridRow: '2 / span 11'
-  },
-  btnBar: {
-    gridColumn: '3 / span 4',
-    gridRowStart: '2',
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-  adventureList: {
-    gridColumn: '3 / span 4',
-    gridRow: '3 / span 10'
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
 // Component that holds the main content
 const MainContent = () => {
   const { currentTab, tabList, setTabList, allCampaigns } = useContext(Context);
@@ -293,82 +269,9 @@ const MainContent = () => {
 }
 
 
-
+// Component that manages the state variables, useContext, page components, and user data
 function NewCampaign({ children }) {
-
-
-  //   // Hold the state of the current tab used for switching between tabs
-  //   const [currentTab, setCurrentTab] = useState('-1');
-  //   console.log(currentTab);
-  //   // Hold the entire list of tabs opened by the user
-  //   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
-  //   // Hold all the user campaign data
-  //   const [allCampaigns, setAllCampaigns] = useState([]);
-
-  //   // Query the DB for the user's campaigns
-  //   // const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
-  //   //   variables: { profileId: Auth.getProfile().data.profile }
-  //   // });
-
-
-  //   // useEffect(() => {
-  //   //   setLoading(true);
-  //   //   const getData = async() => {
-  //   //     const { data } = useQuery(QUERY_USER_CAMPAIGNS, {
-  //   //         variables: { profileId: Auth.getProfile().data.profile }
-  //   //       });
-
-
-
-
-  //   //   }
-
-  //   //   setData(getData());
-
-
-  //   // }, []);
-
-  //   // console.log(data.userCampaigns.campaigns);
-
-
-
-
-
-
-
-
-  //   // const dbData = useRef();
-
-  //   // Query the DB for the user's campaigns
-  //   // const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
-  //   //   variables: { profileId: Auth.getProfile().data.profile },
-  //   //   onCompleted: (completedData) => {
-  //   //     console.log('in oncomepte');
-  //   //     console.log(completedData);
-  //   //     //setAllCampaigns(completedData.userCampaigns.campaigns);
-  //   //   }
-  //   // });
-
-  //   // // console.log('testing oncomplete');
-  //   //  console.log(data.userCampaigns.campaigns);
-
-  //   // if (loading) { return 'Loading...' };
-  //   // if (error) { return `Error! ${error.message}` };
-
-
-
-
-
-
-
-
-  //   // console.log('check usestate');
-  //   // console.log(allCampaigns);
-  //   //Store the useState to propagate it down components that need it
-  //   const contextValue = {
-  //     currentTab, setCurrentTab, tabList, setTabList, allCampaigns
-  //   };
-
+  // Hold the initial query user campaign data
   const dbData = useRef([]);
 
   // Hold the state of the current tab used for switching between tabs
@@ -379,10 +282,10 @@ function NewCampaign({ children }) {
 
   const [allCampaigns, setAllCampaigns] = useState([]);
 
+  // Once query returns data, load it into allCampaigns state
   useEffect(() => {
     setAllCampaigns(dbData.current);
   }, [dbData.current]);
-
 
   // Query the DB for the user's campaigns
   const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
@@ -391,22 +294,11 @@ function NewCampaign({ children }) {
       dbData.current = completedData.userCampaigns.campaigns;
     }
   })
-  if (!loading) {
-    console.log('query data')
-    console.log(data.userCampaigns.campaigns);
-
-   // dbData.current = data.userCampaigns.campaigns;
-
-    console.log('state data')
-    console.log(allCampaigns);
-  }
-
 
       //Store the useState to propagate it down components that need it
     const contextValue = {
       currentTab, setCurrentTab, tabList, setTabList, allCampaigns
     };
-
 
   return (
     <main
@@ -441,7 +333,7 @@ function NewCampaign({ children }) {
   );
 }
 
-
+// Main page for Campaign
 const Campaign = () => {
   return (
     <>
@@ -452,9 +344,6 @@ const Campaign = () => {
             <MainContent />
 
           </NewCampaign>
-
-
-
         </>
       ) : (
         <div>Please log in to view content...</div>
