@@ -103,11 +103,15 @@ export default function SingleHeadspace(props) {
         {/* Headspace Post Body (Column 1 of the Grid) */}
         <section style={styles.pandCSection}>
           <div style={styles.postDiv}>
+
+            
             <textarea
               style={styles.postInput}
               type="text"
               defaultValue={props.userPost.body}
             ></textarea>
+
+
           </div>
           {/* Comments */}
           <div style={styles.commentSection}>
