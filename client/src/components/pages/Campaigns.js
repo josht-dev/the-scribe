@@ -1,21 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
-import Tab from '../Campaigns/Tab';
-import CampaignList from '../Campaigns/CampaignList';
-import SingleCampaign from "../Campaigns/SingleCampaign";
-import Button from '../Campaigns/Button';
+import React, { useState, useEffect, useRef, useContext, createContext } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { QUERY_USER_CAMPAIGNS } from '../../utils/queries';
-
 import Auth from '../../utils/auth';
+import Tab from '../Campaigns/Tab';
+import Button from '../Campaigns/Button';
+import TitleLarge from '../Campaigns/TitleLarge';
+import ListMd from '../Campaigns/ListMd';
+import ListSm from '../Campaigns/ListSm';
+import ModalLarge from '../Campaigns/ModalLarge';
 
+const Context = createContext();
 
-
-
-
-
-
-
-// Styling object
+// Component Styling
 const styles = {
   container: {
     width: '100%',
@@ -66,228 +62,581 @@ const styles = {
   }
 };
 
-// Get the profileId so user campaigns can be pulled
-// const getProfileId = () => {
-//   let myCampaigns = Auth.getProfile().data.profile;
-//   console.log('my profileID: ' + myCampaigns);
-//   console.log(myCampaigns);
-//   console.log(typeof myCampaigns);
+const campaignStyles = {
+  section: {
+    border: '1px solid #1CB9B3',
+    borderRadius: '0 0.25rem 0.25rem 0.25rem',
+    margin: '0 0.5rem 0.5rem 0.5rem',
+    height: '42.25rem',
+    padding: '0.5rem',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gridTemplateRows: 'repeat(12 ,1fr)',
+    gridGap: '0.25rem'
+  },
+  titleLeft: {
+    gridColumn: '1 / span 3',
+  },
+  titleRight: {
+    gridColumn: '4 / span 3',
+  },
+  charactersContainer: {
+    gridColumn: '1 / span 2',
+    gridRow: '2 / span 11'
+  },
+  btnBar: {
+    gridColumn: '3 / span 4',
+    gridRowStart: '2',
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+  adventureList: {
+    gridColumn: '3 / span 4',
+    gridRow: '3 / span 10'
+  }
+}
 
-//   return myCampaigns;
-// }
+// Campaign list stylings
+const listStyles = {
+  listDivLarge: {
+    border: '0.1rem solid #1CB9B3',
+    borderRadius: '0 0.25rem 0.25rem 0.25rem',
+    margin: '0 0.5rem 0.5rem 0.5rem',
+    height: '42.25rem',
+    backgroundColor: '#F5F5F5',
+  },
+  listCardLarge: {
+    backgroundColor: '#fff',
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    borderRadius: '0.25rem',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: '0.5rem',
+    height: '20%'
+  },
+  listCardLargeTitle: {
+    width: '70%',
+    margin: '0 0.5rem',
+    fontSize: '2rem'
+  },
+  listCardLargeDetails: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+};
 
-// function UseQuery() {
-//  // Query the DB for the user's campaigns
-//  const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
-//   variables: { profileId: Auth.getProfile().data.profile },
-//   onCompleted: (completedData) => {
-//     console.log('in oncomepte');
-//     console.log(completedData.userCampaigns.campaigns);
 
-   
 
-//     //setAllCampaigns(completedData.userCampaigns.campaigns);
+
+// // Render a save btn when on a campaign
+// function SaveBtn() {
+//   // this btn should only rentder on single campaign pages
+//   // if (currentTab != -1) {
+//   if (true) {
+//     return (
+//       <div>
+//         <div
+//           style={styles.addBtnDiv}
+//           onClick={() => {
+//             {/* handleSave() */ }
+//           }}
+//         >
+//           <Button
+//             title='save'
+//           />
+//         </div>
+//       </div>
+//     );
+//   } else {
+//     return (<></>)
 //   }
-// });
-//    if (loading) return 'Loading...';
-//   if (error) return `Error! ${error.message}`;
-// console.log('test');
-// return data.userCampaigns.campaigns
 // }
 
 
-async function Campaigns() {
-
-  // const profileId = getProfileId();
-
-
-
-
-  // Current selected tab state
-  const [currentTab, setCurrentTab] = useState('-1');
-  const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
-  // Function to handle the tab change
-  const handleTabChange = (tab) => setCurrentTab(tab);
-  // Pulling list into a variable so it can be added to and saved
-  const [allCampaigns, setAllCampaigns] = useState([]);
-
-  // // Query the DB for the user's campaigns
-  // const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
-  //   variables: { profileId: Auth.getProfile().data.profile },
-  //   onCompleted: (completedData) => {
-  //     console.log('in oncomepte');
-  //     console.log(completedData.userCampaigns.campaigns);
-
-     
-
-  //     //setAllCampaigns(completedData.userCampaigns.campaigns);
-  //   }
-  // });
-
-
-  // const { loading, error, data } = useQuery(Query_USER_CAMPAIGNS, {
-  //   variables: { profileId }
-  // }
-  // );
-  // if (loading) return 'Loading...';
-  // if (error) return `Error! ${error.message}`;
+// Component that renders the tabs
+const TabContainer = () => {
+  const { currentTab, setCurrentTab, tabList } = useContext(Context);
+  return (
+    <div style={styles.tabContainer} id='tabContainer'>
+      {tabList.flatMap(item => {
+        return (<Tab
+          currentTab={currentTab}
+          handleTabChange={setCurrentTab}
+          tab={item}
+          key={item.id}
+        />)
+      })}
+    </div>
+  );
+}
 
 
 
-  // The onClick for adding new items
-  const handleAdd = () => {
-    // Deal with needing an unique id while item has not been added to db yet
-    const itemId = `none-${allCampaigns.length++}`;
-    const newList = allCampaigns.concat({
-      _id: itemId,
-      gameName: 'new campaign!',
-      ruleSet: 'game time',
-      modifiedAt: '',
-      adventures: [],
-      characters: [],
-      story: []
-    });
-    setAllCampaigns(newList);
-    setCurrentTab(currentTab);
+// Component that renders the list of campaigns
+const CampaignList = () => {
+  const { tabList, setTabList, allCampaigns } = useContext(Context);
+
+  // Event listener that will add a new tab on card click
+  const onAddBtnClick = (event) => {
+    // Get the campaign id and title from the article data attributes
+    const title = () => {
+      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
+      const parentTitle = event.nativeEvent.srcElement.dataset.title;
+      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
+
+      return childTitle || parentTitle || nestedTitle;
+    }
+    const id = () => {
+      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
+      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
+      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
+
+      return childId || parentId || nestedId;
+    }
+
+    const propObj = {
+      id: id(),
+      title: title()
+    }
+
+    // Check if tab with campaignid/key already exists
+    let dup = false;
+    for (let i = 0; i < tabList.length; i++) {
+      if (tabList[i].id === propObj.id) {
+        dup = true;
+      }
+    }
+
+    if (!dup) {
+      // Add a new tab
+      setTabList(tabList.concat(propObj));
+    } else {
+      return;
+    }
+  }
+
+  return (
+    <section style={listStyles.listDivLarge} className='list-scroll'>
+      {allCampaigns.flatMap(card => {
+        return (
+          <article
+            style={listStyles.listCardLarge}
+            key={card._id}
+            data-campaignid={card._id}
+            data-title={card.gameName}
+            onClick={onAddBtnClick}
+          >
+            <span style={listStyles.listCardLargeTitle}>{card.gameName}</span>
+            <div style={listStyles.listCardLargeDetails}>
+              <span>game: {card.ruleSet}</span>
+              <span>Updated: {card.modifiedAt}</span>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+  );
+}
+
+const SingleCampaign = () => {
+  const { currentTab, allCampaigns } = useContext(Context);
+
+  // A useState to old the currently selected character
+  const [currentChar, setCurrentChar] = useState('');
+  const handleSetChar = (id) => {
+    setCurrentChar(id)
   };
 
-  //const [currentCampaign, setCurrentCampaign] = useState();
-  //let currentCampaign = useRef('');
-  // const setCurrentCampaign = (id) => {currentCampaign = id}
-  //console.log('currentCampaign: ' + currentCampaign.current);
-  const handleCurrentCampaign = (data) => {
-    //console.log('setting current campaign');
-    //console.log(data);
-    // setCurrentCampaign(data);
-    //currentCampaign = data;
+  // Modal useState code
+  const [modalId, setModalId] = useState('none');
+  const handleModalId = (id) => setModalId(id);
+  // Handle opening/closing this modal
+  const [openModal, setOpenModal] = useState(false);
+  const handleModalOpen = () => {
+    setOpenModal(!openModal);
+  };
+
+  // Hold this campaigns data
+  let selectedCampaign;
+  for (const x in allCampaigns) {
+    if (allCampaigns[x]._id == currentTab) {
+      selectedCampaign = allCampaigns[x];
+      break;
+    }
   }
 
+  const npcs = [];
+  const pcs = [];
 
-
-  // Update campaign with saved data
-  /*The data obj takes a value to update or an array to update*/
-  const handleSave = () => {
-    // Get current data
-    //console.log(currentCampaign);
-
-    //let newCampaign = 
-    // update story array
-
-    // update adventures array
-
-    // update characters array
-
-    // update entire campaign
-
-
+  // Spit characters into pc's and npc's
+  if (selectedCampaign.characters) {
+    selectedCampaign.characters.forEach(char => {
+      // check if the character is an npc and push to appropriate array
+      if (char.npc) {
+        npcs.push(char);
+      } else {
+        pcs.push(char);
+      }
+    });
   }
 
-  // Render main content modal/page
-  const renderPage = () => {
-    if (currentTab == -1) {
-      // Render the list of campaigns
-      return <CampaignList
-        tabList={tabList}
-        setTabList={setTabList}
-        campaignArray={allCampaigns}
-        list={allCampaigns}
-      />
-    } else {
-      let data;
-      // Get data for currentTab
-      for (const x in allCampaigns) {
-        if (allCampaigns[x]._id == currentTab) {
-          data = allCampaigns[x];
-          break;
+  // Tell ModalLarge which data to display
+  const renderModal = () => {
+
+    if (openModal) {
+      // Grab the title depending on btn used
+      const title = () => {
+        switch (modalId) {
+          case 'main-story':
+            return 'main story';
+          case 'side-quests':
+            return 'side story';
+          case 'player-plots':
+            return 'player plots';
+          case 'pc':
+            return 'player character';
+          case 'npc':
+            return 'non-player character';
+          default:
+            break;
         }
       }
-      // Set current campaign
-      handleCurrentCampaign(data);
-      //console.log('check current campaign data');
-      //console.log(currentCampaign);
-      return <SingleCampaign
-        campaign={data}
-      />
+      // Set the campaign data to send to ModalLarge
+      const modalData = () => {
+        let data;
+        let story;
+        if (!selectedCampaign.storyOutline) {
+          story = [];
+        } else {
+          story = selectedCampaign.storyOutline;
+        }
+        let characters;
+        if (!selectedCampaign.characters) {
+          characters = [];
+        } else {
+          characters = selectedCampaign.characters;
+        }
+        // REMOVE THIS LATER
+        let oneStory;
+        switch (modalId) {
+          case 'main-story':
+            // Check if story exists
+            if (story[0]) {
+              data = story.find(story => {
+                return story.main;
+              });
+            } else {
+              // TODO - Check back when connected to backend
+              // for empty _id field for story[{_id: ??}]
+              data = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: true,
+                side: false,
+                player: false,
+                storyBoard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
 
-      // const tabIndex = list.findIndex((item, index) => {
+            return data;
+          case 'side-quests':
+            // TODO - Set back to allow story array
+            data = story.flatMap(story => {
+              if (story.side) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: true,
+                player: false,
+                storyBoard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
 
-      //   console.log('tabIndex find hit');
-      //   console.log(currentTab);
-      //   console.log(item);
-      //   console.log('array meth index: ' + index);
-      //   return item._id == currentTab;
-      // });
-      // Render a single campaign
-      // return <SingleCampaign
-      //   campaign={list[tabIndex]}
-      // />
-    }
-  }
+            return /*data*/ oneStory;
+          case 'player-plots':
+            // TODO - Set back to allow story array
+            data = story.flatMap(story => {
+              if (story.player) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: false,
+                player: true,
+                storyBoard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
 
-  // Render a save btn when on a campaign
-  function SaveBtn() {
-    // this btn should only rentder on single campaign pages
-    if (currentTab != -1) {
+            return /*data*/ oneStory;
+          case 'pc':
+            data = characters.find(char => {
+              return char._id == currentChar;
+            });
+
+            // Check if this is a new character
+            if (!data) {
+              data = {
+                _id: currentChar,
+                characterName: "Hi! I'm New!",
+                characterStatus: '',
+                characterSheet: '',
+                npc: 'pc',
+                campaignId: selectedCampaign._id,
+                motivations: [],
+                characterNotes: []
+              };
+            }
+
+            return data;
+          case 'npc':
+            data = characters.find(char => {
+              return char._id == currentChar;
+            });
+
+            // Check if this is a new character
+            if (!data) {
+              data = {
+                _id: currentChar,
+                characterName: "Hi! I'm New!",
+                characterStatus: '',
+                characterSheet: '',
+                npc: 'npc',
+                campaignId: selectedCampaign._id,
+                motivations: [],
+                characterNotes: []
+              };
+            }
+
+            return data;
+          default:
+            break;
+        }
+      }
+
+      // Display modal with data appropriate to the user clicked
+
+      // REMOVE - temp/testing code
       return (
-        <div>
-          <div
-            style={styles.addBtnDiv}
-            onClick={() => {
-              handleSave()
-            }}
-          >
-            <Button
-              title='save'
-            />
-          </div>
-        </div>
+        <ModalLarge
+          id={modalId}
+          characterid={currentChar}
+          title={title()}
+          modalData={modalData()}
+          openModal={openModal}
+          handleModalOpen={handleModalOpen}
+        />
       );
+
     } else {
-      return (<></>)
+      // Modal is closed
+      return;
     }
 
   }
 
-  // Return the large modal/page
+  return (
+    <>
+      {renderModal()}
+      <section style={campaignStyles.section} >
+        <div style={campaignStyles.titleLeft}>
+          <TitleLarge
+            placeholder='campaign title'
+            title={selectedCampaign.title}
+          />
+        </div>
+        <div style={campaignStyles.titleRight}>
+          <TitleLarge
+            placeholder='game system'
+            title={selectedCampaign.game}
+          />
+        </div>
+        <section style={campaignStyles.charactersContainer}>
+          <ListSm
+            title='player characters'
+            characters={pcs}
+            type='pc'
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
+          />
+          <ListSm
+            title='non-player characters'
+            characters={npcs}
+            type='npc'
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
+          />
+        </section>
+        <div style={campaignStyles.btnBar}>
+          <Button
+            title='main story'
+            id='main-story'
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
+          />
+          <Button
+            title='side quests'
+            id='side-quests' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
+          />
+          <Button
+            title='player plots'
+            id='player-plots' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
+          />
+          <Button
+            title='future feature'
+            id='timeline'
+          /*handleModalOpen={handleModalOpen}
+          handleModalId={handleModalId}*/
+          />
+        </div>
+        <section style={campaignStyles.adventureList}>
+          <ListMd
+            type='text'
+            adventures={selectedCampaign.adventures}
+          />
+        </section>
+      </section >
+    </>
+  );
+}
+
+// Component that holds the main content
+const MainContent = () => {
+  const { currentTab, tabList, setTabList, allCampaigns } = useContext(Context);
+
+  // Render the content based on what tab is currently selected
+  const renderPage = () => {
+    // Check current tab
+    if (currentTab == -1) {
+      // Render the list of user campaigns
+      return <CampaignList />
+    } else {
+      // Render the campaign matching the id in the current tab
+      return <SingleCampaign />
+    }
+  }
+
+  return (<>{renderPage()}</>);
+}
+
+
+// Component that manages the state variables, useContext, page components, and user data
+function NewCampaign({ children }) {
+  // Hold the initial query user campaign data
+  const dbData = useRef([]);
+
+  // Hold the state of the current tab used for switching between tabs
+  const [currentTab, setCurrentTab] = useState('-1');
+  // Hold the entire list of tabs opened by the user
+  const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
+
+  const [allCampaigns, setAllCampaigns] = useState([]);
+
+  // Once query returns data, load it into allCampaigns state
+  useEffect(() => {
+    setAllCampaigns(dbData.current);
+  }, [dbData.current]);
+
+  // Query the DB for the user's campaigns
+  const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
+    variables: { profileId: Auth.getProfile().data.profile },
+    onCompleted: (completedData) => {
+      dbData.current = completedData.userCampaigns.campaigns;
+    }
+  })
+
+  //Store the useState to propagate it down components that need it
+  const contextValue = {
+    currentTab, setCurrentTab, tabList, setTabList, allCampaigns
+  };
+
   return (
     <main
       style={styles.container}
     >
       <section style={styles.section}>
-        <>
-          <div style={styles.titleDiv}>
-            <span style={styles.titleBtn}>campaigns</span>
-            <div
-              style={styles.addBtnDiv}
-              onClick={() => {
-                handleAdd()
-              }}
-            >
-              <Button
-                title='new'
-              />
-            </div>
-            <SaveBtn />
+        <div style={styles.titleDiv}>
+          <span style={styles.titleBtn}>campaigns</span>
+          <div
+            style={styles.addBtnDiv}
+            onClick={() => {
+              {/* handleAdd() */ }
+            }}
+          >
+            {/* <Button
+              title='new'
+            /> */}
           </div>
-          <div style={styles.tabContainer} id='tabContainer'>
-            {tabList.flatMap(item => {
-              return (<Tab
-                currentTab={currentTab}
-                handleTabChange={handleTabChange}
-                tab={item}
-                key={item.id}
-              />)
-            })}
-          </div>
-        </>
-        {renderPage()}
-    
-        
+          {/* <SaveBtn /> */}
+        </div>
+
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <Context.Provider value={contextValue}>
+            {children}
+          </Context.Provider>
+        )}
 
       </section>
-    </main>
+    </main >
   );
 }
 
+// Main page for Campaign
+const Campaigns = () => {
+  return (
+    <>
+      {Auth.loggedIn() ? (
+        <>
+          <NewCampaign>
+            <TabContainer />
+            <MainContent />
+
+          </NewCampaign>
+        </>
+      ) : (
+        <div>Please log in to view content...</div>
+      )}
+    </>
+  )
+}
 
 export default Campaigns;

@@ -23,11 +23,7 @@ import Headspace from "./components/pages/Headspace";
 import Workshop from "./components/pages/Workshop";
 import Contact from "./components/pages/Contact";
 import CssBaseline from "@mui/material/CssBaseline";
-import TestPage from './components/pages/TestPage';
 import "../src/assets/css/App.css";
-
-// REMOVE - Testing component
-import NewCampaign from "./components/pages/NewCampaign";
 
 const httpLink = createHttpLink({
  
@@ -63,12 +59,10 @@ export default function App() {
       >
         <Route path="/account" element={<Account />} />
         <Route path="/campaigns" element={<Campaigns />} />
-        <Route path="/NewCampaign" element={<NewCampaign />} />
         <Route path="/headspace" element={<Headspace />} />
         <Route path="/workshop" element={<Workshop />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/test" element={<TestPage />} />
       </Route>
     )
   );
