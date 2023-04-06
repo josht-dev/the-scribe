@@ -215,6 +215,9 @@ const CampaignList = () => {
 const SingleCampaign = () => {
   const { currentTab, allCampaigns } = useContext(Context);
 
+  //const [ selectedCampaign, setSelectedCampaign ] = useState();
+
+  let selectedCampaign;
   // A useState to old the currently selected character
   const [currentChar, setCurrentChar] = useState('');
   const handleSetChar = (id) => {
@@ -231,13 +234,33 @@ const SingleCampaign = () => {
   };
 
   // Hold this campaigns data
-  let selectedCampaign;
   for (const x in allCampaigns) {
     if (allCampaigns[x]._id == currentTab) {
+      //console.log(allCampaigns[x]);
       selectedCampaign = allCampaigns[x];
       break;
     }
   }
+
+  // useEffect((allCampaigns) => {
+  //   for (const x in allCampaigns) {
+  //     if (allCampaigns[x]._id == currentTab) {
+  //       setSelectedCampaign(allCampaigns[x]);
+  //       break;
+  //     }
+  //   }
+  // }, []);
+
+  // useEffect((allCampaigns) => {
+  //   for (const x in allCampaigns) {
+  //     if (allCampaigns[x]._id == currentTab) {
+  //       setSelectedCampaign(allCampaigns[x]);
+  //       break;
+  //     }
+  //   }
+  // }, [currentTab]);
+
+  // console.log(selectedCampaign);
 
   const npcs = [];
   const pcs = [];
@@ -538,6 +561,7 @@ const MainContent = () => {
 function NewCampaign({ children }) {
   // Hold the initial query user campaign data
   const dbData = useRef([]);
+  const selectedCampaign = useRef({});
 
   // Hold the state of the current tab used for switching between tabs
   const [currentTab, setCurrentTab] = useState('-1');
@@ -561,7 +585,8 @@ function NewCampaign({ children }) {
 
   //Store the useState to propagate it down components that need it
   const contextValue = {
-    currentTab, setCurrentTab, tabList, setTabList, allCampaigns
+    currentTab, setCurrentTab, tabList, 
+    setTabList, allCampaigns, selectedCampaign
   };
 
   // The onClick for adding new items
@@ -580,6 +605,8 @@ function NewCampaign({ children }) {
     setAllCampaigns(newList);
     setCurrentTab(currentTab);
   };
+
+  console.log(currentTab);
 
   return (
     <main
