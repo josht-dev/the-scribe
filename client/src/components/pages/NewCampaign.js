@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useContext, createContext, Suspense } from "react";
+import React, { useState, useEffect, useRef, useContext, createContext } from "react";
 import { gql, useQuery } from "@apollo/client";
 import Auth from '../../utils/auth';
 import { QUERY_USER_CAMPAIGNS } from '../../utils/queries';
 import Tab from '../Campaigns/Tab';
-import CampaignList from '../Campaigns/CampaignList';
-import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
 
+import GetCampaignData from '../../utils/DbCalls';
+
+
+const Context = createContext();
 
 // Component Styling
 const styles = {
@@ -60,105 +62,51 @@ const styles = {
 };
 
 
-/*
-function TabList({ tabList }) {
-  let currentTab = 0;
-  let handleTabChange = 0;
-  return (
-    <div style={styles.tabContainer} id='tabContainer'>
-      {tabList.flatMap(item => {
-        return (<Tab
-          currentTab={currentTab}
-          handleTabChange={handleTabChange}
-          tab={item}
-          key={item.id}
-        />)
-      })}
-    </div>
-  );
-}
-*/
-// Render a save btn when on a campaign
-
-function SaveBtn() {
-  // this btn should only rentder on single campaign pages
-  // if (currentTab != -1) {
-  if (true) {
-    return (
-      <div>
-        <div
-          style={styles.addBtnDiv}
-          onClick={() => {
-            {/* handleSave() */ }
-          }}
-        >
-          <Button
-            title='save'
-          />
-        </div>
-      </div>
-    );
-  } else {
-    return (<></>)
-  }
-}
-
-
-
-
-/*
-const Context = createContext();
-
-const ChildWithCount = () => {
-  const { count, setCount } = useContext(Context);
-  console.log('ChildWithCount re-renders');
-  return (
-    <div>
-      <button onClick={() => setCount(count + 1)}>{count}</button>
-      <p>Child</p>
-    </div>
-  );
-};
-
-const ExpensiveChild = () => {
-  console.log('ExpensiveChild re-renders');
-  return <p>Expensive child</p>;
-};
-
-const CountContext = ({ children }) => {
-  const [count, setCount] = useState(0);
-  const contextValue = { count, setCount };
-  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
-};
-
-
-<CountContext>
-      <ChildWithCount />
-      <ExpensiveChild />
-    </CountContext>
-*/
 
 
 
 
 
+// // Render a save btn when on a campaign
+// function SaveBtn() {
+//   // this btn should only rentder on single campaign pages
+//   // if (currentTab != -1) {
+//   if (true) {
+//     return (
+//       <div>
+//         <div
+//           style={styles.addBtnDiv}
+//           onClick={() => {
+//             {/* handleSave() */ }
+//           }}
+//         >
+//           <Button
+//             title='save'
+//           />
+//         </div>
+//       </div>
+//     );
+//   } else {
+//     return (<></>)
+//   }
+// }
 
-// Grab the user's profileId that was passed back when they logged in
-const getProfileId = () => {
-  let myProfileId = Auth.getProfile().data.profile;
 
-  // REMOVE - Log used for testing
-  console.log('my profileID: ' + myProfileId);
+// // Grab the user's profileId that was passed back when they logged in
+// // const getProfileId = () => {
+// //   let myProfileId = Auth.getProfile().data.profile;
 
-  return myProfileId;
-}
+// //   // REMOVE - Log used for testing
+// //   console.log('my profileID: ' + myProfileId);
 
-// Get the profileId to send to the DB
-const profileId = getProfileId();
-const Context = createContext();
+// //   return myProfileId;
+// // }
 
+// // Get the profileId to send to the DB
+// // const profileId = getProfileId();
+// const Context = createContext();
 
-
+// Component that renders the tabs
 const TabContainer = () => {
   const { currentTab, setCurrentTab, tabList } = useContext(Context);
   return (
@@ -177,31 +125,230 @@ const TabContainer = () => {
 
 
 
+// Component that renders the list of campaigns
+const CampaignList = () => {
+  const { tabList, setTabList, allCampaigns } = useContext(Context);
+
+  console.log('campaignlist hit');
+  console.log('allCampaigns recieved');
+  console.log(allCampaigns);
+  // Event listener that will add a new tab on card click
+  const onAddBtnClick = (event) => {
+    // Get the campaign id and title from the article data attributes
+    const title = () => {
+      const childTitle = event.nativeEvent.srcElement.parentElement.dataset.title;
+      const parentTitle = event.nativeEvent.srcElement.dataset.title;
+      const nestedTitle = event.nativeEvent.srcElement.parentElement.parentElement.dataset.title;
+
+      return childTitle || parentTitle || nestedTitle;
+    }
+    const id = () => {
+      const childId = event.nativeEvent.srcElement.parentElement.dataset.campaignid;
+      const parentId = event.nativeEvent.srcElement.dataset.campaignid;
+      const nestedId = event.nativeEvent.srcElement.parentElement.parentElement.dataset.campaignid;
+
+      return childId || parentId || nestedId;
+    }
+
+    const propObj = {
+      id: id(),
+      title: title()
+    }
+
+    // Check if tab with campaignid/key already exists
+    let dup = false;
+    for (let i = 0; i < tabList.length; i++) {
+      if (tabList[i].id === propObj.id) {
+        dup = true;
+      }
+    }
+
+    if (!dup) {
+      // Add a new tab
+      setTabList(tabList.concat(propObj));
+    } else {
+      return;
+    }
+  }
+
+  return (
+    <section style={styles.listDivLarge} className='list-scroll'>
+      {allCampaigns.flatMap(card => {
+        return (
+          <article
+            style={styles.listCardLarge}
+            key={card._id}
+            data-campaignid={card._id}
+            data-title={card.gameName}
+            onClick={onAddBtnClick}
+          >
+            <span style={styles.listCardLargeTitle}>{card.gameName}</span>
+            <div style={styles.listCardLargeDetails}>
+              <span>game: {card.ruleSet}</span>
+              <span>Updated: {card.modifiedAt}</span>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Component that holds the main content
+const MainContent = () => {
+  const { currentTab, tabList, setTabList, allCampaigns } = useContext(Context);
+
+  console.log('mainContent hit');
+  console.log(allCampaigns);
+
+  // Render the content based on what tab is currently selected
+  const renderPage = () => {
+    // Check current tab
+    if (currentTab == -1) {
+      console.log('render if hit');
+      // Render the list of user campaigns
+      return <CampaignList />
+    } else {
+
+
+
+
+
+
+
+
+    }
+  }
+
+  return (<>{renderPage()}</>);
+}
 
 
 
 function NewCampaign({ children }) {
-  console.log(children);
+
+
+  //   // Hold the state of the current tab used for switching between tabs
+  //   const [currentTab, setCurrentTab] = useState('-1');
+  //   console.log(currentTab);
+  //   // Hold the entire list of tabs opened by the user
+  //   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
+  //   // Hold all the user campaign data
+  //   const [allCampaigns, setAllCampaigns] = useState([]);
+
+  //   // Query the DB for the user's campaigns
+  //   // const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
+  //   //   variables: { profileId: Auth.getProfile().data.profile }
+  //   // });
+
+
+  //   // useEffect(() => {
+  //   //   setLoading(true);
+  //   //   const getData = async() => {
+  //   //     const { data } = useQuery(QUERY_USER_CAMPAIGNS, {
+  //   //         variables: { profileId: Auth.getProfile().data.profile }
+  //   //       });
+
+
+
+
+  //   //   }
+
+  //   //   setData(getData());
+
+
+  //   // }, []);
+
+  //   // console.log(data.userCampaigns.campaigns);
+
+
+
+
+
+
+
+
+  //   // const dbData = useRef();
+
+  //   // Query the DB for the user's campaigns
+  //   // const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
+  //   //   variables: { profileId: Auth.getProfile().data.profile },
+  //   //   onCompleted: (completedData) => {
+  //   //     console.log('in oncomepte');
+  //   //     console.log(completedData);
+  //   //     //setAllCampaigns(completedData.userCampaigns.campaigns);
+  //   //   }
+  //   // });
+
+  //   // // console.log('testing oncomplete');
+  //   //  console.log(data.userCampaigns.campaigns);
+
+  //   // if (loading) { return 'Loading...' };
+  //   // if (error) { return `Error! ${error.message}` };
+
+
+
+
+
+
+
+
+  //   // console.log('check usestate');
+  //   // console.log(allCampaigns);
+  //   //Store the useState to propagate it down components that need it
+  //   const contextValue = {
+  //     currentTab, setCurrentTab, tabList, setTabList, allCampaigns
+  //   };
+
+  const dbData = useRef([]);
+
   // Hold the state of the current tab used for switching between tabs
   const [currentTab, setCurrentTab] = useState('-1');
   console.log(currentTab);
   // Hold the entire list of tabs opened by the user
   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
-  // Hold all the user campaign data
+
   const [allCampaigns, setAllCampaigns] = useState([]);
 
+  useEffect(() => {
+    setAllCampaigns(dbData.current);
+  }, [dbData.current]);
+
+
+  // Query the DB for the user's campaigns
   const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
-    variables: { profileId }
-  }, { onCompleted: setAllCampaigns }
-  );
-  if (loading) { return 'Loading...' };
-  if (error) { return `Error! ${error.message}` };
+    variables: { profileId: Auth.getProfile().data.profile }, 
+    onCompleted: (completedData) => {
+      dbData.current = completedData.userCampaigns.campaigns;
+    }
+  })
+  if (!loading) {
+    console.log('query data')
+    console.log(data.userCampaigns.campaigns);
+
+   // dbData.current = data.userCampaigns.campaigns;
+
+    console.log('state data')
+    console.log(allCampaigns);
+  }
 
 
-  //Store the useState to propagate it down components that need it
-  const contextValue = {
-    currentTab, setCurrentTab, tabList, setTabList, allCampaigns
-  };
+      //Store the useState to propagate it down components that need it
+    const contextValue = {
+      currentTab, setCurrentTab, tabList, setTabList, allCampaigns
+    };
 
 
   return (
@@ -224,31 +371,39 @@ function NewCampaign({ children }) {
           {/* <SaveBtn /> */}
         </div>
 
-
-
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
         <Context.Provider value={contextValue}>
-          {children}
+        {children}
         </Context.Provider>
-
-
+        )}
 
       </section>
     </main >
   );
 }
 
-const App = () => {
-  return (
-    <NewCampaign>
-      <TabContainer />
 
-    </NewCampaign>
+const Campaign = () => {
+  return (
+    <>
+      {Auth.loggedIn() ? (
+        <>
+          <NewCampaign>
+            <TabContainer />
+            <MainContent />
+
+          </NewCampaign>
+
+
+
+        </>
+      ) : (
+        <div>Please log in to view content...</div>
+      )}
+    </>
   )
 }
 
-
-
-
-
-
-export default App;
+export default Campaign;

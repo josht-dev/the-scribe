@@ -4,13 +4,16 @@ import CampaignList from '../Campaigns/CampaignList';
 import SingleCampaign from "../Campaigns/SingleCampaign";
 import Button from '../Campaigns/Button';
 import { gql, useQuery } from "@apollo/client";
-
 import { QUERY_USER_CAMPAIGNS } from '../../utils/queries';
-import { InMemoryCache } from '@apollo/client';
-
-import { Suspense } from 'react';
 
 import Auth from '../../utils/auth';
+
+
+
+
+
+
+
 
 // Styling object
 const styles = {
@@ -64,69 +67,38 @@ const styles = {
 };
 
 // Get the profileId so user campaigns can be pulled
-const getProfileId = () => {
-  let myCampaigns = Auth.getProfile().data.profile;
-console.log('my profileID: ' + myCampaigns);
-console.log(myCampaigns);
-console.log(typeof myCampaigns);
+// const getProfileId = () => {
+//   let myCampaigns = Auth.getProfile().data.profile;
+//   console.log('my profileID: ' + myCampaigns);
+//   console.log(myCampaigns);
+//   console.log(typeof myCampaigns);
 
-return myCampaigns;
-}
+//   return myCampaigns;
+// }
 
-const Query_USER_CAMPAIGNS = gql`
-  query getUserCampaigns($profileId: ID!) {
-  userCampaigns(profileId: $profileId) {
-    _id
-    about
-    profileUser
-    profilePicture
-    campaigns {
-      _id
-      gameName
-      ruleSet
-      genre
-      notes
-      storyOutline {
-        _id
-        campaign
-        objectives
-        timeline
-        bigBad
-        main
-        side
-        player
-        storyBoard
-        title
-      }
-      adventures {
-        _id
-        title
-        setup
-        resolution
-        notes
-        objectives
-        encounters
-        campaign
-      }
-      characters {
-        _id
-        characterName
-        characterStatus
-        motivations
-        characterNotes
-        characterSheet
-        npc
-      }
-      currentDateInGame
-    }
-  }
-}
-`
+// function UseQuery() {
+//  // Query the DB for the user's campaigns
+//  const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
+//   variables: { profileId: Auth.getProfile().data.profile },
+//   onCompleted: (completedData) => {
+//     console.log('in oncomepte');
+//     console.log(completedData.userCampaigns.campaigns);
+
+   
+
+//     //setAllCampaigns(completedData.userCampaigns.campaigns);
+//   }
+// });
+//    if (loading) return 'Loading...';
+//   if (error) return `Error! ${error.message}`;
+// console.log('test');
+// return data.userCampaigns.campaigns
+// }
 
 
-function Campaigns() {
+async function Campaigns() {
 
-  const profileId = getProfileId();
+  // const profileId = getProfileId();
 
 
 
@@ -136,21 +108,31 @@ function Campaigns() {
   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
   // Function to handle the tab change
   const handleTabChange = (tab) => setCurrentTab(tab);
- // Pulling list into a variable so it can be added to and saved
+  // Pulling list into a variable so it can be added to and saved
   const [allCampaigns, setAllCampaigns] = useState([]);
-  
-  const { loading, error, data } = useQuery(Query_USER_CAMPAIGNS, {
-    variables: { profileId }
-  }
-  );
-  if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
 
-  console.log('my new data');
-  console.log(data);
+  // // Query the DB for the user's campaigns
+  // const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
+  //   variables: { profileId: Auth.getProfile().data.profile },
+  //   onCompleted: (completedData) => {
+  //     console.log('in oncomepte');
+  //     console.log(completedData.userCampaigns.campaigns);
 
-  setAllCampaigns(data);
-  
+     
+
+  //     //setAllCampaigns(completedData.userCampaigns.campaigns);
+  //   }
+  // });
+
+
+  // const { loading, error, data } = useQuery(Query_USER_CAMPAIGNS, {
+  //   variables: { profileId }
+  // }
+  // );
+  // if (loading) return 'Loading...';
+  // if (error) return `Error! ${error.message}`;
+
+
 
   // The onClick for adding new items
   const handleAdd = () => {
@@ -228,7 +210,7 @@ function Campaigns() {
       />
 
       // const tabIndex = list.findIndex((item, index) => {
-        
+
       //   console.log('tabIndex find hit');
       //   console.log(currentTab);
       //   console.log(item);
@@ -248,16 +230,16 @@ function Campaigns() {
     if (currentTab != -1) {
       return (
         <div>
-        <div
-          style={styles.addBtnDiv}
-          onClick={() => {
-            handleSave()
-          }}
-        >
-          <Button
-            title='save'
-          />
-        </div>
+          <div
+            style={styles.addBtnDiv}
+            onClick={() => {
+              handleSave()
+            }}
+          >
+            <Button
+              title='save'
+            />
+          </div>
         </div>
       );
     } else {
@@ -299,6 +281,9 @@ function Campaigns() {
           </div>
         </>
         {renderPage()}
+    
+        
+
       </section>
     </main>
   );
