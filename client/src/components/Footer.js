@@ -47,24 +47,36 @@ const styles = {
 
 export default function Footer() {
     return (
-        <AppBar position="static" sx={{ 
-            backgroundColor: "transparent",
-            bottom: "1rem",
-            position: "absolute",
-        }} component='footer'>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "transparent",
+          bottom: "1rem",
+          position: "absolute",
+        }}
+        component="footer"
+      >
         <Container disableGutters maxWidth="xl">
-            <Toolbar disableGutters>
+          <Toolbar disableGutters>
             <Link to="/contact">
-                <img style={styles.image} src={ContactIcon} alt="contact icon"></img>
+              <img
+                style={styles.image}
+                src={ContactIcon}
+                alt="contact icon"
+              ></img>
             </Link>
             <Link to="/about">
-                <img style={styles.image} src={DevsIcon} alt="devs icon"></img>
+              <img style={styles.image} src={DevsIcon} alt="devs icon"></img>
             </Link>
-            <Link to="/donate">
-                <img style={styles.rightImg} src={DonateIcon} alt="donate icon"></img>
+            <Link to="/construction">
+              <img
+                style={styles.rightImg}
+                src={DonateIcon}
+                alt="donate icon"
+              ></img>
             </Link>
-            </Toolbar>
-         </Container>
-        </AppBar>
+          </Toolbar>
+        </Container>
+      </AppBar>
     );
 }
