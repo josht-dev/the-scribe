@@ -5,8 +5,6 @@ import { QUERY_USER_CAMPAIGNS } from '../../utils/queries';
 import Tab from '../Campaigns/Tab';
 import Button from '../Campaigns/Button';
 
-import GetCampaignData from '../../utils/DbCalls';
-
 
 const Context = createContext();
 
@@ -61,8 +59,35 @@ const styles = {
   }
 };
 
-
-
+// Campaign list stylings
+const listStyles = {
+  listDivLarge: {
+    border: '0.1rem solid #1CB9B3',
+    borderRadius: '0 0.25rem 0.25rem 0.25rem',
+    margin: '0 0.5rem 0.5rem 0.5rem',
+    height: '42.25rem',
+    backgroundColor: '#F5F5F5',
+  },
+  listCardLarge: {
+    backgroundColor: '#fff',
+    boxShadow: '0px 3px 5px -2px rgba(0, 0, 0, 0.2), 0px 2px 3px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)',
+    borderRadius: '0.25rem',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: '0.5rem',
+    height: '20%'
+  },
+  listCardLargeTitle: {
+    width: '70%',
+    margin: '0 0.5rem',
+    fontSize: '2rem'
+  },
+  listCardLargeDetails: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+};
 
 
 
@@ -172,18 +197,18 @@ const CampaignList = () => {
   }
 
   return (
-    <section style={styles.listDivLarge} className='list-scroll'>
+    <section style={listStyles.listDivLarge} className='list-scroll'>
       {allCampaigns.flatMap(card => {
         return (
           <article
-            style={styles.listCardLarge}
+            style={listStyles.listCardLarge}
             key={card._id}
             data-campaignid={card._id}
             data-title={card.gameName}
             onClick={onAddBtnClick}
           >
-            <span style={styles.listCardLargeTitle}>{card.gameName}</span>
-            <div style={styles.listCardLargeDetails}>
+            <span style={listStyles.listCardLargeTitle}>{card.gameName}</span>
+            <div style={listStyles.listCardLargeDetails}>
               <span>game: {card.ruleSet}</span>
               <span>Updated: {card.modifiedAt}</span>
             </div>
@@ -194,7 +219,39 @@ const CampaignList = () => {
   );
 }
 
-
+const campaignStyles = {
+  section: {
+    border: '1px solid #1CB9B3',
+    borderRadius: '0 0.25rem 0.25rem 0.25rem',
+    margin: '0 0.5rem 0.5rem 0.5rem',
+    height: '42.25rem',
+    padding: '0.5rem',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(6, 1fr)',
+    gridTemplateRows: 'repeat(12 ,1fr)',
+    gridGap: '0.25rem'
+  },
+  titleLeft: {
+    gridColumn: '1 / span 3',
+  },
+  titleRight: {
+    gridColumn: '4 / span 3',
+  },
+  charactersContainer: {
+    gridColumn: '1 / span 2',
+    gridRow: '2 / span 11'
+  },
+  btnBar: {
+    gridColumn: '3 / span 4',
+    gridRowStart: '2',
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+  adventureList: {
+    gridColumn: '3 / span 4',
+    gridRow: '3 / span 10'
+  }
+}
 
 
 
