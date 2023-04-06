@@ -177,9 +177,6 @@ const TabContainer = () => {
 const CampaignList = () => {
   const { tabList, setTabList, allCampaigns } = useContext(Context);
 
-  console.log('campaignlist hit');
-  console.log('allCampaigns recieved');
-  console.log(allCampaigns);
   // Event listener that will add a new tab on card click
   const onAddBtnClick = (event) => {
     // Get the campaign id and title from the article data attributes
@@ -269,9 +266,6 @@ const SingleCampaign = () => {
     }
   }
 
-  console.log('selected campaign: ');
-  console.log(selectedCampaign);
-
   const npcs = [];
   const pcs = [];
 
@@ -289,10 +283,6 @@ const SingleCampaign = () => {
 
   // Tell ModalLarge which data to display
   const renderModal = () => {
-
-
-    console.log('modalId: ' + modalId);
-
 
     if (openModal) {
       // Grab the title depending on btn used
@@ -455,9 +445,6 @@ const SingleCampaign = () => {
 
       // Display modal with data appropriate to the user clicked
 
-      console.log('modaldata: ');
-      console.log(modalData());
-
       // REMOVE - temp/testing code
       return (
         <ModalLarge
@@ -554,9 +541,6 @@ const SingleCampaign = () => {
 const MainContent = () => {
   const { currentTab, tabList, setTabList, allCampaigns } = useContext(Context);
 
-  console.log('mainContent hit');
-  console.log(allCampaigns);
-
   // Render the content based on what tab is currently selected
   const renderPage = () => {
     // Check current tab
@@ -580,7 +564,6 @@ function NewCampaign({ children }) {
 
   // Hold the state of the current tab used for switching between tabs
   const [currentTab, setCurrentTab] = useState('-1');
-  console.log(currentTab);
   // Hold the entire list of tabs opened by the user
   const [tabList, setTabList] = useState([{ id: -1, title: 'your campaigns' }]);
 

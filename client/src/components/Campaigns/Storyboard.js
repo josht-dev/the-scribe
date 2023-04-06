@@ -55,10 +55,6 @@ const styles = {
 }
 
 export default function Storyboard(props) {
-
-  console.log('storyboard');
-  console.log(props);
-
   // Pulling list into a variable so it can be added to
   const initialList = props.storyboards;
   const [list, setList] = useState(initialList);
