@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef, useContext, createContext } from "react";
 import { gql, useQuery } from "@apollo/client";
-import Auth from '../../utils/auth';
 import { QUERY_USER_CAMPAIGNS } from '../../utils/queries';
+import Auth from '../../utils/auth';
 import Tab from '../Campaigns/Tab';
 import Button from '../Campaigns/Button';
-
+import TitleLarge from '../Campaigns/TitleLarge';
+import ListMd from '../Campaigns/ListMd';
+import ListSm from '../Campaigns/ListSm';
+import ModalLarge from '../Campaigns/ModalLarge';
 
 const Context = createContext();
 
@@ -239,6 +242,310 @@ const CampaignList = () => {
   );
 }
 
+const SingleCampaign = () => {
+  const { currentTab, allCampaigns } = useContext(Context);
+
+  // A useState to old the currently selected character
+  const [currentChar, setCurrentChar] = useState('');
+  const handleSetChar = (id) => {
+    setCurrentChar(id)
+  };
+
+  // Modal useState code
+  const [modalId, setModalId] = useState('none');
+  const handleModalId = (id) => setModalId(id);
+  // Handle opening/closing this modal
+  const [openModal, setOpenModal] = useState(false);
+  const handleModalOpen = () => {
+    setOpenModal(!openModal);
+  };
+
+  // Hold this campaigns data
+  let selectedCampaign;
+  for (const x in allCampaigns) {
+    if (allCampaigns[x]._id == currentTab) {
+      selectedCampaign = allCampaigns[x];
+      break;
+    }
+  }
+
+  const npcs = [];
+  const pcs = [];
+
+  // Spit characters into pc's and npc's
+  if (selectedCampaign.characters) {
+    selectedCampaign.characters.forEach(char => {
+      // check if the character is an npc and push to appropriate array
+      if (char.npc) {
+        npcs.push(char);
+      } else {
+        pcs.push(char);
+      }
+    });
+  }
+
+  // Tell ModalLarge which data to display
+  const renderModal = () => {
+    if (openModal) {
+      // Grab the title depending on btn used
+      const title = () => {
+        switch (modalId) {
+          case 'main-story':
+            return 'main story';
+          case 'side-quests':
+            return 'side story';
+          case 'player-plots':
+            return 'player plots';
+          case 'pc':
+            return 'player character';
+          case 'npc':
+            return 'non-player character';
+          default:
+            break;
+        }
+      }
+      // Set the campaign data to send to ModalLarge
+      const modalData = () => {
+        let data;
+        let story;
+        if (!selectedCampaign.story) {
+          story = [];
+        } else {
+          story = selectedCampaign.story;
+        }
+        let characters;
+        if (!selectedCampaign.characters) {
+          characters = [];
+        } else {
+          characters = selectedCampaign.story;
+        }
+        // REMOVE THIS LATER
+        let oneStory;
+        switch (modalId) {
+          case 'main-story':
+            // Check if story exists
+            if (story[0]) {
+              data = selectedCampaign.story.find(story => {
+                return story.main;
+              });
+            } else {
+              // TODO - Check back when connected to backend
+              // for empty _id field for story[{_id: ??}]
+              data = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: true,
+                side: false,
+                player: false,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return data;
+          case 'side-quests':
+            // TODO - Set back to allow story array
+            data = story.flatMap(story => {
+              if (story.side) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: true,
+                player: false,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return /*data*/ oneStory;
+          case 'player-plots':
+            // TODO - Set back to allow story array
+            data = story.flatMap(story => {
+              if (story.player) {
+                return story;
+              } else {
+                return [];
+              }
+            });
+            // REMOVE THIS IN THE FUTURE
+            oneStory = data[0];
+            if (!oneStory) {
+              oneStory = {
+                title: '',
+                timeline: '',
+                bigBad: '',
+                main: false,
+                side: false,
+                player: true,
+                storyboard: [],
+                objectives: [],
+                setup: '',
+                resolution: '',
+              };
+            }
+
+            return /*data*/ oneStory;
+          case 'pc':
+            data = characters.find(char => {
+              return char._id == currentChar;
+            });
+
+            // Check if this is a new character
+            if (!data) {
+              data = {
+                _id: currentChar,
+                characterName: "Hi! I'm New!",
+                characterStatus: '',
+                characterSheet: '',
+                npc: 'pc',
+                campaignId: selectedCampaign._id,
+                motivations: [],
+                characterNotes: []
+              };
+            }
+
+            return data;
+          case 'npc':
+            data = characters.find(char => {
+              return char._id == currentChar;
+            });
+
+            // Check if this is a new character
+            if (!data) {
+              data = {
+                _id: currentChar,
+                characterName: "Hi! I'm New!",
+                characterStatus: '',
+                characterSheet: '',
+                npc: 'npc',
+                campaignId: selectedCampaign._id,
+                motivations: [],
+                characterNotes: []
+              };
+            }
+
+            return data;
+          default:
+            break;
+        }
+      }
+
+      // Display modal with data appropriate to the user clicked
+
+
+      // REMOVE - temp/testing code
+      return (
+        <ModalLarge
+          id={modalId}
+          characterid={currentChar}
+          title={title()}
+          modalData={modalData()}
+          openModal={openModal}
+          handleModalOpen={handleModalOpen}
+        />
+      );
+
+    } else {
+      // Modal is closed
+      return;
+    }
+
+  }
+
+  return (
+    <>
+      {renderModal()}
+      <section style={campaignStyles.section} >
+        <div style={campaignStyles.titleLeft}>
+          <TitleLarge
+            placeholder='campaign title'
+            title={selectedCampaign.title}
+          />
+        </div>
+        <div style={campaignStyles.titleRight}>
+          <TitleLarge
+            placeholder='game system'
+            title={selectedCampaign.game}
+          />
+        </div>
+        <section style={campaignStyles.charactersContainer}>
+          <ListSm
+            title='player characters'
+            characters={pcs}
+            type='pc'
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
+          />
+          <ListSm
+            title='non-player characters'
+            characters={npcs}
+            type='npc'
+            openModal={openModal}
+            handleModalOpen={handleModalOpen}
+            handleSetChar={handleSetChar} 
+            handleModalId={handleModalId} 
+          />
+        </section>
+        <div style={campaignStyles.btnBar}>
+          <Button
+            title='main story'
+            id='main-story'
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
+          />
+          <Button
+            title='side quests'
+            id='side-quests' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
+          />
+          <Button
+            title='player plots'
+            id='player-plots' 
+            handleModalOpen={handleModalOpen}
+            handleModalId={handleModalId}
+          />
+          <Button
+            title='future feature'
+            id='timeline'
+          /*handleModalOpen={handleModalOpen}
+          handleModalId={handleModalId}*/
+          />
+        </div>
+        <section style={campaignStyles.adventureList}>
+          <ListMd
+            type='text'
+            adventures={selectedCampaign.adventures}
+          />
+        </section>
+      </section >
+    </>
+  );
+
+
+
+
+
+
+}
+
 // Component that holds the main content
 const MainContent = () => {
   const { currentTab, tabList, setTabList, allCampaigns } = useContext(Context);
@@ -250,18 +557,11 @@ const MainContent = () => {
   const renderPage = () => {
     // Check current tab
     if (currentTab == -1) {
-      console.log('render if hit');
       // Render the list of user campaigns
       return <CampaignList />
     } else {
-
-
-
-
-
-
-
-
+      // Render the campaign matching the id in the current tab
+      return <SingleCampaign />
     }
   }
 
@@ -289,16 +589,16 @@ function NewCampaign({ children }) {
 
   // Query the DB for the user's campaigns
   const { loading, error, data } = useQuery(QUERY_USER_CAMPAIGNS, {
-    variables: { profileId: Auth.getProfile().data.profile }, 
+    variables: { profileId: Auth.getProfile().data.profile },
     onCompleted: (completedData) => {
       dbData.current = completedData.userCampaigns.campaigns;
     }
   })
 
-      //Store the useState to propagate it down components that need it
-    const contextValue = {
-      currentTab, setCurrentTab, tabList, setTabList, allCampaigns
-    };
+  //Store the useState to propagate it down components that need it
+  const contextValue = {
+    currentTab, setCurrentTab, tabList, setTabList, allCampaigns
+  };
 
   return (
     <main
@@ -323,9 +623,9 @@ function NewCampaign({ children }) {
         {loading ? (
           <div>Loading...</div>
         ) : (
-        <Context.Provider value={contextValue}>
-        {children}
-        </Context.Provider>
+          <Context.Provider value={contextValue}>
+            {children}
+          </Context.Provider>
         )}
 
       </section>
