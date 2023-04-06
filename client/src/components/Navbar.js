@@ -166,9 +166,21 @@ export default function Navbar() {
               }}
             >
               {log.map((log) => (
-                <MenuItem key={log.id} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{log.name}</Typography>
-                </MenuItem>
+                <Link to={log.link} key={log.id} onClick={handleLinkClick}>
+                  <MenuItem key={log.id} onClick={handleCloseNavMenu}>
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      id={log.id}
+                      sx={{
+                        my: 0,
+                        color: "#1CB9B3",
+                        display: "inline",
+                      }}
+                    >
+                      {log.name}
+                    </Button>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -241,9 +253,21 @@ export default function Navbar() {
                 }}
               >
                 {notLog.map((notLog) => (
-                  <MenuItem key={notLog.id} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{notLog.name}</Typography>
-                  </MenuItem>
+                  <Link to={notLog.link} key={notLog.id} onClick={handleLinkClick}>
+                    <MenuItem key={notLog.id} onClick={handleCloseNavMenu}>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        id={notLog.id}
+                        sx={{
+                          my: 0,
+                          color: "#1CB9B3",
+                          display: "inline",
+                        }}
+                      >
+                        {notLog.name}
+                      </Button>
+                    </MenuItem>
+                  </Link>
                 ))}
               </Menu>
             </Box>
