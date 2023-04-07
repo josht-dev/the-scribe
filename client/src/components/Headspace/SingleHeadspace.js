@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
 import { useQuery } from "@apollo/client";
 import { QUERY_SINGLE_USERPOST } from "../../utils/queries";
+import { ADD_USERPOST } from "../../utils/mutations";
+
 
 // Component styles
 const styles = {
@@ -93,7 +95,38 @@ export default function SingleHeadspace(props) {
   const [ title, setTitle ] = useState(props.userPost);
   const [ body, setBody ] = useState(props.userPost);
 
-  const handleFormSubmit = () => {};
+    const [addUserPost, { error }] = useMutation(ADD_USERPOST, {
+      update(cache, { data: { addUserPost } }) {
+        try {
+          const { userPost } = cache.readQuery({ query: QUERY_SINGLE_USERPOST });
+
+          cache.writeQuery({
+            query: QUERY_SINGLE_USERPOST,
+            data: { thoughts: [addUserPost, ...userPost] },
+          });
+        } catch (e) {
+          console.error(e);
+        }
+      },
+    });
+
+  const handleFormSubmit = async(event) => {
+    try{
+       const { data } = await addUserPost({
+        variables: {
+          body,
+          title,
+          username: Auth.getProfile().data.username,
+        },
+      });
+
+      setTitle('')
+      setBody('')
+    
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   console.log('post user');
   console.log(props.userPost.username);
@@ -105,10 +138,8 @@ export default function SingleHeadspace(props) {
   const handleChange = (event) => {
     console.log('handlechange hit');
     const { name, value } = event.target;
-console.log(event);
-    console.log(name);
-    console.log(value);
-
+       setTitle(value);
+       setBody(value.length);
   };
 
 
