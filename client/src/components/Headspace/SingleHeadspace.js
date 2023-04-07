@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_SINGLE_USERPOST } from "../../utils/queries";
-import { ADD_USERPOST } from "../../utils/mutations";
+import { ADD_USERPOST, ADD_COMMENT } from "../../utils/mutations";
 import Auth from '../../utils/auth';
+import Button from '../Campaigns/Button';
 
 
 // Component styles
@@ -77,6 +78,16 @@ const styles = {
     fontWeight: 500,
     padding: '0.5rem',
     borderRadius: "0.25rem",
+  },
+  commentBtn: {
+    fontSize: '1rem',
+    margin: '0.5rem 0',
+    padding: '.5rem 1.5rem',
+  },
+  commentBtnDiv: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: 'fit-content'
   }
 };
 
@@ -85,10 +96,6 @@ export default function SingleHeadspace(props) {
   //   variables: 
   // });
   // const userPost = data?.userPost || [];
-
-  const [ reRender, setReRender ] = useState(false);
-
-console.log(props.currentTab);
 
   // check if this is a new post
   const initialComments = (props.userPost.subject === 'unsavedPost')
@@ -99,8 +106,11 @@ console.log(props.currentTab);
   // saving a post
   const [title, setTitle] = useState(props.userPost);
   const [body, setBody] = useState(props.userPost);
+  const [newComment, setNewComment] = useState('');
 
-  const [addUserPost, { error }] = useMutation(ADD_USERPOST, {
+  const [addComment, { error }] = useMutation(ADD_COMMENT);
+
+  const [addUserPost] = useMutation(ADD_USERPOST, {
     update(cache, { data: { addUserPost } }) {
       try {
         const { userPost } = cache.readQuery({ query: QUERY_SINGLE_USERPOST });
@@ -115,37 +125,59 @@ console.log(props.currentTab);
     },
   });
 
+  const saveComment = async (event) => {
+    console.log('hit save comment');
+    console.log(newComment);
+    try {
+      const { data } = await addComment({
+        variables: {
+          userPostId: props.userPost._id,
+          commentBody: newComment,
+          commentWriter: Auth.getProfile().data.username,
+        },
+      });
+
+      setNewComment('');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleFormSubmit = async (event) => {
     try {
+      const subject = 'savedPost';
       const { data } = await addUserPost({
         variables: {
           body,
           title,
+          subject,
           username: Auth.getProfile().data.username,
         },
       });
-
-      setTitle('')
-      setBody('')
+      // TODO - DO BETTER LATER
+      // This is such a crap way to do this, but reloading data and changing tabs has been so much trouble and I don't have the bandwidth to keep fighting with it - Josh
+      window.location.assign("/headspace");
 
     } catch (err) {
       console.error(err);
     }
   };
 
-  console.log('post user');
-  console.log(props.userPost.username);
-
-  console.log('me');
-  console.log(props.username);
 
 
-  const handleChange = (event) => {
-    console.log('handlechange hit');
-    const { name, value } = event.target;
+
+  const handleTitleChange = (event) => {
+    const value = event.target.value;
     setTitle(value);
-    setBody(value.length);
   };
+  const handleBodyChange = (event) => {
+    const value = event.target.value;
+    setBody(value);
+  };
+  const handleCommentChange = (event) => {
+    const value = event.target.value;
+    setNewComment(value);
+  }
 
   return (
     <>
@@ -155,7 +187,7 @@ console.log(props.currentTab);
           <TitleLarge
             placeholder="headspace post title"
             title={props.userPost.title}
-            onChange={handleChange}
+            onChange={handleTitleChange}
           />
         </div>
         {/* Headspace Post Body (Column 1 of the Grid) */}
@@ -171,7 +203,7 @@ console.log(props.currentTab);
                 style={styles.postInput}
                 type="text"
                 defaultValue={props.userPost.body}
-                onChange={handleChange}
+                onChange={handleBodyChange}
               ></textarea>
             ) : (
               <textarea
@@ -183,21 +215,67 @@ console.log(props.currentTab);
             )}
 
           </div>
-          {/* Comments */}
-          <div style={styles.commentSection}>
-            {comments.flatMap((card, index) => {
-              return (
-                <div style={styles.commentCard} key={index}>
-                  <textarea
-                    style={styles.commentText}
-                    defaultValue={card.commentBody}
-                  ></textarea>
+
+          {props.userPost.subject === 'unsavedPost' ? (
+
+            <div>
+              <div
+                style={styles.addBtnDiv}
+                onClick={() => {
+                  handleFormSubmit()
+                }}
+              >
+                <Button
+                  title='save'
+                />
+              </div>
+            </div>
+
+          ) : (
+            <>
+
+              {/* Comments */}
+              <div style={styles.commentSection}>
+                <div style={styles.commentBtnDiv}>
+                  <div
+                    style={styles.commentBtn}
+                    onClick={() => {
+                      const newComment = comments.concat({
+                        commentBody: 'unsaved new comment',
+                      });
+
+                      setComments(newComment);
+                    }}
+                  >
+                    <Button
+                      title='add new comment'
+                    />
+                  </div>
+                  <div
+                    style={styles.commentBtn}
+                    onClick={() => {
+                      saveComment()
+                    }}
+                  >
+                    <Button
+                      title='save new comment'
+                    />
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-
-
+                {comments.flatMap((card, index) => {
+                  return (
+                    <div style={styles.commentCard} key={index}>
+                      <textarea
+                        style={styles.commentText}
+                        defaultValue={card.commentBody}
+                        onChange={handleCommentChange}
+                      ></textarea>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          )}
 
         </form>
       </section>

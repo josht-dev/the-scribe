@@ -111,10 +111,14 @@ export default function Headspace() {
         return item._id === currentTab;
       });
       // Render a single headspace post
-      return <SingleHeadspace userPost={userPosts[tabIndex]} username={Auth.getProfile().data.username} />;
+      return <SingleHeadspace
+        userPost={userPosts[tabIndex]}
+        username={Auth.getProfile().data.username}
+        currentTab={currentTab} 
+        userPosts={userPosts}
+      />;
     }
   }
-  console.log(userPosts);
   // The onClick for adding new items
   const handleAdd = () => {
     // Deal with needing an unique id while item has not been added to db yet
@@ -131,6 +135,7 @@ export default function Headspace() {
     setUserPosts(newList);
     setCurrentTab(currentTab);
   };
+
 
 
   // Return the large modal/page
@@ -150,7 +155,7 @@ export default function Headspace() {
                   <div
                     style={styles.addBtnDiv}
                     onClick={() => {
-                      { handleAdd() }
+                      handleAdd()
                     }}
                   >
                     {<Button
@@ -159,28 +164,7 @@ export default function Headspace() {
                   </div>
                 ) : (
                   <>
-                    {userPosts[userPosts.findIndex((item) => {
-                      return item._id === currentTab
-                    })].username === Auth.getProfile().data.username ? (
-
-                      <div>
-                        <div
-                          style={styles.addBtnDiv}
-                          onClick={() => {
-                            {/* handleSave()  */ }
-                          }}
-                        >
-                          <Button
-                            title='save'
-                          />
-                        </div>
-                      </div>
-
-                    ) : (
-
-                      <></>
-
-                    )}
+                    
                   </>
                 )}
               </div>

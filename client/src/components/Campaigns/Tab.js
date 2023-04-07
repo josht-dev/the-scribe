@@ -22,6 +22,7 @@ export default function CampaignTabs(props) {
     if (props.currentTab !== campaignId) {
       // Change the currentTab state
       props.handleTabChange(campaignId);
+      
     }
   };
 
