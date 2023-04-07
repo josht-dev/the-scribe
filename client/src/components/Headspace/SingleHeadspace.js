@@ -156,7 +156,7 @@ export default function SingleHeadspace(props) {
       });
       // TODO - DO BETTER LATER
       // This is such a crap way to do this, but reloading data and changing tabs has been so much trouble and I don't have the bandwidth to keep fighting with it - Josh
-      window.location.reload();
+      //window.location.reload();
 
     } catch (err) {
       console.error(err);
