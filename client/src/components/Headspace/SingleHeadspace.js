@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import TitleLarge from "../Campaigns/TitleLarge";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_SINGLE_USERPOST } from "../../utils/queries";
 import { ADD_USERPOST } from "../../utils/mutations";
+import Auth from '../../utils/auth';
 
 
 // Component styles
@@ -50,7 +51,7 @@ const styles = {
   commentSection: {
     gridColumn: "2 / span 1",
     height: '100%',
-    width: '100%',  
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     padding: "0.5rem",
@@ -85,34 +86,38 @@ export default function SingleHeadspace(props) {
   // });
   // const userPost = data?.userPost || [];
 
+  const [ reRender, setReRender ] = useState(false);
+
+console.log(props.currentTab);
+
   // check if this is a new post
-  const initialComments = (props.userPost.subject === 'unsavedPost') 
+  const initialComments = (props.userPost.subject === 'unsavedPost')
     ? [] : props.userPost.comments;
-   
+
   const [comments, setComments] = useState(initialComments);
 
   // saving a post
-  const [ title, setTitle ] = useState(props.userPost);
-  const [ body, setBody ] = useState(props.userPost);
+  const [title, setTitle] = useState(props.userPost);
+  const [body, setBody] = useState(props.userPost);
 
-    const [addUserPost, { error }] = useMutation(ADD_USERPOST, {
-      update(cache, { data: { addUserPost } }) {
-        try {
-          const { userPost } = cache.readQuery({ query: QUERY_SINGLE_USERPOST });
+  const [addUserPost, { error }] = useMutation(ADD_USERPOST, {
+    update(cache, { data: { addUserPost } }) {
+      try {
+        const { userPost } = cache.readQuery({ query: QUERY_SINGLE_USERPOST });
 
-          cache.writeQuery({
-            query: QUERY_SINGLE_USERPOST,
-            data: { thoughts: [addUserPost, ...userPost] },
-          });
-        } catch (e) {
-          console.error(e);
-        }
-      },
-    });
+        cache.writeQuery({
+          query: QUERY_SINGLE_USERPOST,
+          data: { thoughts: [addUserPost, ...userPost] },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+  });
 
-  const handleFormSubmit = async(event) => {
-    try{
-       const { data } = await addUserPost({
+  const handleFormSubmit = async (event) => {
+    try {
+      const { data } = await addUserPost({
         variables: {
           body,
           title,
@@ -122,7 +127,7 @@ export default function SingleHeadspace(props) {
 
       setTitle('')
       setBody('')
-    
+
     } catch (err) {
       console.error(err);
     }
@@ -138,10 +143,9 @@ export default function SingleHeadspace(props) {
   const handleChange = (event) => {
     console.log('handlechange hit');
     const { name, value } = event.target;
-       setTitle(value);
-       setBody(value.length);
+    setTitle(value);
+    setBody(value.length);
   };
-
 
   return (
     <>
@@ -155,39 +159,37 @@ export default function SingleHeadspace(props) {
           />
         </div>
         {/* Headspace Post Body (Column 1 of the Grid) */}
-        <section style={styles.pandCSection}>
-
         <form
-      
-            onSubmit={handleFormSubmit}
-          >
+          style={styles.pandCSection}
+          onSubmit={handleFormSubmit}
+        >
 
           <div style={styles.postDiv}>
 
-            {props.userPost.username === props.username || props.userPost.subject === 'unsavedPost' ? (
+            {props.userPost.username === props.username ? (
               <textarea
-              style={styles.postInput}
-              type="text"
-              defaultValue={props.userPost.body}
-              onChange={handleChange}
-            ></textarea>
+                style={styles.postInput}
+                type="text"
+                defaultValue={props.userPost.body}
+                onChange={handleChange}
+              ></textarea>
             ) : (
               <textarea
-              style={styles.postInput}
-              type="text"
-              defaultValue={props.userPost.body}
-              readOnly
-            ></textarea>
+                style={styles.postInput}
+                type="text"
+                defaultValue={props.userPost.body}
+                readOnly
+              ></textarea>
             )}
-            
+
           </div>
           {/* Comments */}
           <div style={styles.commentSection}>
             {comments.flatMap((card, index) => {
               return (
                 <div style={styles.commentCard} key={index}>
-                  <textarea 
-                    style={styles.commentText} 
+                  <textarea
+                    style={styles.commentText}
                     defaultValue={card.commentBody}
                   ></textarea>
                 </div>
@@ -195,9 +197,9 @@ export default function SingleHeadspace(props) {
             })}
           </div>
 
-          </form>
 
-        </section>
+
+        </form>
       </section>
     </>
   );

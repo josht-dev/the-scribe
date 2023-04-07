@@ -3,7 +3,7 @@ import Tab from "../Campaigns/Tab";
 import HeadspaceList from "../Headspace/HeadspaceList";
 import SingleHeadspace from "../Headspace/SingleHeadspace";
 import Button from '../Campaigns/Button';
-import HeadpaceForm from "../Headspace/HeadSpaceForm"
+//import HeadpaceForm from "../Headspace/HeadSpaceForm"
 
 import { useQuery } from "@apollo/client";
 import { QUERY_USERPOSTS } from "../../utils/queries";
@@ -122,7 +122,7 @@ export default function Headspace() {
     const itemId = `none-${num++}`;
     const newList = userPosts.concat({
       _id: itemId,
-      username: '',
+      username: Auth.getProfile().data.username,
       title: 'unsaved new post',
       subject: 'unsavedPost',
       body: 'you should put your thoughts here',
@@ -158,18 +158,30 @@ export default function Headspace() {
                     />}
                   </div>
                 ) : (
-                  <div>
-                    <div
-                      style={styles.addBtnDiv}
-                      onClick={() => {
-                        {/* handleSave()  */ }
-                      }}
-                    >
-                      <Button
-                        title='save'
-                      />
-                    </div>
-                  </div>
+                  <>
+                    {userPosts[userPosts.findIndex((item) => {
+                      return item._id === currentTab
+                    })].username === Auth.getProfile().data.username ? (
+
+                      <div>
+                        <div
+                          style={styles.addBtnDiv}
+                          onClick={() => {
+                            {/* handleSave()  */ }
+                          }}
+                        >
+                          <Button
+                            title='save'
+                          />
+                        </div>
+                      </div>
+
+                    ) : (
+
+                      <></>
+
+                    )}
+                  </>
                 )}
               </div>
 
@@ -190,8 +202,7 @@ export default function Headspace() {
 
       ) : (
         <div>Please log in to view content...</div>
-      )
-      }
+      )}
     </>
   )
 }
